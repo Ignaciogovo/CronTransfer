@@ -1,0 +1,5 @@
+# Paramiko: conexion ssh
+paramiko
+
+# sql:
+pymysql

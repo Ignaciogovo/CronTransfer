@@ -1,0 +1,18 @@
+version: "3.1"
+services:
+  program:
+    image: easybapp:1.0
+    restart: unless-stopped
+    container_name: program
+    volumes:
+      - /:/source # Origen
+  bbdd:
+    image: easybmysql:1.0
+    container_name: bbdd
+    environment:
+      - MYSQL_ROOT_PASSWORD=prueba
+    volumes:
+      - ./mysql/config:/var/lib/mysql
+    ports:
+      - 3306
+    restart: unless-stopped
