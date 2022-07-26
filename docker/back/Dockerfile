@@ -13,6 +13,7 @@ RUN pip install -r /python/requirements.txt
 
 #Instalamos nano
 RUN apt-get install -y nano
+RUN echo "#EASYBACKUPS" >> /etc/crontab
 
 # Instalamos cron
 RUN apt-get update && apt-get install -y cron

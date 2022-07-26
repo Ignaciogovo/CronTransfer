@@ -1,7 +1,17 @@
+from pymysql import NULL
+
+
+def pasarbbddAcrontab():
+    print("prueba")
+
+
+
+
+
 def DefinirCrontab(data):
     # datos: minutos horas dias meses DiasDeSemana(weekday) archivo.py peticion log:
     crontab = data["minutes"]+" "+data["hours"]+" "+data["days"]+" "+data["months"]+" "+data["weekday"]+" root "+data["command"]+" "+data["peticion"]
-    if "log" in data:
+    if data["log"] is not NULL:
         crontab=crontab+" >> " + data["log"]
     return(crontab)
 
@@ -18,6 +28,8 @@ data= {
     "weekday" : "*",
     "command" : "date",
     "peticion" : str(1)
-    # ,"log": "/ruta/archivo.log"
+     ,"log": "/ruta/archivo.log"
 }
+
+print(DefinirCrontab(data))
 
