@@ -20,16 +20,15 @@ def CrearCrontab(crontab):
     archivoCrontab.write(crontab)
     archivoCrontab.close()
     # PRUEBA crontab
-data= {
-    "minutes" : "*",
-    "hours" : "*",
-    "days" : "*",    
-    "months" : "*",
-    "weekday" : "*",
-    "command" : "date",
-    "peticion" : str(1)
-     ,"log": "/ruta/archivo.log"
-}
+# data= {
+#     "minutes" : "*",
+#     "hours" : "*",
+#     "days" : "*",    
+#     "months" : "*",
+#     "weekday" : "*",
+#     "command" : "date",
+#     "peticion" : str(1)
+#      ,"log": "/ruta/archivo.log"
+# }
 
-print(DefinirCrontab(data))
 

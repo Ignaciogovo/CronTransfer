@@ -63,6 +63,3 @@ def comprobar(data):
     else:
         print("No realizamos inserción")
         sys.exit(1)
-
-data = introducirssh()
-    

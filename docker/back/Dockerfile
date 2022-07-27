@@ -13,11 +13,10 @@ RUN pip install -r /python/requirements.txt
 
 #Instalamos nano
 RUN apt-get install -y nano
-RUN echo "#EASYBACKUPS" >> /etc/crontab
 
 # Instalamos cron
 RUN apt-get update && apt-get install -y cron
-
+RUN echo "#EASYBACKUPS" >> /etc/crontab
 # Instalamos suervisor
 RUN apt-get install -y supervisor \
 # Borramos líneas añadidas con todos los apt-get updates hechos anteriormente 

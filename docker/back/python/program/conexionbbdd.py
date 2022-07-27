@@ -17,10 +17,10 @@ def ingresarSSH(data):
 
     # Prepare SQL query to INSERT a record into the database.
     sql = "INSERT INTO conexionssh(IP,port,user,pass) VALUES (%s,%s,%s,%s)"
-    cursor.execute(sql,data)
+    
     try:
     # Execute the SQL command
-        cursor.execute(sql)
+        cursor.execute(sql,data.values())
     # Commit your changes in the database
         db.commit()
     except:
