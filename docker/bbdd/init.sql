@@ -58,7 +58,7 @@ CREATE TABLE `share` (
   `days` varchar(30) NOT NULL,
   `months` varchar(30) NOT NULL,
   `weekday` varchar(30) NOT NULL,
-  `log` varchar(30) NOT NULL,
+  `log` varchar(30) NULL,
   PRIMARY KEY (`id`),
   KEY `FKid_conexion` (`id_conexion`),
   CONSTRAINT `FKid_conexion` FOREIGN KEY (`id_conexion`) REFERENCES `conexionssh` (`id`)
