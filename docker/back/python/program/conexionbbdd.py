@@ -39,10 +39,10 @@ def ingresarShare(data,borrar):
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "INSERT INTO conexionshare(origen,final,id_conexion,minutes,hours,days,months,weekday,log) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    sql = "INSERT INTO share(origen,final,id_conexion,minutes,hours,days,months,weekday,log) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     try:
     # Execute the SQL command
-        cursor.execute(sql,(data["source"],data["final"],data["source"],data["id_conexion"],data["minutes"],data["hours"],data["days"],data["months"],data["weekday"],data["log"]))
+        cursor.execute(sql,(data["source"],data["final"],data["id_conexion"],data["minutes"],data["hours"],data["days"],data["months"],data["weekday"],data["log"]))
     # Commit your changes in the database
         db.commit()
     except:
@@ -102,7 +102,7 @@ def consultaridssh():
     try:
         cursor.execute(sql)
         resultado = cursor.fetchone()
-        resultado = resultado[0]
+        resultado = str(resultado[0])
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)

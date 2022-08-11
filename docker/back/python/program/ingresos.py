@@ -42,7 +42,7 @@ def introducirshare():
     if data["log"] == "y" or data["log"] == "Y":
         data["log"]=input("Indica la ruta del log: ")
     else:
-        data["log"]=NULL
+        data["log"]='NULL'
     validar(data)
     comprobar(data)
     return(data)
@@ -63,3 +63,8 @@ def comprobar(data):
     else:
         print("No realizamos inserción")
         sys.exit(1)
+
+def ConvertSTR(data):
+    for x in data:
+        data[x]= str(data.get(x))
+    return data
