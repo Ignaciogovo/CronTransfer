@@ -110,6 +110,24 @@ def ultimoidssh():
     db.close()
     return(resultado)
 
+def ultimoidSHARE():
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "select id from share order by id desc;"
+    try:
+        cursor.execute(sql)
+        resultado = cursor.fetchone()
+        resultado = str(resultado[0])
+    except:
+        print("Ha fallado la conexión.")
+        sys.exit(1)
+
+    db.close()
+    return(resultado)
+
 def consultaridssh(id):
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
@@ -128,6 +146,24 @@ def consultaridssh(id):
     db.close()
     return(resultado)
 
+
+def consultarDatosshare(id):
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "select minutes, hours, days, months, weekday, log from share where id=%s;"
+    try:
+        cursor.execute(sql,id)
+        resultado = cursor.fetchone()
+    except:
+        print("Ha fallado la conexión.")
+        sys.exit(1)
+
+    db.close()
+    return(resultado)
+
 def consultarDatosssh(id_ssh):
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
@@ -136,7 +172,7 @@ def consultarDatosssh(id_ssh):
     # Prepare SQL query to INSERT a record into the database.
     sql = "select IP, port, user, pass from conexionssh where id=%s;"
     try:
-        cursor.execute(sql,id)
+        cursor.execute(sql,id_ssh)
         resultado = cursor.fetchone()
     except:
         print("Ha fallado la conexión.")

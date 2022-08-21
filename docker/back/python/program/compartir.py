@@ -31,5 +31,8 @@ def conexionData():
     return(data)
 
 data=conexionData()
-print(data)
-fssh.comprobarSSH(data)
+try:
+    fssh.sendfile(data)
+except:
+    print("No se ha podido enviar el archivo")
+    sys.exit(1)
