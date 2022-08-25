@@ -156,13 +156,22 @@ def consultarDatosshare(id):
     sql = "select minutes, hours, days, months, weekday, log from share where id=%s;"
     try:
         cursor.execute(sql,id)
-        resultado = cursor.fetchone()
+        datos = cursor.fetchone()
+        data= {
+        "minutes" : datos[0],
+        "hours" : datos[1],
+        "days" : datos[2],    
+        "months" : datos[3],
+        "weekday" : datos[4],
+        "id" : str(id),
+        "log": datos[5]
+        }
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
 
     db.close()
-    return(resultado)
+    return(data)
 
 def consultarDatosssh(id_ssh):
     db = bbddeasybackups()
@@ -173,13 +182,18 @@ def consultarDatosssh(id_ssh):
     sql = "select IP, port, user, pass from conexionssh where id=%s;"
     try:
         cursor.execute(sql,id_ssh)
-        resultado = cursor.fetchone()
+        datosSSH = cursor.fetchone()
+        data={}
+        data["HOST"]= datosSSH[0]
+        data["PORT"] = datosSSH[1]
+        data["USER"] = datosSSH[2]
+        data["PASS"] = datosSSH[3]
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
 
     db.close()
-    return(resultado)
+    return(data)
 
 def consultarOrigenFinal(id):
     db = bbddeasybackups()

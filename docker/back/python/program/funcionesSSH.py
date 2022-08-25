@@ -1,6 +1,8 @@
+from genericpath import isdir, isfile
 import paramiko
 import sys
-
+from datetime import datetime
+import os
 def comprobarSSH(data):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # Con esto indicamos que accedemos con nuestras propias credenciales
@@ -29,10 +31,36 @@ def sendfile(data):
         sftp_client.put(
             data["SOURCE"],
             data["FINAL"]
-        )
+        )   
         sftp_client.close()
     except: 
         print("Error al transferir archivos")
         sys.exit(1)
         # Cerramos conexión
     ssh_client.close()
+
+# Con esta función analizamos la ruta para conocer si es un archivo o un directorio. Según lo que sea se ejeturá distintas
+def analizarRuta(data):
+    if os.path.isfile(data["SOURCE"]):
+        sendfile(data["SOURCE"])
+    else:
+        if os.path.isdir(data["SOURCE"]):
+            with os.scandir(data["SOURCE"]) as ficheros:
+                for fichero in ficheros:
+                    if data["SOURCE"].endswith('/'): 
+                        data["SOURCE"] = data["SOURCE"]+fichero
+                    else:    
+                        data["SOURCE"] = data["SOURCE"]+'/'+fichero
+                    analizarRuta(data)
+        else:
+            print("No podemos reconocer el tipo de ruta de origen.")
+            sys.exit(1)
+
+# def generarArchivoFecha(archivo):
+#     #fecha actual
+#     now = datetime.now()
+#     #Datetime
+#     if
+#         now.day
+#         now.month
+#         now.year
