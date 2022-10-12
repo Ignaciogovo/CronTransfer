@@ -24,6 +24,9 @@ RUN apt-get install -y supervisor \
 RUN mkdir -p /var/log/supervisor
 COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
+# Generamos alias para la comodidad del programa:
+RUN echo 'alias hi="echo hello"' >> ~/.bashrc
+
 # Indicamos los volumenes compartidos:
 VOLUME [ "/source" ]
 # Establecemos el comando del proceso de inicio del contenedor

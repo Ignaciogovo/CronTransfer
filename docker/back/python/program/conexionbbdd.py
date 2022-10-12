@@ -42,7 +42,7 @@ def ingresarShare(data,borrar):
     sql = "INSERT INTO share(origen,final,id_conexion,minutes,hours,days,months,weekday,log) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     try:
     # Execute the SQL command
-        cursor.execute(sql,(data["source"],data["final"],data["id_conexion"],data["minutes"],data["hours"],data["days"],data["months"],data["weekday"],data["log"]))
+        cursor.execute(sql,(data["SOURCE"],data["FINAL"],data["id_conexion"],data["minutes"],data["hours"],data["days"],data["months"],data["weekday"],data["log"]))
     # Commit your changes in the database
         db.commit()
     except:

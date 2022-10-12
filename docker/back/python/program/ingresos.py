@@ -16,8 +16,12 @@ def introducirssh():
     return(data)
 def introducirshare():
     data={}
-    data["source"]=  input("Ruta origen: ") or ("")
-    data["final"] = input("rutafinal: ") or ("")
+    data["SOURCE"]=  input("Ruta origen: ") or ("")
+    if data["SOURCE"].endswith("/"):
+       data["SOURCE"][:-1]  
+    data["FINAL"] = input("rutafinal: ") or ("")
+    if data["FINAL"].endswith("/"):
+       data["FINAL"][:-1]  
     print("Introducir fechas y horarios del backups:")
     data["minutes"] ='Falso'
     while data["minutes"] =='Falso':
