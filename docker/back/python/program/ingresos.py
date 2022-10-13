@@ -1,7 +1,7 @@
 from multiprocessing.sharedctypes import Value
 import sys
 from time import sleep
-
+from getpass import getpass
 from pymysql import NULL
 from funcionesSSH import comprobarSSH
 def introducirssh():
@@ -9,7 +9,8 @@ def introducirssh():
     data["HOST"]=  input("IP Servidor: ") or ("")
     data["PORT"] = input("puerto(puerto 22 por defecto): ") or ("22")
     data["USER"] = input("usuario: ") or ("")
-    data["PASS"] = input("Contraseña: ") or ("")
+    # data["PASS"] = input("Contraseña: ") or ("")
+    data["PASS"]= getpass("Contraseña: ")
     validar(data)
     comprobar(data)
     comprobarSSH(data)
@@ -191,7 +192,8 @@ def comprobar(data):
     print("Esto son los datos que desea introducir:")
     for x in data:
         valor = data.get(x)
-        print(x," --> ",valor)
+        if  x != "PASS":
+            print(x," --> ",valor)
     comprobar=input("¿Ésta de acuerdo (Y/N)?:")
     if comprobar == "y" or comprobar == "Y":
         print("Realizamos inserción")

@@ -2,11 +2,6 @@ from pymysql import NULL
 import conexionbbdd as bbdd
 import sys
 
-
-
-
-
-
 def DefinirCrontab(data):
     # datos: minutos horas dias meses DiasDeSemana(weekday) archivo.py peticion log:
     crontab = data["minutes"]+" "+data["hours"]+" "+data["days"]+" "+data["months"]+" "+data["weekday"]+" root "+"python3 /python/program/compartir.py "+data["id"]

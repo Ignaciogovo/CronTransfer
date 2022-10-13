@@ -26,6 +26,7 @@ COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 # Generamos alias para la comodidad del programa:
 RUN echo 'alias hi="echo hello"' >> ~/.bashrc
+RUN echo 'alias AñadirBackup="python3 /python/program/inputs.py"' >> ~/.bashrc
 
 # Indicamos los volumenes compartidos:
 VOLUME [ "/source" ]
