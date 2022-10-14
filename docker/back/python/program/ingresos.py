@@ -18,9 +18,18 @@ def introducirssh():
 def introducirshare():
     data={}
     data["SOURCE"]=  input("Ruta origen: ") or ("")
+    # configuramos los datos proporcionados
+    # Eliminamos el / final para evitar errores
     if data["SOURCE"].endswith("/"):
-       data["SOURCE"][:-1]  
+       data["SOURCE"][:-1]
+    # Incluimos el directorio del contenedor para evitar errores
+    if data["SOURCE"].startswith("/"):
+        data["SOURCE"]='/source'+data["SOURCE"]
+    else:
+        data["SOURCE"]='/source'+"/"+data["SOURCE"]
     data["FINAL"] = input("rutafinal: ") or ("")
+    # configuramos los datos proporcionados
+    # Eliminamos el / final para evitar errores
     if data["FINAL"].endswith("/"):
        data["FINAL"][:-1]  
     print("Introducir fechas y horarios del backups:")
@@ -192,8 +201,12 @@ def comprobar(data):
     print("Esto son los datos que desea introducir:")
     for x in data:
         valor = data.get(x)
+        # No sacamos por pantalla el valor contraseña
         if  x != "PASS":
-            print(x," --> ",valor)
+            if x == "SOURCE":
+                print(x," --> ",valor.replace("/source",""))
+            else:
+                print(x," --> ",valor)
     comprobar=input("¿Ésta de acuerdo (Y/N)?:")
     if comprobar == "y" or comprobar == "Y":
         print("Realizamos inserción")

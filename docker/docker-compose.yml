@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     container_name: program
     volumes:
-      - /:/source # Origen
+      - /:/source # Origen --->  dejarlo como tal
   bbdd:
     image: easybmysql:1.0
     container_name: bbdd

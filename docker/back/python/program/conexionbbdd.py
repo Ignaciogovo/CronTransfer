@@ -9,6 +9,7 @@ def bbddeasybackups():
         print("Error al conectar con la base de datos")
         sys.exit(1)
 
+# Ingresar y borrar datos
 
 def ingresarSSH(data):
     db = bbddeasybackups()
@@ -59,7 +60,7 @@ def ingresarShare(data,borrar):
     # desconectar del servidor
     db.close()
 
-def borrarSSH(id):
+def borrarSSH(id_ssh):
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -67,14 +68,34 @@ def borrarSSH(id):
     # Prepare SQL query to INSERT a record into the database.
     sql = "delete from conexionssh where id=%s;"
     try:
-        cursor.execute(sql,id)
+        cursor.execute(sql,id_ssh)
         db.commit()
     except:
-        print("Ha fallado el delete.")
+        print("Ha fallado el delete, los datos que desea borrar puede ser clave foranea de otros servicios.")
         sys.exit(1)
 
     db.close()    
 
+def borrarSHARE(id):
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "delete from share where id=%s;"
+    try:
+        cursor.execute(sql,id)
+        db.commit()
+    except:
+        print("Ha fallado el delete")
+        sys.exit(1)
+
+    db.close()  
+# Consultas a la base de datos
+
+#########################################################################
+# Consultas en tabla share:
+########################################################################
 def consultarUsuario(id):
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
@@ -90,25 +111,23 @@ def consultarUsuario(id):
         sys.exit(1)
     db.close()
     return(resultado)
-
-
-def ultimoidssh():
+def consultarOrigenFinal(id):
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select id from conexionssh order by id desc;"
+    sql = "select origen,final from share where id=%s;"
     try:
-        cursor.execute(sql)
+        cursor.execute(sql,id)
         resultado = cursor.fetchone()
-        resultado = str(resultado[0])
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
-
     db.close()
     return(resultado)
+
+
 
 def ultimoidSHARE():
     db = bbddeasybackups()
@@ -146,8 +165,8 @@ def consultaridssh(id):
     db.close()
     return(resultado)
 
-
-def consultarDatosshare(id):
+# Consultamos los datos de la tabla share de forma individual
+def consultar_Un_servicio(id):
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -173,6 +192,64 @@ def consultarDatosshare(id):
     db.close()
     return(data)
 
+
+
+# Consulta todos los servicios
+
+def consultar_servicios():
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "select minutes, hours, days, months, weekday, log, id from share;"
+    try:
+        cursor.execute(sql)
+        datos = cursor.fetchall()
+    except:
+        print("Ha fallado la conexión.")
+        sys.exit(1)
+
+    db.close()
+    return(datos)#↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+        # Cuando se necesite ejecutar esta función para usamos este for para la matriz después de retornarla
+        # for row in datos:
+        #     data = {
+        #     "minutes" : row[0],
+        #     "hours" : row[1],
+        #     "days" : row[2],    
+        #     "months" : row[3],
+        #     "weekday" : row[4],
+        #     "log": row[5],
+        #     "id" : row[6]
+        #     }
+#########################################################################
+# Consultas en tabla conexionssh:
+########################################################################
+
+
+# Obtenemos el último id ofrecido 
+def ultimoidssh():
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "select id from conexionssh order by id desc;"
+    try:
+        cursor.execute(sql)
+        resultado = cursor.fetchone()
+        resultado = str(resultado[0])
+    except:
+        print("Ha fallado la conexión.")
+        sys.exit(1)
+
+    db.close()
+    return(resultado)
+
+
+
+# Consultamos los datos de conexionssh de forma individual
 def consultarDatosssh(id_ssh):
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
@@ -195,36 +272,70 @@ def consultarDatosssh(id_ssh):
     db.close()
     return(data)
 
-def consultarOrigenFinal(id):
+
+def comprobar_Conexiones():
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select origen,final from share where id=%s;"
-    try:
-        cursor.execute(sql,id)
-        resultado = cursor.fetchone()
-    except:
-        print("Ha fallado la conexión.")
-        sys.exit(1)
-
-    db.close()
-    return(resultado)
-def consultartrabajos():
-    db = bbddeasybackups()
-    # prepare a cursor object using cursor() method
-    cursor = db.cursor()
-
-    # Prepare SQL query to INSERT a record into the database.
-    sql = "select * from share;"
+    sql = "select IP, port, user, pass, id from conexionssh;"
     try:
         cursor.execute(sql)
-        resultado = cursor.fetchone()
+        datosSSH = cursor.fetchone()
+
+    except:
+        print("Ha fallado la conexión.")
+        sys.exit(1)
+    db.close()
+    if datosSSH:
+        return datosSSH
+    else:
+        return 0
+        # for row in conexiones:
+        # conexion = {
+        # "IP" : row[0],
+        # "PORT" : row[1],
+        # "USER" : row[2],  
+        # "ID" : row[3] 
+        # }
+
+
+
+
+
+
+
+
+#########################################################################
+# Consultas en varias tablas:
+########################################################################
+
+# Consulta de inner join de share y conexionssh para realizar un borrado
+def consultarParaborrados():
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "select  sh.id, origen, final, IP, user,sh.id_conexion from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
+    try:
+        cursor.execute(sql)
+        datos = cursor.fetchall()
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
 
     db.close()
-    return(resultado)
+    return(datos)
+            # Cuando se necesite ejecutar esta función para usamos este for para la matriz después de retornarla
+        # for row in datos:
+        #     data = {
+        #     "id" : row[0],
+        #     "SOURCE" : row[1],
+        #     "FINAL" : row[2],    
+        #     "IP" : row[3],
+        #     "USER" : row[4]
+        #     }
+
 

@@ -24,7 +24,7 @@ def conexionData():
 
 data=conexionData()
 try:
-    fssh.sendfile(data)
+    fssh.realizar_envio(data)
 except:
     print("No se ha podido enviar el archivo")
     sys.exit(1)

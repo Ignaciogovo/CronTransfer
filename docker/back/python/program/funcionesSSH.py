@@ -97,6 +97,15 @@ def A_Rutafinal(data):
         data["FINAL"]=data["FINAL"].replace(final,origen)
     return(data)
 
+def realizar_envio(data):
+    #Analizamos los datos que se envian, para proporcionar la forma adecuada de envio
+    data=A_Compresion(data)
+    #Analizamos la ruta final para proporcionar la forma adecuada de envio
+    data=A_Rutafinal(data)
+    # Realizamos envio
+    sendfile(data)
+
+
 # def generarArchivoFecha(archivo):
 #     #fecha actual
 #     now = datetime.now()
