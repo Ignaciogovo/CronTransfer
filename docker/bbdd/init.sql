@@ -27,8 +27,13 @@ CREATE TABLE `conexionssh` (
   `IP` varchar(100) NOT NULL,
   `port` varchar(100) NOT NULL,
   `user` varchar(100) NOT NULL,
-  `pass` varchar(100) NOT NULL,
+-- dos opciones password/clave
+  `tipo` varchar(20) NOT NULL, 
+  `pass` varchar(5000) NULL,
+  `clave` varchar(250) NULL,
+  `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
+--CONSTRAINT `chk_tipo` CHECK (`tipo`='password' or `tipo`='clave')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,15 +55,15 @@ DROP TABLE IF EXISTS `share`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `share` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `origen` varchar(150) NOT NULL,
-  `final` varchar(150) NOT NULL,
+  `origen` varchar(250) NOT NULL,
+  `final` varchar(250) NOT NULL,
   `id_conexion` int NOT NULL,
   `minutes` varchar(30) NOT NULL,
   `hours` varchar(30) NOT NULL,
   `days` varchar(30) NOT NULL,
   `months` varchar(30) NOT NULL,
   `weekday` varchar(30) NOT NULL,
-  `log` varchar(30) NULL,
+  `log` varchar(250) NULL,
   PRIMARY KEY (`id`),
   KEY `FKid_conexion` (`id_conexion`),
   CONSTRAINT `FKid_conexion` FOREIGN KEY (`id_conexion`) REFERENCES `conexionssh` (`id`)

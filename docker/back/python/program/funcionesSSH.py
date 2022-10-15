@@ -4,22 +4,39 @@ import sys
 from datetime import datetime
 import os
 import shutil
+import cifradopass as cp
+
+# Realiza una conexión al servidor
 def comprobarSSH(data):
+    if data["TIPO"] =='clave':
+        private_key = paramiko.RSAKey.from_private_key_file(data["CLAVE"])
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # Con esto indicamos que accedemos con nuestras propias credenciales
     try:
+        if data["TIPO"] =='clave':
+            # Nos conectamos al servidor a partir de las credenciales
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], pkey=private_key)
         # Nos conectamos al servidor a partir de las credenciales
-        ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
+        elif data["TIPO"] =='password':
+            data["PASS"]== cp.desencriptar_pass(data["PASS"])
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
     except:
         print("error al realizar conexión, la conexión no es válida")
         sys.exit(1)
-
+# Comprobamos que la ruta final es correcta y se puede realizar una conexión
 def  comprobarRutaSSH(data):
+    if data["TIPO"] =='clave':
+        private_key = paramiko.RSAKey.from_private_key_file(data["CLAVE"])
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # Con esto indicamos que accedemos con nuestras propias credenciales
     try:
+        if data["TIPO"] =='clave':
+            # Nos conectamos al servidor a partir de las credenciales
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], pkey=private_key)
         # Nos conectamos al servidor a partir de las credenciales
-        ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
+        elif data["TIPO"] =='password':
+            data["PASS"]== cp.desencriptar_pass(data["PASS"])
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
     except:
         print("error al realizar conexión")
         sys.exit(1)
@@ -29,25 +46,31 @@ def  comprobarRutaSSH(data):
         entrada, salida, error = ssh_client.exec_command('ls '+data["FINAL"])
         # print(salida.read().decode()) # decode hace más legible el texto.
         c_error=error.read().decode()
+        ssh_client.close()  
         if (len(c_error)==0):
             return(0)
         else:
             return(1)
     except: 
-        print("Error al comprobar la ruta, destino es correcta")
+        print("Error al comprobar la ruta final, destino es correcta")
         sys.exit(1)
         # Cerramos conexión
-    ssh_client.close()
 
 
 
 def sendfile(data):
-
+    if data["TIPO"] =='clave':
+        private_key = paramiko.RSAKey.from_private_key_file(data["CLAVE"])
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # Con esto indicamos que accedemos con nuestras propias credenciales
     try:
+        if data["TIPO"] =='clave':
+            # Nos conectamos al servidor a partir de las credenciales
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], pkey=private_key)
         # Nos conectamos al servidor a partir de las credenciales
-        ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
+        elif data["TIPO"] =='password':
+            data["PASS"]== cp.desencriptar_pass(data["PASS"])
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
     except:
         print("error al realizar conexión")
         sys.exit(1)
@@ -73,7 +96,7 @@ def A_Compresion(data):
         return(data)
     else:
         if os.path.isdir(data["SOURCE"]):
-            archivo_zip = shutil.make_archive("/home/ignaciogovo/AnalisisDatos", "zip", data["SOURCE"])
+            archivo_zip = shutil.make_archive(data["SOURCE"], "zip", data["SOURCE"])
             if os.path.isfile(archivo_zip):
                 data["SOURCE"]=archivo_zip
                 return(data)

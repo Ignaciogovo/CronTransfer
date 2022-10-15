@@ -32,13 +32,7 @@ else:
 if opcion_menu == "1":
     print("Estas son las conexiones guardanas en el sistema:")
     print("ID ----- IP ----- PORT ----- USER")
-    for row in conexiones:
-        conexion = {
-        "IP" : row[0],
-        "PORT" : row[1],
-        "USER" : row[2],
-        "ID" : row[3]
-        }
+    for conexion in conexiones:
         print(conexion["ID"]+" --- "+conexion["IP"]+" --- "+conexion["PORT"]+" --- "+conexion["USER"])
     idssh = input("Introducir ID de la conexión deseada: (Si introduce el 0 crea una nueva conexión") or ("0")
     if idssh == "0":

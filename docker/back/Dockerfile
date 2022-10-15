@@ -11,6 +11,10 @@ RUN mkdir /python
 COPY python/ /python/
 RUN pip install -r /python/requirements.txt
 
+# introducimos la clave para el cifrado de contraseñas
+RUN mkdir /.claves
+RUN python3 /python/program/instalar_clave.py
+
 #Instalamos nano
 RUN apt-get install -y nano
 
@@ -26,7 +30,7 @@ COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 # Generamos alias para la comodidad del programa:
 RUN echo 'alias hi="echo hello"' >> ~/.bashrc
-RUN echo 'alias AñadirServicio="python3 /python/program/inputs.py"' >> ~/.bashrc
+RUN echo 'alias IncluirServicio="python3 /python/program/inputs.py"' >> ~/.bashrc
 RUN echo 'alias BorrarServicio="python3 /python/program/borrado.py"' >> ~/.bashrc
 
 # Indicamos los volumenes compartidos:

@@ -7,6 +7,7 @@ def DefinirCrontab(data):
     crontab = data["minutes"]+" "+data["hours"]+" "+data["days"]+" "+data["months"]+" "+data["weekday"]+" root "+"python3 /python/program/compartir.py "+data["id"]
     if data["log"] != "NULL":
         crontab=crontab+" >> " + data["log"]
+    crontab=crontab+" /n "
     return(crontab)
 
 def CrearCrontab(crontab):
@@ -46,17 +47,8 @@ def borrar_Crontab():
 # Con esta función insertamos todos los crontab almacenados en la base de datos
 def todos_crontab():
     datos=bbdd.consultar_servicios()
-    for row in datos:
-        data = {
-        "minutes" : row[0],
-        "hours" : row[1],
-        "days" : row[2],    
-        "months" : row[3],
-        "weekday" : row[4],
-        "log": row[5],
-        "id" : row[6]
-        }
-    crontab = DefinirCrontab(data)
+    for data in datos:
+        crontab = DefinirCrontab(data)
     try:
         CrearCrontab(crontab)
     except:

@@ -17,11 +17,11 @@ def ingresarSSH(data):
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "INSERT INTO conexionssh(IP,port,user,pass) VALUES (%s,%s,%s,%s)"
+    sql = "INSERT INTO conexionssh(IP,port,user,tipo,pass,clave) VALUES (%s,%s,%s,%s,%s,%s)"
     
     try:
     # Execute the SQL command
-        cursor.execute(sql,(data["HOST"],data["PORT"],data["USER"],data["PASS"]))
+        cursor.execute(sql,(data["HOST"],data["PORT"],data["USER"],data["TIPO"],data["PASS"],data["CLAVE"]))
     # Commit your changes in the database
         db.commit()
     except:
@@ -206,12 +206,24 @@ def consultar_servicios():
     try:
         cursor.execute(sql)
         datos = cursor.fetchall()
+        matriz= []
+        for row in datos:
+            data = {
+            "minutes" : row[0],
+            "hours" : row[1],
+            "days" : row[2],    
+            "months" : row[3],
+            "weekday" : row[4],
+            "log": row[5],
+            "id" : row[6]
+            }
+            matriz.append(data)       
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
 
     db.close()
-    return(datos)#↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+    return(matriz)#↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         # Cuando se necesite ejecutar esta función para usamos este for para la matriz después de retornarla
         # for row in datos:
         #     data = {
@@ -256,7 +268,7 @@ def consultarDatosssh(id_ssh):
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select IP, port, user, pass from conexionssh where id=%s;"
+    sql = "select IP, port, user,tipo, pass,clave from conexionssh where id=%s;"
     try:
         cursor.execute(sql,id_ssh)
         datosSSH = cursor.fetchone()
@@ -264,7 +276,9 @@ def consultarDatosssh(id_ssh):
         data["HOST"]= datosSSH[0]
         data["PORT"] = datosSSH[1]
         data["USER"] = datosSSH[2]
-        data["PASS"] = datosSSH[3]
+        data["TIPO"] = datosSSH[3]
+        data["PASS"] = datosSSH[4]
+        data["CLAVE"] = datosSSH[5]
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
@@ -278,18 +292,29 @@ def comprobar_Conexiones():
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
-    # Prepare SQL query to INSERT a record into the database.
-    sql = "select IP, port, user, pass, id from conexionssh;"
+    # Prepare SQL query to select
+    sql = "select IP, port, user, id, tipo, fecha from conexionssh;"
     try:
         cursor.execute(sql)
-        datosSSH = cursor.fetchone()
+        conexiones = cursor.fetchall()
 
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
     db.close()
-    if datosSSH:
-        return datosSSH
+    if conexiones:
+        matriz = []
+        for row in conexiones:
+            data = {
+            "IP" : row[0],
+            "PORT" : row[1],
+            "USER" : row[2],  
+            "ID" : row[3],
+            "TIPO": row[4],
+            "FECHA": row[5]
+            }
+            matriz.append(data)  
+        return matriz
     else:
         return 0
         # for row in conexiones:
@@ -300,6 +325,15 @@ def comprobar_Conexiones():
         # "ID" : row[3] 
         # }
 
+
+# IDEA????????????????????????????????????????????????????????????    
+	# jugadores = []
+	# for row in datos:
+	# 	jugador = {}
+	# 	jugador["id"]=row[0]
+	# 	jugador["posicion"] = row[1]
+	# 	jugador["valor"] = row[2]
+	# 	jugadores.append(jugador)
 
 
 
@@ -321,13 +355,25 @@ def consultarParaborrados():
     sql = "select  sh.id, origen, final, IP, user,sh.id_conexion from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
     try:
         cursor.execute(sql)
-        datos = cursor.fetchall()
+        datos = cursor.fetchall() 
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
-
     db.close()
-    return(datos)
+    if datos:
+        matriz = []
+        for row in datos:
+            data = {
+            "IP" : row[0],
+            "PORT" : row[1],
+            "USER" : row[2],  
+            "ID" : row[3] 
+            }
+            matriz.append(data) 
+        return(matriz)
+    else:
+        print("No se encuentran datos para borrar")
+        sys.exit(1)
             # Cuando se necesite ejecutar esta función para usamos este for para la matriz después de retornarla
         # for row in datos:
         #     data = {

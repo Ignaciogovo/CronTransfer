@@ -4,13 +4,28 @@ from time import sleep
 from getpass import getpass
 from pymysql import NULL
 from funcionesSSH import comprobarSSH
+import cifradopass as cp
 def introducirssh():
     data={}
     data["HOST"]=  input("IP Servidor: ") or ("")
     data["PORT"] = input("puerto(puerto 22 por defecto): ") or ("22")
     data["USER"] = input("usuario: ") or ("")
-    # data["PASS"] = input("Contraseña: ") or ("")
-    data["PASS"]= getpass("Contraseña: ")
+    print("Qué tipo de seguridad en la conexión quieres usar?:")
+    print("1- password")
+    print("2- clave privada")
+    data["TIPO"] = input("Indique el número:(Por defecto 1)") or ("1")
+    if data["TIPO"] == 1:
+        data["PASS"]= getpass("Contraseña: ")
+        data["PASS"]= cp.ecriptar_pass(data["PASS"])
+        data["CLAVE"]= 'NULL'
+        data["TIPO"] = 'password'
+    elif data["TIPO"]==2:
+        data["PASS"]= 'NULL'
+        data["CLAVE"]= input("Ruta clave privada: ")
+        data["TIPO"] = 'clave'
+    else:
+        print("No has seleccionado ninguna opción de las anteriores")
+        sys.exit(1)   
     validar(data)
     comprobar(data)
     comprobarSSH(data)
@@ -21,7 +36,7 @@ def introducirshare():
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
     if data["SOURCE"].endswith("/"):
-       data["SOURCE"][:-1]
+       data["SOURCE"]=data["SOURCE"][:-1]
     # Incluimos el directorio del contenedor para evitar errores
     if data["SOURCE"].startswith("/"):
         data["SOURCE"]='/source'+data["SOURCE"]
@@ -31,24 +46,28 @@ def introducirshare():
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
     if data["FINAL"].endswith("/"):
-       data["FINAL"][:-1]  
+       data["FINAL"]=data["FINAL"][:-1]
+    print("")
     print("Introducir fechas y horarios del backups:")
     data["minutes"] ='Falso'
     while data["minutes"] =='Falso':
+        print("")
         print("Elegir minutos:")
         sleep(0.5)
         print("Eliga una letra si desea: \n a: Cada minuto. \n b: Minutos pares. \n c: Minutos impares. \n d: Cada 5 minutos. \n e: Cada 30 minutos. \n De lo contrario si desea hacerlo en un minuto especifico introduzca el número. (0/59)")
         data["minutes"] = input("minutos: ") or ("")
         data["minutes"]=validarIndividual('minutes',data["minutes"])
-    print("Elegir Horas:")
-    sleep(0.5)
-    print("Eliga una letra si desea: \n a: Cada hora. \n b: Cada 2 horas. \n c: cada hora inpar. \n d: Cada 3 horas. \n e: Cada 6 horas. \n f: cada 12 horas. \n De lo contrario si desea hacerlo en una hora especifica introduzca el número. (0/23)")
     data["hours"] = 'Falso'
     while data["hours"] == 'Falso':
+        print("")
+        print("Elegir Horas:")
+        sleep(0.5)
+        print("Eliga una letra si desea: \n a: Cada hora. \n b: Cada 2 horas. \n c: cada hora inpar. \n d: Cada 3 horas. \n e: Cada 6 horas. \n f: cada 12 horas. \n De lo contrario si desea hacerlo en una hora especifica introduzca el número. (0/23)")
         data["hours"] = input("horas: ") or ("")
         data["hours"]=validarIndividual('hours',data["hours"])
     data["days"] = 'Falso'    
     while data["days"] == 'Falso':    
+        print("")
         print("Elegir días:")
         sleep(0.5)
         print("Eliga una letra si desea: \n a: Cada dia. \n b: Cada 2 dias. \n c: cada dia inpar. \n d: Cada 5 dias. \n e: Cada 15 días. \n f: cada 30 días. \n De lo contrario si desea hacerlo en un dia especifico del mes introduzca el número. (1/31)")
@@ -56,6 +75,7 @@ def introducirshare():
         data["days"]=validarIndividual('days',data["days"])
     data["months"]='Falso'    
     while data["months"]=='Falso':
+        print("")
         print("Elegir Meses:")
         sleep(0.5)
         print("Eliga una letra si desea: \n a: Cada mes. \n b: Cada 2 meses. \n c: cada mes inpar. \n d: Cada 3 meses. \n De lo contrario si desea hacerlo en un mes especifico introduzca el número. (1/12)")   
@@ -63,12 +83,16 @@ def introducirshare():
         data["months"]=validarIndividual('months',data["months"])
     data["weekday"]='Falso'    
     while data["weekday"]=='Falso':
+        print("")
         print("Elegir día de la semana:")
         sleep(0.5)
         print("Eliga una letra si desea: \n a: cada dia. \n b: Días laborables. \n c: Fin de semana. \n d: Sabado y Domingo. \n De lo contrario si desea hacerlo en dia de la semana especifico especifico introduzca el número. (0/6)")   
         data["weekday"] = input("dias de la semana: ") or ("")
         data["weekday"] = validarIndividual('weekday',data["weekday"])
     sleep(0.5)
+
+    # Preguntamos si quiere guardar un log de transacciones
+    print("")
     print("Quieres almacenar el log de transacciones en la ruta /log?(Y/N)")
     data["log"]= input()
     if data["log"] == "y" or data["log"] == "Y":

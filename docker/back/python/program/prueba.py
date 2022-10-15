@@ -4,7 +4,7 @@ import sys
 from datetime import datetime
 import os
 import funcionesSSH as fs
-
+import cifradopass as cp
 
 data = {}
 data["HOST"]=  '192.168.1.131'
@@ -19,6 +19,14 @@ data["FINAL"] = '/home/abc/backups'
 # sendfile(data)
 
 
+encriptado=cp.ecriptar_pass("hola me llamo paco")
+print(encriptado)
+desencriptado=cp.desencriptar_pass(encriptado)
+print(desencriptado)
+
+
+
+
 
 # def A_Rutafinal(data):
 #     origen=(data["SOURCE"])[((data["SOURCE"]).rfind("/")):]
@@ -29,10 +37,10 @@ data["FINAL"] = '/home/abc/backups'
 #     print(final)
 
 # A_Rutafinal(data)
-data=fs.A_Compresion(data)
-data=fs.A_Rutafinal(data)
-print(data)
-fs.sendfile(data)
+# data=fs.A_Compresion(data)
+# data=fs.A_Rutafinal(data)
+# print(data)
+# fs.sendfile(data)
 
 
 

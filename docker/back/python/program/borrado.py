@@ -4,16 +4,8 @@ import crontab as cr
 datos=bbdd.consultarParaborrados()
 print("Servicios en uso:")
 print("id ----- origen ----- final ----- IP ----- user")
-for row in datos:
-    data = {
-    "id" : row[0],
-    "SOURCE" : row[1],
-    "FINAL" : row[2],    
-    "IP" : row[3],
-    "USER" : row[4],
-    "id_ssh": row[5]
-    }
-    print(data["id"]+" --- "+data["SOURCE"]+" --- "+data["FINAL"]+" --- "+data["IP"]+" --- "+data["USER"])
+for data in datos:
+    print(str(data["id"])+" --- "+str(data["SOURCE"])+" --- "+str(data["FINAL"])+" --- "+(data["IP"])+" --- "+(data["USER"]))
 # Preguntar el id de los datos que se desean borrar 
 id_borrar=  input("Indica el id del servicio de backups que desea borrar: (Escribir 0 si no desea borrar ninguno") or ("0")
 if id_borrar == "0":

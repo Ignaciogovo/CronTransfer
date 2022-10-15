@@ -3,3 +3,6 @@ paramiko
 
 # sql:
 pymysql
+
+# Encriptar
+cryptography
