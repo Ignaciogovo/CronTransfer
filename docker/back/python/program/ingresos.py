@@ -14,18 +14,23 @@ def introducirssh():
     print("1- password")
     print("2- clave privada")
     data["TIPO"] = input("Indique el número:(Por defecto 1)") or ("1")
-    if data["TIPO"] == 1:
+    if data["TIPO"] == "1":
         data["PASS"]= getpass("Contraseña: ")
-        data["PASS"]= cp.ecriptar_pass(data["PASS"])
+        data["PASS"]= cp.encriptar_pass(data["PASS"])
         data["CLAVE"]= 'NULL'
         data["TIPO"] = 'password'
-    elif data["TIPO"]==2:
+    elif data["TIPO"]=="2":
         data["PASS"]= 'NULL'
         data["CLAVE"]= input("Ruta clave privada: ")
+        # Añadimos el directorio del contenedor para evitar errores
+        if data["CLAVE"].startswith("/"):
+            data["CLAVE"]='/source'+data["CLAVE"]
+        else:
+            data["CLAVE"]='/source'+"/"+data["CLAVE"]
         data["TIPO"] = 'clave'
     else:
         print("No has seleccionado ninguna opción de las anteriores")
-        sys.exit(1)   
+        sys.exit(1)
     validar(data)
     comprobar(data)
     comprobarSSH(data)
@@ -47,6 +52,16 @@ def introducirshare():
     # Eliminamos el / final para evitar errores
     if data["FINAL"].endswith("/"):
        data["FINAL"]=data["FINAL"][:-1]
+    print("")
+    # sobreescribir el archivo
+    print("Escoja el tipo de envio que desea:")
+    print("1- Sobrescribir el backup")
+    print("2- Dejar los backups anteriores diferenciados por fechas")
+    data["SOBRESCRIBIR"]=input("Tipo de envio: (Por defecto 2") or ("2")
+    if data["SOBRESCRIBIR"]=="1":
+        data["SOBRESCRIBIR"] = "YES"
+    elif data["SOBRESCRIBIR"]=="2":
+        data["SOBRESCRIBIR"] = "NO"
     print("")
     print("Introducir fechas y horarios del backups:")
     data["minutes"] ='Falso'

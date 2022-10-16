@@ -7,7 +7,7 @@ def DefinirCrontab(data):
     crontab = data["minutes"]+" "+data["hours"]+" "+data["days"]+" "+data["months"]+" "+data["weekday"]+" root "+"python3 /python/program/compartir.py "+data["id"]
     if data["log"] != "NULL":
         crontab=crontab+" >> " + data["log"]
-    crontab=crontab+" /n "
+    crontab=crontab+"\n"
     return(crontab)
 
 def CrearCrontab(crontab):
@@ -27,14 +27,14 @@ def RealizarCrontab(id):
 
 def borrar_Crontab():
     # Leer archivo linea a linea
-    f = open("/home/ignaciogovo/prueba.txt", "r")
+    f = open("/etc/crontab", "r")
     puntoB = 1
     for x in f:
         if "#EASYBACKUPS" in x:
             break
         puntoB=puntoB+1
     f.close()
-    with open("/home/ignaciogovo/prueba.txt", 'r+') as fp:
+    with open("/etc/crontab", 'r+') as fp:
         lineas= fp.readlines()
         fp.seek(0)
         fp.truncate()

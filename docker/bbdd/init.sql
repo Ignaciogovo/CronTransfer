@@ -27,13 +27,11 @@ CREATE TABLE `conexionssh` (
   `IP` varchar(100) NOT NULL,
   `port` varchar(100) NOT NULL,
   `user` varchar(100) NOT NULL,
--- dos opciones password/clave
   `tipo` varchar(20) NOT NULL, 
   `pass` varchar(5000) NULL,
   `clave` varchar(250) NULL,
   `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
---CONSTRAINT `chk_tipo` CHECK (`tipo`='password' or `tipo`='clave')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -57,6 +55,7 @@ CREATE TABLE `share` (
   `id` int NOT NULL AUTO_INCREMENT,
   `origen` varchar(250) NOT NULL,
   `final` varchar(250) NOT NULL,
+  `sobrescribir` varchar(20) NOT NULL,
   `id_conexion` int NOT NULL,
   `minutes` varchar(30) NOT NULL,
   `hours` varchar(30) NOT NULL,

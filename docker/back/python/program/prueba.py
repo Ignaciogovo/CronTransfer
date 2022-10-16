@@ -10,19 +10,34 @@ data = {}
 data["HOST"]=  '192.168.1.131'
 data["PORT"] = '22'
 data["USER"] = 'abc'
+data["TIPO"] = 'password'
+data["CLAVE"] = '/home/ignaciogovo/.ssh/prueba/id_prueba'
 data["PASS"] = 'abc'
-data["SOURCE"]=  '/home/ignaciogovo/proyectos/EstudiosPython/AnalisisDatos'
-data["FINAL"] = '/home/abc/backups'
+data["SOURCE"]=  '/contenedores/keeweb'#/home/ignaciogovo/proyectos/EstudiosPython/AnalisisDatos'
+data["FINAL"] = '/home/abc/prueba.py'
 
 # Control+k control+u  --> Descomenta
 #Control+k control+c --> Comenta
 # sendfile(data)
+# data["PASS"]=cp.encriptar_pass(data["PASS"])
+# # data["PASS"]=cp.desencriptar_pass(data["PASS"])
+# # print(data["PASS"])
+# # fs.comprobarSSH(data)
+# fs.realizar_envio(data)
 
 
-encriptado=cp.ecriptar_pass("hola me llamo paco")
-print(encriptado)
-desencriptado=cp.desencriptar_pass(encriptado)
-print(desencriptado)
+def generarArchivoFecha(data):
+    final=(data["FINAL"])[((data["FINAL"]).rfind("/"))+1:]
+    #fecha actual
+    now = datetime.now()
+    now= ("f_"+str(now.year)+str(now.month)+str(now.day)+"_")
+    #Datetime
+    now=now+final
+    data["FINAL"]=data["FINAL"].replace(final,now)
+    return(data)
+    
+
+
 
 
 

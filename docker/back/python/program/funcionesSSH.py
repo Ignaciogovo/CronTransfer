@@ -1,3 +1,4 @@
+from dataclasses import replace
 from genericpath import isdir, isfile
 import paramiko
 import sys
@@ -18,8 +19,10 @@ def comprobarSSH(data):
             ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], pkey=private_key)
         # Nos conectamos al servidor a partir de las credenciales
         elif data["TIPO"] =='password':
-            data["PASS"]== cp.desencriptar_pass(data["PASS"])
-            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
+            password = cp.desencriptar_pass(data["PASS"])
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=password)
+        else:
+            print("problema")
     except:
         print("error al realizar conexión, la conexión no es válida")
         sys.exit(1)
@@ -35,10 +38,11 @@ def  comprobarRutaSSH(data):
             ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], pkey=private_key)
         # Nos conectamos al servidor a partir de las credenciales
         elif data["TIPO"] =='password':
-            data["PASS"]== cp.desencriptar_pass(data["PASS"])
-            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
+            password= cp.desencriptar_pass(data["PASS"])
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=password)
     except:
-        print("error al realizar conexión")
+        print("error al realizar conexión para comprobar ruta final")
+        borrarZIP(data)
         sys.exit(1)
     # Enviamos el archivo a partir de esta serie de lineas
     try:
@@ -52,7 +56,8 @@ def  comprobarRutaSSH(data):
         else:
             return(1)
     except: 
-        print("Error al comprobar la ruta final, destino es correcta")
+        print("Error al comprobar la ruta final, destino es incorrecto")
+        borrarZIP(data)
         sys.exit(1)
         # Cerramos conexión
 
@@ -69,10 +74,11 @@ def sendfile(data):
             ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], pkey=private_key)
         # Nos conectamos al servidor a partir de las credenciales
         elif data["TIPO"] =='password':
-            data["PASS"]== cp.desencriptar_pass(data["PASS"])
-            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=data["PASS"])
+            password= cp.desencriptar_pass(data["PASS"])
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=password)
     except:
-        print("error al realizar conexión")
+        print("error al realizar conexión al transferir archivo")
+        borrarZIP(data)
         sys.exit(1)
     # Enviamos el archivo a partir de esta serie de lineas
     try:
@@ -84,6 +90,7 @@ def sendfile(data):
         sftp_client.close()
     except: 
         print("Error al transferir archivos, comprueba si la ruta de origen o destino es correcta")
+        borrarZIP(data)
         sys.exit(1)
         # Cerramos conexión
     ssh_client.close()
@@ -99,6 +106,7 @@ def A_Compresion(data):
             archivo_zip = shutil.make_archive(data["SOURCE"], "zip", data["SOURCE"])
             if os.path.isfile(archivo_zip):
                 data["SOURCE"]=archivo_zip
+                data["ZIP"] = "YES"
                 return(data)
             else:
                 print("No se ha podido realizar la compresión")
@@ -107,10 +115,17 @@ def A_Compresion(data):
             print("No se ha reconocido si la ruta es un archivo o directorio para decidir si comprimir o no")
             sys.exit(1)   
 
+def borrarZIP(data):
+    try:
+    # Borrar archivo zip
+        if data["ZIP"]:
+            os.remove(data["SOURCE"])
+    except:
+        print("No se ha podido borrar el archivo zip")
 
 def A_Rutafinal(data):
     origen=(data["SOURCE"])[((data["SOURCE"]).rfind("/")):]
-    final=(data["FINAL"])[((data["SOURCE"]).rfind("/")):]
+    final=(data["FINAL"])[((data["FINAL"]).rfind("/")):]
     valorfinal=comprobarRutaSSH(data)
     # Si la ruta es correcta le añadimos a la ruta el archivo origen
     if valorfinal==0:
@@ -125,15 +140,23 @@ def realizar_envio(data):
     data=A_Compresion(data)
     #Analizamos la ruta final para proporcionar la forma adecuada de envio
     data=A_Rutafinal(data)
+    if data["SOBRESCRIBIR"]=="NO":
+        data=generarArchivoFecha(data)
     # Realizamos envio
     sendfile(data)
+    #Borramos el archivo zip
+    borrarZIP(data)
 
 
-# def generarArchivoFecha(archivo):
-#     #fecha actual
-#     now = datetime.now()
-#     #Datetime
-#     if
-#         now.day
-#         now.month
-#         now.year
+def generarArchivoFecha(data):
+    final=(data["FINAL"])[((data["FINAL"]).rfind("/"))+1:]
+    #fecha actual
+    now = datetime.now()
+    now= ("f_"+str(now.year)+str(now.month)+str(now.day)+"_")
+    #Datetime
+    now=now+final
+    data["FINAL"]=data["FINAL"].replace(final,now)
+    return(data)
+
+
+

@@ -40,10 +40,10 @@ def ingresarShare(data,borrar):
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "INSERT INTO share(origen,final,id_conexion,minutes,hours,days,months,weekday,log) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    sql = "INSERT INTO share(origen,final,id_conexion,minutes,hours,days,months,weekday,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     try:
     # Execute the SQL command
-        cursor.execute(sql,(data["SOURCE"],data["FINAL"],data["id_conexion"],data["minutes"],data["hours"],data["days"],data["months"],data["weekday"],data["log"]))
+        cursor.execute(sql,(data["SOURCE"],data["FINAL"],data["id_conexion"],data["minutes"],data["hours"],data["days"],data["months"],data["weekday"],data["log"],data["SOBRESCRIBIR"]))
     # Commit your changes in the database
         db.commit()
     except:
@@ -72,7 +72,7 @@ def borrarSSH(id_ssh):
         db.commit()
     except:
         print("Ha fallado el delete, los datos que desea borrar puede ser clave foranea de otros servicios.")
-        sys.exit(1)
+        #sys.exit(1)
 
     db.close()    
 
@@ -117,7 +117,7 @@ def consultarOrigenFinal(id):
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select origen,final from share where id=%s;"
+    sql = "select origen,final,sobrescribir from share where id=%s;"
     try:
         cursor.execute(sql,id)
         resultado = cursor.fetchone()
@@ -293,7 +293,8 @@ def comprobar_Conexiones():
     cursor = db.cursor()
 
     # Prepare SQL query to select
-    sql = "select IP, port, user, id, tipo, fecha from conexionssh;"
+    sql = "select id, IP, user, port, tipo, fecha from conexionssh;"
+
     try:
         cursor.execute(sql)
         conexiones = cursor.fetchall()
@@ -306,10 +307,10 @@ def comprobar_Conexiones():
         matriz = []
         for row in conexiones:
             data = {
-            "IP" : row[0],
-            "PORT" : row[1],
-            "USER" : row[2],  
-            "ID" : row[3],
+            "ID" : row[0],
+            "IP" : row[1],
+            "USER" : row[2], 
+            "PORT" : row[3], 
             "TIPO": row[4],
             "FECHA": row[5]
             }
@@ -352,7 +353,7 @@ def consultarParaborrados():
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select  sh.id, origen, final, IP, user,sh.id_conexion from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
+    sql = "select  sh.id, origen, final, IP, user from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
     try:
         cursor.execute(sql)
         datos = cursor.fetchall() 
@@ -364,10 +365,11 @@ def consultarParaborrados():
         matriz = []
         for row in datos:
             data = {
-            "IP" : row[0],
-            "PORT" : row[1],
-            "USER" : row[2],  
-            "ID" : row[3] 
+            "ID" : row[0],
+            "SOURCE": row[1], 
+            "FINAL" : row[2],
+            "IP" : row[3],
+            "USER" : row[4]
             }
             matriz.append(data) 
         return(matriz)

@@ -10,11 +10,12 @@ def genera_clave():
 
 # Función para cargar la clave
 def cargar_clave():
-    return open("/.claves/clave.key","rb").read()
+    return open("/.prueba/clave_prueba.key","rb").read()
+    #return open("/.claves/clave.key","rb").read()
 
 
 # Encriptar un mensaje
-def ecriptar_pass(pswd):
+def encriptar_pass(pswd):
     clave = cargar_clave()
     pswd = pswd.encode()
     # Iniciamos "Fernet" 

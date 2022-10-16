@@ -5,7 +5,7 @@ def conexionData():
     try:
         id = sys.argv[1]
     except:
-        print("El programa no recibe argumentos")
+        print("El programa compartir.py no recibe argumentos, fallo en el archivo crontab")
         sys.exit(1)
     try:
         origenfinal = bbdd.consultarOrigenFinal(id)
@@ -20,6 +20,7 @@ def conexionData():
         sys.exit(1)
     data["SOURCE"] =origenfinal[0]
     data["FINAL"] =origenfinal[1]
+    data["SOBRESCRIBIR"] =origenfinal[2]
     return(data)
 
 data=conexionData()
