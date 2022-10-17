@@ -37,9 +37,11 @@ def generarArchivoFecha(data):
     return(data)
     
 
+# now = datetime.now()
+# now= ("f_"+str(now.year)+str(now.month)+str(now.day)+"_"+str(now.hour)+str(now.minute)+"_")
+# print(now)
 
-
-
+# print("Finalizado backup  --->"+str(datetime.now()))
 
 
 

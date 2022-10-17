@@ -71,7 +71,7 @@ def borrarSSH(id_ssh):
         cursor.execute(sql,id_ssh)
         db.commit()
     except:
-        print("Ha fallado el delete, los datos que desea borrar puede ser clave foranea de otros servicios.")
+        print("Ha fallado el delete de la conexión, los datos que desea borrar puede ser clave foránea de otros servicios.")
         #sys.exit(1)
 
     db.close()    
@@ -87,7 +87,7 @@ def borrarSHARE(id):
         cursor.execute(sql,id)
         db.commit()
     except:
-        print("Ha fallado el delete")
+        print("Ha fallado el delete al servicio")
         sys.exit(1)
 
     db.close()  
@@ -223,18 +223,9 @@ def consultar_servicios():
         sys.exit(1)
 
     db.close()
-    return(matriz)#↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-        # Cuando se necesite ejecutar esta función para usamos este for para la matriz después de retornarla
-        # for row in datos:
-        #     data = {
-        #     "minutes" : row[0],
-        #     "hours" : row[1],
-        #     "days" : row[2],    
-        #     "months" : row[3],
-        #     "weekday" : row[4],
-        #     "log": row[5],
-        #     "id" : row[6]
-        #     }
+    return(matriz)
+
+
 #########################################################################
 # Consultas en tabla conexionssh:
 ########################################################################
@@ -318,23 +309,7 @@ def comprobar_Conexiones():
         return matriz
     else:
         return 0
-        # for row in conexiones:
-        # conexion = {
-        # "IP" : row[0],
-        # "PORT" : row[1],
-        # "USER" : row[2],  
-        # "ID" : row[3] 
-        # }
 
-
-# IDEA????????????????????????????????????????????????????????????    
-	# jugadores = []
-	# for row in datos:
-	# 	jugador = {}
-	# 	jugador["id"]=row[0]
-	# 	jugador["posicion"] = row[1]
-	# 	jugador["valor"] = row[2]
-	# 	jugadores.append(jugador)
 
 
 
@@ -376,14 +351,4 @@ def consultarParaborrados():
     else:
         print("No se encuentran datos para borrar")
         sys.exit(1)
-            # Cuando se necesite ejecutar esta función para usamos este for para la matriz después de retornarla
-        # for row in datos:
-        #     data = {
-        #     "id" : row[0],
-        #     "SOURCE" : row[1],
-        #     "FINAL" : row[2],    
-        #     "IP" : row[3],
-        #     "USER" : row[4]
-        #     }
-
 

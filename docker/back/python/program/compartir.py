@@ -1,7 +1,11 @@
 import sys
 import conexionbbdd as bbdd
 import funcionesSSH as fssh
+from datetime import datetime
 def conexionData():
+    print("-------------")
+    print(datetime.now())
+    print("-------------")
     try:
         id = sys.argv[1]
     except:
@@ -26,6 +30,7 @@ def conexionData():
 data=conexionData()
 try:
     fssh.realizar_envio(data)
+    print("Finalizado backup  --->"+str(datetime.now()))
 except:
     print("No se ha podido enviar el archivo")
     sys.exit(1)

@@ -5,6 +5,7 @@ from getpass import getpass
 from pymysql import NULL
 from funcionesSSH import comprobarSSH
 import cifradopass as cp
+
 def introducirssh():
     data={}
     data["HOST"]=  input("IP Servidor: ") or ("")
@@ -13,7 +14,7 @@ def introducirssh():
     print("Qué tipo de seguridad en la conexión quieres usar?:")
     print("1- password")
     print("2- clave privada")
-    data["TIPO"] = input("Indique el número:(Por defecto 1)") or ("1")
+    data["TIPO"] = input("Indique el número:(Por defecto 1) ") or ("1")
     if data["TIPO"] == "1":
         data["PASS"]= getpass("Contraseña: ")
         data["PASS"]= cp.encriptar_pass(data["PASS"])
@@ -57,7 +58,7 @@ def introducirshare():
     print("Escoja el tipo de envio que desea:")
     print("1- Sobrescribir el backup")
     print("2- Dejar los backups anteriores diferenciados por fechas")
-    data["SOBRESCRIBIR"]=input("Tipo de envio: (Por defecto 2") or ("2")
+    data["SOBRESCRIBIR"]=input("Tipo de envio: (Por defecto 2) ") or ("2")
     if data["SOBRESCRIBIR"]=="1":
         data["SOBRESCRIBIR"] = "YES"
     elif data["SOBRESCRIBIR"]=="2":

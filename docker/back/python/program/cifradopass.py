@@ -10,8 +10,7 @@ def genera_clave():
 
 # Función para cargar la clave
 def cargar_clave():
-    return open("/.prueba/clave_prueba.key","rb").read()
-    #return open("/.claves/clave.key","rb").read()
+    return open("/.claves/clave.key","rb").read()
 
 
 # Encriptar un mensaje

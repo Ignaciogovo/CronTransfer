@@ -152,7 +152,7 @@ def generarArchivoFecha(data):
     final=(data["FINAL"])[((data["FINAL"]).rfind("/"))+1:]
     #fecha actual
     now = datetime.now()
-    now= ("f_"+str(now.year)+str(now.month)+str(now.day)+"_")
+    now= ("f_"+str(now.year)+str(now.month)+str(now.day)+"_"+str(now.hour)+str(now.minute)+"_")
     #Datetime
     now=now+final
     data["FINAL"]=data["FINAL"].replace(final,now)
