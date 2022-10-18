@@ -29,13 +29,15 @@ RUN mkdir -p /var/log/supervisor
 COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 # Generamos alias para la comodidad del programa:
-RUN echo 'alias hi="echo hello"' >> ~/.bashrc
+RUN echo 'alias hi="echo "Bienvenido a EASYBACKUPS""' >> ~/.bashrc
 RUN echo 'alias IngresoCompleto="python3 /python/program/inputs.py 2"' >> ~/.bashrc
 RUN echo 'alias IngresoConexion="python3 /python/program/inputs.py 1"' >> ~/.bashrc
 RUN echo 'alias BorrarServicio="python3 /python/program/borrado.py"' >> ~/.bashrc
 RUN echo 'alias ConsultarConexiones="python3 /python/program/conexionbbdd.py 1"' >> ~/.bashrc
 RUN echo 'alias ConsultarServicios="python3 /python/program/conexionbbdd.py 2"' >> ~/.bashrc
 RUN echo 'alias ConsultarDatos="python3 /python/program/conexionbbdd.py 3"' >> ~/.bashrc
+RUN echo 'backupDiario="python3 /python/program/inputsfast.py"' >> ~/.bashrc
+
 
 # Indicamos los volumenes compartidos:
 VOLUME [ "/source" ]
