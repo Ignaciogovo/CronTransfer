@@ -71,7 +71,7 @@ def borrarSSH(id_ssh):
         cursor.execute(sql,id_ssh)
         db.commit()
     except:
-        print("Ha fallado el delete de la conexión, los datos que desea borrar puede ser clave foránea de otros servicios.")
+        print("Ha fallado el borrado de la conexión, los datos que desea borrar puede ser clave foránea de otros servicios.")
         #sys.exit(1)
 
     db.close()    
@@ -87,10 +87,26 @@ def borrarSHARE(id):
         cursor.execute(sql,id)
         db.commit()
     except:
-        print("Ha fallado el delete al servicio")
+        print("Ha fallado el borrado al servicio")
         sys.exit(1)
 
-    db.close()  
+    db.close()
+
+def borrarSHARE_conexion(id_ssh):
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "delete from share where id_conexion=%s;"
+    try:
+        cursor.execute(sql,id_ssh)
+        db.commit()
+    except:
+        print("Ha fallado el borrado de los servicios")
+        sys.exit(1)
+
+    db.close()
 # Consultas a la base de datos
 
 #########################################################################
@@ -135,7 +151,7 @@ def ultimoidSHARE():
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select id from share order by id desc;"
+    sql = "select id from share order by fecha desc;"
     try:
         cursor.execute(sql)
         resultado = cursor.fetchone()

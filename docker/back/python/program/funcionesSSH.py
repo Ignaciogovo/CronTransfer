@@ -140,7 +140,7 @@ def realizar_envio(data):
     data=A_Compresion(data)
     #Analizamos la ruta final para proporcionar la forma adecuada de envio
     data=A_Rutafinal(data)
-    if data["SOBRESCRIBIR"]=="NO":
+    if data["SOBRESCRIBIR"]=="N":
         data=generarArchivoFecha(data)
     # Realizamos envio
     sendfile(data)

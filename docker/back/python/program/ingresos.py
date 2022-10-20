@@ -60,9 +60,9 @@ def introducirshare():
     print("2- Dejar los backups anteriores diferenciados por fechas")
     data["SOBRESCRIBIR"]=input("Tipo de envio: (Por defecto 2) ") or ("2")
     if data["SOBRESCRIBIR"]=="1":
-        data["SOBRESCRIBIR"] = "YES"
+        data["SOBRESCRIBIR"] = "Y"
     elif data["SOBRESCRIBIR"]=="2":
-        data["SOBRESCRIBIR"] = "NO"
+        data["SOBRESCRIBIR"] = "N"
     print("")
     print("Introducir fechas y horarios del backups:")
     data["minutes"] ='Falso'
@@ -112,7 +112,11 @@ def introducirshare():
     print("Quieres almacenar el log de transacciones en la ruta /log?(Y/N)")
     data["log"]= input()
     if data["log"] == "y" or data["log"] == "Y":
-        data["log"]=input("Indica la ruta del log: ")
+        data["log"]=input("Indica el nombre del log: ")
+        if data["log"].startswith("/"):
+            data["log"]='/log'+data["log"]
+        else:
+            data["log"]='/log'+"/"+data["log"]
     else:
         data["log"]='NULL'
     validar(data)

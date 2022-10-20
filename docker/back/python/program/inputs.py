@@ -3,7 +3,7 @@ import ingresos
 import conexionbbdd
 import crontab
 import sys
-
+import f_consultas as f_c
 
 
 
@@ -35,10 +35,7 @@ def inputcompleto():
         opcion_menu = "2"
 
     if opcion_menu == "1":
-        print("Estas son las conexiones guardanas en el sistema:")
-        print("ID -------- IP -------- PORT -------- USER -------- fecha_creación_conexión")
-        for conexion in conexiones:
-            print(str(conexion["ID"])+" --- "+str(conexion["IP"])+" --- "+str(conexion["PORT"])+" --- "+str(conexion["USER"])+" --- "+str(conexion["FECHA"]))
+        f_c.c_ssh()
         idssh = input("Introducir ID de la conexión deseada: (Si introduce el 0 crea una nueva conexión: ") or ("0")
         if idssh == "0":
             idssh=crear_conexion()

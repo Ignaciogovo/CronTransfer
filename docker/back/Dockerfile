@@ -15,6 +15,8 @@ RUN pip install -r /python/requirements.txt
 RUN mkdir /.claves
 RUN python3 /python/program/instalar_clave.py
 
+# Creamos una carpeta para los logs de transacciones del backup
+RUN mkdir /log
 #Instalamos nano
 RUN apt-get install -y nano
 
@@ -25,6 +27,7 @@ RUN echo "#EASYBACKUPS" >> /etc/crontab
 RUN apt-get install -y supervisor \
 # Borramos líneas añadidas con todos los apt-get updates hechos anteriormente 
     && rm -rf /var/lib/apt/lists/*
+# /modificamos las rutas del supervisor
 RUN mkdir -p /var/log/supervisor
 COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
@@ -32,11 +35,14 @@ COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 RUN echo 'alias hi="echo "Bienvenido a EASYBACKUPS""' >> ~/.bashrc
 RUN echo 'alias IngresoCompleto="python3 /python/program/inputs.py 2"' >> ~/.bashrc
 RUN echo 'alias IngresoConexion="python3 /python/program/inputs.py 1"' >> ~/.bashrc
-RUN echo 'alias BorrarServicio="python3 /python/program/borrado.py"' >> ~/.bashrc
-RUN echo 'alias ConsultarConexiones="python3 /python/program/conexionbbdd.py 1"' >> ~/.bashrc
-RUN echo 'alias ConsultarServicios="python3 /python/program/conexionbbdd.py 2"' >> ~/.bashrc
-RUN echo 'alias ConsultarDatos="python3 /python/program/conexionbbdd.py 3"' >> ~/.bashrc
-RUN echo 'backupDiario="python3 /python/program/inputsfast.py"' >> ~/.bashrc
+RUN echo 'alias BorrarServicio="python3 /python/program/borrado.py 1"' >> ~/.bashrc
+RUN echo 'alias BorrarConexion="python3 /python/program/borrado.py 2"' >> ~/.bashrc
+RUN echo 'alias ConsultarConexiones="python3 /python/program/consultas.py 1"' >> ~/.bashrc
+RUN echo 'alias ConsultarServicios="python3 /python/program/consultas.py 2"' >> ~/.bashrc
+RUN echo 'alias ConsultarDatos="python3 /python/program/consultas.py 3"' >> ~/.bashrc
+    # En este alias hay que añadir 4 parametros: backupDiario id_conexión hora ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) 
+RUN echo 'alias backupDiario="python3 /python/program/inputsfast.py"' >> ~/.bashrc 
+
 
 
 # Indicamos los volumenes compartidos:
