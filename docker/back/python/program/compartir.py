@@ -6,6 +6,7 @@ def conexionData():
     print("-------------")
     print(datetime.now())
     print("-------------")
+    # Obtenemos el id  a partir de un parametro
     try:
         id = sys.argv[1]
     except:
@@ -31,6 +32,8 @@ data=conexionData()
 try:
     fssh.realizar_envio(data)
     print("Finalizado backup  --->"+str(datetime.now()))
+    print("")
 except:
     print("No se ha podido enviar el archivo")
+    print("")
     sys.exit(1)

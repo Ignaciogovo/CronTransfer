@@ -3,6 +3,9 @@ import ingresos
 import conexionbbdd
 import crontab
 import sys
+from f_consultas import contar_logs
+
+
 
 
 try:
@@ -12,7 +15,8 @@ try:
     final= str(sys.argv[4])
     log = str(sys.argv[5]) or ("NULL")
     if log == "y" or log == "Y":
-        log="/log/conexion_"+id_conexion+"hora_"+hora+".log"
+        total=str(contar_logs()+1)
+        log="/log/conexion_"+id_conexion+"hora_"+hora+"_"+total+".log"
     else:
         log="NULL"
     sobrescribir = str(sys.argv[5]) or ("N")

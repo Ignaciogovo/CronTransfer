@@ -7,8 +7,6 @@ import f_consultas as f_c
 
 
 
-
-
 def crear_conexion():
     print("")
     print("Introducir una conexión nueva")

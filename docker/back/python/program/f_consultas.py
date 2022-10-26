@@ -1,5 +1,5 @@
 import conexionbbdd as cb
-
+import os
 
 def c_ssh():
     conexiones=cb.comprobar_Conexiones()
@@ -23,3 +23,13 @@ def c_servicio():
     else:
         print("No hay servicios almacenados en el sistema")
         return(1)
+
+
+
+def contar_logs():
+    total = 0
+    directorio= "/log"
+    for path in os.listdir(directorio):
+        if str(path).find("."):
+            total= total+1
+    return(total)
