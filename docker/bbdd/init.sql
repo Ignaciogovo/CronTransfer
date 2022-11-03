@@ -63,6 +63,7 @@ CREATE TABLE `share` (
   `months` varchar(30) NOT NULL,
   `weekday` varchar(30) NOT NULL,
   `log` varchar(250) NULL,
+  `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `FKid_conexion` (`id_conexion`),
   CONSTRAINT `FKid_conexion` FOREIGN KEY (`id_conexion`) REFERENCES `conexionssh` (`id`)

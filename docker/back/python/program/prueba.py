@@ -11,9 +11,9 @@ data["HOST"]=  '192.168.1.131'
 data["PORT"] = '22'
 data["USER"] = 'abc'
 data["TIPO"] = 'password'
-data["CLAVE"] = '/home/ignaciogovo/.ssh/prueba/id_prueba'
+data["CLAVE"] = '.prueba/prueba/id_prueba'
 data["PASS"] = 'abc'
-data["SOURCE"]=  '/contenedores/keeweb'#/home/ignaciogovo/proyectos/EstudiosPython/AnalisisDatos'
+data["SOURCE"]=  '/contenedores/keeweb'
 data["FINAL"] = '/home/abc/prueba.py'
 
 # Control+k control+u  --> Descomenta
@@ -36,6 +36,7 @@ def generarArchivoFecha(data):
     data["FINAL"]=data["FINAL"].replace(final,now)
     return(data)
     
+
 
 # now = datetime.now()
 # now= ("f_"+str(now.year)+str(now.month)+str(now.day)+"_"+str(now.hour)+str(now.minute)+"_")

@@ -4,7 +4,7 @@ import conexionbbdd
 import crontab
 import sys
 import f_consultas as f_c
-
+import ascii
 
 
 def crear_conexion():

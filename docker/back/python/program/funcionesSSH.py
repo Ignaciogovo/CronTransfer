@@ -10,7 +10,11 @@ import cifradopass as cp
 # Realiza una conexión al servidor
 def comprobarSSH(data):
     if data["TIPO"] =='clave':
-        private_key = paramiko.RSAKey.from_private_key_file(data["CLAVE"])
+        try:
+            private_key = paramiko.RSAKey.from_private_key_file(data["CLAVE"])
+        except:
+            print("Error al localizar la clave privada")
+            sys.exit(1)
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # Con esto indicamos que accedemos con nuestras propias credenciales
     try:

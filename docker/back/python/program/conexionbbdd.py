@@ -254,7 +254,7 @@ def ultimoidssh():
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select id from conexionssh order by id desc;"
+    sql = "select id from conexionssh order by fecha desc;"
     try:
         cursor.execute(sql)
         resultado = cursor.fetchone()

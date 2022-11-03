@@ -29,14 +29,16 @@ except:
     sys.exit(1)
 
 data= {
+"SOURCE": origen,
+"FINAL": final,
 "minutes" : "0",
 "hours" : hora,
-"days" : "*",    
+"days" : "*",
 "months" : "*",
 "weekday" : "*",
 "id_conexion" : id_conexion,
 "log": log,
-"sobrescribir": sobrescribir
+"SOBRESCRIBIR": sobrescribir
 }
 
 
@@ -48,5 +50,7 @@ idshare =conexionbbdd.ultimoidSHARE()
 crontab.RealizarCrontab(idshare)
 if log != "NULL":
     print("Se guardado la configuración.")
+    f = open(log, "x")
+    f.close()
     print("La ruta del log de transacciones: "+log)
 
