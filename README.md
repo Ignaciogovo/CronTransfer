@@ -53,8 +53,51 @@ Accedemos al contenedor docker:
 ```bash
 > docker exec -it program /bin/bash
 ```
+Realizar una inserción de servicio completo:
+```bash
+> IngresoCompleto
+```
 
 Realizar una inserción de datos de un servidor remoto:
 ```bash
-> docker exec -it program /bin/bash
+> IngresoConexion
 ```
+
+Realizar una inserción rápida de servicio backup diario
+  Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+Ejemplo
+```bash
+> backupDiario 7 3 /backups_bbdd/ultimobackup.sql /backups Y N
+```
+Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 todos los días a las 3 AM con archivo log y sin sobrescribir la backup en el servidor remoto
+
+
+
+Consultar conexiones: 
+```bash
+> select c
+```
+
+Consultar servicios
+```bash
+> select s
+```
+Consultar todo
+```bash
+> select a
+```
+
+
+Borrar servicios
+```bash
+> delete s
+```
+Borrar conexión
+```bash
+> delete c
+```
+con esta opción se borrarán todos los servicios vinculados a la conexión
+
+
+
+
