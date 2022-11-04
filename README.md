@@ -75,26 +75,26 @@ Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la 
 
 Consultar conexiones: 
 ```bash
-> select c
+> easy_select c
 ```
 
 Consultar servicios
 ```bash
-> select s
+> easy_select s
 ```
 Consultar todo
 ```bash
-> select a
+> easy_select a
 ```
 
 
 Borrar servicios
 ```bash
-> delete s
+> easy_delete s
 ```
 Borrar conexión
 ```bash
-> delete c
+> easy_delete c
 ```
 con esta opción se borrarán todos los servicios vinculados a la conexión
 
