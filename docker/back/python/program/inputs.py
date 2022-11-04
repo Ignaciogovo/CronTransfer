@@ -1,7 +1,7 @@
 from pydoc import importfile
 import ingresos
 import conexionbbdd
-import crontab
+import crontabs
 import sys
 import f_consultas as f_c
 import ascii

@@ -1,6 +1,6 @@
 import conexionbbdd as bbdd
 import sys
-import crontab as cr
+import crontabs as cr
 import f_consultas as f_c
 
 
@@ -52,12 +52,11 @@ try:
 except:
     print("Es necesario incluir un argumento")
     sys.exit(1)
-if menu == "1":
+if menu == "s":
     borrar_servicio()
 
-elif menu =="2":
+elif menu =="c":
     borrar_conexion()
 else:
     print("No se reconoce los argumentos")
-
 

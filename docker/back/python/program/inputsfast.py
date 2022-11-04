@@ -1,7 +1,7 @@
 from pydoc import importfile
 import ingresos
 import conexionbbdd
-import crontab
+import crontabs
 import sys
 from f_consultas import contar_logs
 

@@ -8,13 +8,13 @@ try:
 except:
     print("Es necesario incluir un argumento")
     sys.exit(1)
-if menu == "1":
+if menu == "c":
     f_c.c_ssh()
 
-elif menu =="2":
+elif menu =="s":
     f_c.c_servicio()
 
-elif menu == "3":
+elif menu == "a":
     f_c.c_ssh()
     print("")
     print("---------------")
