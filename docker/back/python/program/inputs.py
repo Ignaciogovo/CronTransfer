@@ -53,17 +53,17 @@ def inputcompleto():
     # conexionbbdd.ingresarShare(datosshare,None)
     # Realizar Crontab:
     idshare =conexionbbdd.ultimoidSHARE()
-    crontab.RealizarCrontab(idshare)
+    crontabs.RealizarCrontab(idshare)
 
 try:
     menu= sys.argv[1]
 except:
     print("Es necesario incluir un argumento")
     sys.exit(1)
-if menu == "1":
+if menu == "c":
     crear_conexion()
 
-elif menu =="2":
+elif menu =="s":
     inputcompleto()
 else:
     print("No se reconoce los argumentos")

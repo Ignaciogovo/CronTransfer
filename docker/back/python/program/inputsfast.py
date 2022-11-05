@@ -47,7 +47,7 @@ conexionbbdd.ingresarShare(data,None)
 # conexionbbdd.ingresarShare(datosshare,None)
 # Realizar Crontab:
 idshare =conexionbbdd.ultimoidSHARE()
-crontab.RealizarCrontab(idshare)
+crontabs.RealizarCrontab(idshare)
 if log != "NULL":
     print("Se guardado la configuración.")
     f = open(log, "x")

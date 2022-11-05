@@ -37,8 +37,8 @@ COPY bienvenida.txt /.textos/bienvenida.txt
 
 # Generamos alias para la comodidad del programa:
 RUN echo 'alias hi="cat /.textos/bienvenida.txt"' >> ~/.bashrc
-RUN echo 'alias IngresoCompleto="python3 /python/program/inputs.py 2"' >> ~/.bashrc
-RUN echo 'alias IngresoConexion="python3 /python/program/inputs.py 1"' >> ~/.bashrc
+RUN echo 'alias easy_insert="python3 /python/program/inputs.py s"' >> ~/.bashrc
+RUN echo 'alias easy_insert="python3 /python/program/inputs.py c"' >> ~/.bashrc
 # En este alias se añade un parametro con varias opciones(c/s/a)
 RUN echo 'alias easy_delete="python3 /python/program/borrado.py"' >> ~/.bashrc
 # En este alias se añade un parametro con varias opciones(c/s/a)
