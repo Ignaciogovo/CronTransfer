@@ -4,7 +4,7 @@ import conexionbbdd
 import crontabs
 import sys
 import f_consultas as f_c
-import ascii
+from ascii import logo
 
 
 def crear_conexion():
@@ -61,9 +61,24 @@ except:
     print("Es necesario incluir un argumento")
     sys.exit(1)
 if menu == "c":
+    logo()
     crear_conexion()
 
 elif menu =="s":
+    logo()
     inputcompleto()
+elif menu =="cf":
+    try:
+        data={}
+        data["IP"]=sys.argv[2]
+        data["PORT"] = sys.argv[3]
+        data["USER"] = sys.argv[4]
+        data["TIPO"] = sys.argv[5]
+    except:
+        print("Es necesario incluir más argumentos")
+        sys.exit(1)
+    datos_conexion=ingresos.fast_introducirssh(data)
+    conexionbbdd.ingresarSSH(datos_conexion)
+    
 else:
     print("No se reconoce los argumentos")

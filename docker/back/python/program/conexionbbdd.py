@@ -338,7 +338,7 @@ def comprobar_Conexiones():
 ########################################################################
 
 # Consulta de inner join de share y conexionssh para realizar un borrado
-def consultarParaborrados():
+def consultar_Servicio():
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()

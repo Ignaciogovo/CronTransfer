@@ -1,3 +1,3 @@
 import art
-
-print(art.text2art("EASYBACKUPS"))
+def logo():
+    print(art.text2art("EASYBACKUPS"))

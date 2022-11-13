@@ -47,16 +47,55 @@ def borrar_conexion():
             cr.todos_crontab()
             print("Finalizado la operación de borrado")
 
+def fast_borrar_servicio(id_borrar):
+    try:
+        bbdd.borrarSHARE(id_borrar)
+        # Realizamos borrado en crontab y vuelta a su escritura
+        cr.borrar_Crontab()
+        cr.todos_crontab()
+    except:
+        print("No se ha podido borrar el servicio")
+
+def fast_borrar_conexion(id_borrar):
+    try:
+            bbdd.borrarSHARE_conexion(id_borrar)       
+            bbdd.borrarSSH(id_borrar)
+            cr.borrar_Crontab()
+            cr.todos_crontab()
+            print("Finalizado la operación de borrado")
+    except:
+        print("No se ha podido borrar la conexión")
+
+
+
+
+
+
 try:
     menu= sys.argv[1]
 except:
     print("Es necesario incluir un argumento")
     sys.exit(1)
+
 if menu == "s":
     borrar_servicio()
 
 elif menu =="c":
     borrar_conexion()
+elif menu =="sf":
+    try:
+        id_borrar=sys.argv[2]
+    except:
+         print("Es necesario incluir el id del servicio")
+         sys.exit(1)
+    fast_borrar_servicio(id_borrar)
+elif menu =="cf":
+    try:
+        id_borrar=sys.argv[2]
+    except:
+         print("Es necesario incluir el id de la conexión")
+         sys.exit(1)
+    fast_borrar_conexion(id_borrar)
 else:
     print("No se reconoce los argumentos")
 

@@ -6,6 +6,35 @@ from pymysql import NULL
 from funcionesSSH import comprobarSSH
 import cifradopass as cp
 
+
+
+
+def fast_introducirssh(data):
+    if data["PORT"] == "d":
+        data["PORT"] = "22"
+    if data["TIPO"] == "p":
+        data["PASS"]= getpass("Introduzca la contraseña: ")
+        data["PASS"]= cp.encriptar_pass(data["PASS"])
+        data["CLAVE"]= 'NULL'
+        data["TIPO"] = 'password'
+    elif data["TIPO"] == "k":
+        data["PASS"]= 'NULL'
+        data["CLAVE"]= input("Ruta clave privada: ")
+        # Añadimos el directorio del contenedor para evitar errores
+        if data["CLAVE"].startswith("/"):
+            data["CLAVE"]='/source'+data["CLAVE"]
+        else:
+            data["CLAVE"]='/source'+"/"+data["CLAVE"]
+        data["TIPO"] = 'clave'
+    else:
+        print("parametro password/key incorrecto")
+        sys.exit(1)
+    validar(data)
+    comprobar(data)
+    comprobarSSH(data)
+
+
+
 def introducirssh():
     data={}
     data["HOST"]=  input("IP Servidor: ") or ("")
@@ -16,7 +45,7 @@ def introducirssh():
     print("2- clave privada")
     data["TIPO"] = input("Indique el número:(Por defecto 1) ") or ("1")
     if data["TIPO"] == "1":
-        data["PASS"]= getpass("Contraseña: ")
+        data["PASS"]= getpass("Introduzca la contraseña: ")
         data["PASS"]= cp.encriptar_pass(data["PASS"])
         data["CLAVE"]= 'NULL'
         data["TIPO"] = 'password'

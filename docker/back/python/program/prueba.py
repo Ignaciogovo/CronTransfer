@@ -1,11 +1,11 @@
-from ast import Return
-from genericpath import isdir, isfile
-import sys
-from datetime import datetime
-import os
-import funcionesSSH as fs
-import cifradopass as cp
-
+# from ast import Return
+# from genericpath import isdir, isfile
+# import sys
+# from datetime import datetime
+# import os
+# import funcionesSSH as fs
+# import cifradopass as cp
+from tabulate import tabulate
 data = {}
 data["HOST"]=  '192.168.1.131'
 data["PORT"] = '22'
@@ -26,16 +26,27 @@ data["FINAL"] = '/home/abc/prueba.py'
 # fs.realizar_envio(data)
 
 
-def generarArchivoFecha(data):
-    final=(data["FINAL"])[((data["FINAL"]).rfind("/"))+1:]
-    #fecha actual
-    now = datetime.now()
-    now= ("f_"+str(now.year)+str(now.month)+str(now.day)+"_")
-    #Datetime
-    now=now+final
-    data["FINAL"]=data["FINAL"].replace(final,now)
-    return(data)
+# def generarArchivoFecha(data):
+#     final=(data["FINAL"])[((data["FINAL"]).rfind("/"))+1:]
+#     #fecha actual
+#     now = datetime.now()
+#     now= ("f_"+str(now.year)+str(now.month)+str(now.day)+"_")
+#     #Datetime
+#     now=now+final
+#     data["FINAL"]=data["FINAL"].replace(final,now)
+#     return(data)
     
+
+
+
+
+
+
+d = [ ["Mark", 12, 95],
+     ["Jay", 11, 88],
+     ["Jack", 14, 90]]
+
+print(tabulate(d, headers=["Name", "Age", "Percent"]))
 
 
 # now = datetime.now()
