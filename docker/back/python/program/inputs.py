@@ -75,10 +75,10 @@ elif menu =="cf":
         data["USER"] = sys.argv[4]
         data["TIPO"] = sys.argv[5]
     except:
-        print("Es necesario incluir más argumentos")
+        print("Es necesario incluir más parametros")
         sys.exit(1)
     datos_conexion=ingresos.fast_introducirssh(data)
     conexionbbdd.ingresarSSH(datos_conexion)
     
 else:
-    print("No se reconoce los argumentos")
+    print("No se reconoce los parametros")

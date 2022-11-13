@@ -1,0 +1,43 @@
+
+| ____|   / \   / ___| \ \ / /| __ )    / \    / ___|| |/ /| | | ||  _ \ / ___| 
+|  _|    / _ \  \___ \  \ V / |  _ \   / _ \  | |    | ' / | | | || |_) |\___ \ 
+| |___  / ___ \  ___) |  | |  | |_) | / ___ \ | |___ | . \ | |_| ||  __/  ___) |
+|_____|/_/   \_\|____/   |_|  |____/ /_/   \_\ \____||_|\_\ \___/ |_|    |____/ 
+                                                                                
+Comandos:
+easy_insert 
+        + s  -->  realizar un insert de un servicio de backup completo con guía
+        + c  --> Realizar una insercción de datos de una conexión con guía
+        + cf --> Realizar una insercción rápida de datos de conexion, es necesario otros parametros:
+            IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
+            Ejemplo: easy_insert cf 192.168.1.4 d  nombre_usuario p 
+
+backup_daily
+        Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+        Ejemplo: backup_daily 7 3 /backups_bbdd/ultimobackup.sql /backups Y N
+            --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 todos los días a las 3 AM con archivo log 
+            y sin sobrescribir la backup en el servidor remoto
+
+
+easy_select
+        + c --> muestra por pantalla las conexiones
+        + s --> muestra por pantalla los servicios backups
+        + a --> muestra por pantalla las dos consultas anteriores
+
+
+easy_run
+        + id --->( id representa el codigo identificador del servicio)
+        Ejemplo: easy_run 7 --> Ejecuta el servicio con id 7
+
+
+
+easy_delete
+        + s --> Borra un servicio con guía
+        + c --> Borra una conexión con guía
+        + sf  --> Borra servicio a partir del parametro dado (Es necesario el id del servicio que se desea borrar)
+            Ejemplo: easy_delete sf 7 --> Borra el servicio con id 7
+        + cf --> Borra conexión a partir del parametro dado
+            Ejemplo: easy_delete sf 4 --> Borra el servicio con id 4
+
+
+easy_help --> Muestra el archivo ayuda por pantalla

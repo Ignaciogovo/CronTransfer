@@ -54,6 +54,12 @@ Accedemos al contenedor docker:
 > docker exec -it program /bin/bash
 ```
 
+#### Mostrar por pantalla todos los comandos
+```bash
+> easy_help
+```
+
+#### Inserción servicio con guía
 Realizar una inserción de servicio completo: (Ejecutaras una guía para facilitar insercción)
 ```bash
 > easy_insert s
@@ -63,7 +69,7 @@ Realizar una inserción de datos de un servidor remoto:
 ```bash
 > easy_insert c
 ```
-### Inserción rapída conexión 
+#### Inserción rapída conexión 
 Realizar una inserción de datos de un servidor remoto:
   Parametros: IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
 ```bash
@@ -86,6 +92,8 @@ Ejemplo
 --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 todos los días a las 3 AM con archivo log 
   y sin sobrescribir la backup en el servidor remoto
 
+
+#### Consultas
 Consultar conexiones: 
 ```bash
 > easy_select c
@@ -106,7 +114,7 @@ Ejecutar un servicio en el momento:
 ```bash
 > easy_run id
 ```
-  Ejemplo: easy_run 7 --> Se ejecuta el servicio número 7
+  Ejemplo: easy_run 7 --> Se ejecuta el servicio con id 7
 
 #### Borrar con guía:
 
