@@ -67,7 +67,7 @@ Accedemos al contenedor docker:
 ```
 
 #### Inserción servicio con guía
-Realizar una inserción de servicio completo: (Ejecutaras una guía para facilitar insercción)
+Realizar una inserción de servicio completo: (Se ejecuta una guía para facilitar insercción)
 ```bash
 > easy_insert s
 ```
