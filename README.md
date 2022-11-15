@@ -71,7 +71,7 @@ Realizar una inserción de datos de un servidor remoto:
 ```bash
 > easy_insert c
 ```
-#### Inserción rapída conexión 
+#### Inserción rapída de conexión 
 Realizar una inserción de datos de un servidor remoto:
   Parametros: IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
 ```bash
@@ -85,7 +85,7 @@ Realizar una inserción de datos de un servidor remoto:
 
 
 
-
+#### Inserción rápida de serivicios
 Realizar una inserción rápida de servicio backup diario
   Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
 Ejemplo
