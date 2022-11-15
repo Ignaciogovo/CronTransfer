@@ -1,4 +1,11 @@
 # Easybackups
+<p align="center">
+  <a href="#objetivo">Objetivo</a> •
+  <a href="#instalación">Instalación</a> •
+  <a href="#formas-de-uso">Formas de uso</a> •
+  <a href="#metas-del-proyecto">Metas del proyecto</a><br>
+</p>
+
 ### Objetivo
 
 `Easybackups` es un proyecto pensado para facilitar las copias de seguridad recurrentes de archivos o directorios entre servidores.
@@ -145,5 +152,8 @@ Borrar conexión
 > easy_delete cf id
 ```
 
-
+### Metas del proyecto
+- Realizar una interfaz web
+- Incluir conexiones con almacenamiento en la nube
+- Optimizar código
 
