@@ -15,8 +15,8 @@ easy_insert
 backup_daily
         Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
         Ejemplo: backup_daily 7 3 /backups_bbdd/ultimobackup.sql /backups Y N
-            --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 todos los días a las 3 AM con archivo log 
-            y sin sobrescribir la backup en el servidor remoto
+            --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 
+            todos los días a las 3 AM con archivo log y sin sobrescribir la backup en el servidor remoto
 
 
 easy_select
@@ -41,3 +41,8 @@ easy_delete
 
 
 easy_help --> Muestra el archivo ayuda por pantalla
+
+
+
+
+

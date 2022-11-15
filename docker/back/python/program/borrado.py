@@ -5,7 +5,7 @@ import f_consultas as f_c
 
 
 def borrar_servicio():
-    cerrar=f_c.c_servicio
+    cerrar=f_c.c_servicio()
     if cerrar == 1:
         sys.exit(1)
 
@@ -53,6 +53,7 @@ def fast_borrar_servicio(id_borrar):
         # Realizamos borrado en crontab y vuelta a su escritura
         cr.borrar_Crontab()
         cr.todos_crontab()
+        print("Finalizado la operación de borrado")
     except:
         print("No se ha podido borrar el servicio")
 

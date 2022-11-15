@@ -19,7 +19,7 @@ try:
         log="/log/conexion_"+id_conexion+"hora_"+hora+"_"+total+".log"
     else:
         log="NULL"
-    sobrescribir = str(sys.argv[5]) or ("N")
+    sobrescribir = str(sys.argv[6]) or ("N")
     if sobrescribir == "N" or sobrescribir =="n":
         sobrescribir="N"
     else:
@@ -40,6 +40,19 @@ data= {
 "log": log,
 "SOBRESCRIBIR": sobrescribir
 }
+## Modificamos los datos de ruta para evitar errores
+if data["SOURCE"].endswith("/"):
+    data["SOURCE"]=data["SOURCE"][:-1]
+# Incluimos el directorio del contenedor para evitar errores
+if data["SOURCE"].startswith("/"):
+    data["SOURCE"]='/source'+data["SOURCE"]
+else:
+    data["SOURCE"]='/source'+"/"+data["SOURCE"]
+
+# configuramos los datos proporcionados
+# Eliminamos el / final para evitar errores
+if data["FINAL"].endswith("/"):
+    data["FINAL"]=data["FINAL"][:-1]
 
 
 # Insertamos datos de share en su tabla

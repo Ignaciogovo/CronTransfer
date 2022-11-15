@@ -32,6 +32,7 @@ def fast_introducirssh(data):
     validar(data)
     comprobar(data)
     comprobarSSH(data)
+    return(data)
 
 
 

@@ -70,7 +70,7 @@ elif menu =="s":
 elif menu =="cf":
     try:
         data={}
-        data["IP"]=sys.argv[2]
+        data["HOST"]=sys.argv[2]
         data["PORT"] = sys.argv[3]
         data["USER"] = sys.argv[4]
         data["TIPO"] = sys.argv[5]

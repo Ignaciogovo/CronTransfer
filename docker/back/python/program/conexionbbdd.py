@@ -344,7 +344,7 @@ def consultar_Servicio():
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select  sh.id, origen, final, IP, user from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
+    sql = "select  sh.id, origen, final, IP, user, log from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
     try:
         cursor.execute(sql)
         datos = cursor.fetchall() 
@@ -360,11 +360,11 @@ def consultar_Servicio():
             "SOURCE": row[1], 
             "FINAL" : row[2],
             "IP" : row[3],
-            "USER" : row[4]
+            "USER" : row[4],
+            "LOG" : row[5]
             }
             matriz.append(data) 
         return(matriz)
     else:
-        print("No se encuentran datos para borrar")
-        sys.exit(1)
+        return(0)
 

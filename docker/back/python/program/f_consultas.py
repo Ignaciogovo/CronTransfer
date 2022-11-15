@@ -4,13 +4,14 @@ from tabulate import tabulate
 
 def c_ssh():
     conexiones=cb.comprobar_Conexiones()
+    # Convertir el diccionario en lista
     if conexiones != 0:
-
-        print("Estas son las conexiones guardanas en el sistema:")
-        # print("ID -------- IP -------- PORT -------- USER -------- fecha_creación_conexión")
+        for indice in range(len(conexiones)):
+            conexiones[indice]=list(conexiones[indice].values())
+        print("")
+        print("Conexiones guardanas en el sistema:")
+        print("")
         print(tabulate(conexiones, headers=["ID","IP","PORT","USER", "Tipo","first connection"]))
-        # for conexion in conexiones:
-        #     print(str(conexion["ID"])+" --- "+str(conexion["IP"])+" --- "+str(conexion["PORT"])+" --- "+str(conexion["USER"])+" --- "+str(conexion["FECHA"]))
     else:
         print("No hay conexiones en el sistema")
         return(1)
@@ -18,12 +19,14 @@ def c_ssh():
 
 def c_servicio():
     datos=cb.consultar_Servicio()
+    # Convertir el diccionario en lista
     if datos != 0:
-        print("Servicios en uso:")
-        print(tabulate(datos, headers=["ID","origen","final","IP", "user"]))
-        # print("id ------------ origen ----------- final ----------- IP ----------- user")
-        # for data in datos:
-        #     print(str(data["ID"])+" --- "+str(data["SOURCE"])+" --- "+str(data["FINAL"])+" --- "+(data["IP"])+" --- "+(data["USER"]))
+        for indice in range(len(datos)):
+            datos[indice]=list(datos[indice].values())
+        print("")
+        print("Servicios guardados en el sistema:")
+        print("")
+        print(tabulate(datos, headers=["ID","origen","final","IP", "user","log"]))
     else:
         print("No hay servicios almacenados en el sistema")
         return(1)

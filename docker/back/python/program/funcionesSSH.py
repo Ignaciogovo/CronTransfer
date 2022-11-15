@@ -46,7 +46,8 @@ def  comprobarRutaSSH(data):
             ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=password)
     except:
         print("error al realizar conexión para comprobar ruta final")
-        borrarZIP(data)
+        if data["ZIP"]=="YES":
+            borrarZIP(data)
         sys.exit(1)
     # Enviamos el archivo a partir de esta serie de lineas
     try:
@@ -61,7 +62,8 @@ def  comprobarRutaSSH(data):
             return(1)
     except: 
         print("Error al comprobar la ruta final, destino es incorrecto")
-        borrarZIP(data)
+        if data["ZIP"]=="YES":
+            borrarZIP(data)
         sys.exit(1)
         # Cerramos conexión
 
@@ -82,7 +84,8 @@ def sendfile(data):
             ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=password)
     except:
         print("error al realizar conexión al transferir archivo")
-        borrarZIP(data)
+        if data["ZIP"]=="YES":
+            borrarZIP(data)
         sys.exit(1)
     # Enviamos el archivo a partir de esta serie de lineas
     try:
@@ -94,7 +97,8 @@ def sendfile(data):
         sftp_client.close()
     except: 
         print("Error al transferir archivos, comprueba si la ruta de origen o destino es correcta")
-        borrarZIP(data)
+        if data["ZIP"]=="YES":
+            borrarZIP(data)
         sys.exit(1)
         # Cerramos conexión
     ssh_client.close()
@@ -116,16 +120,15 @@ def A_Compresion(data):
                 print("No se ha podido realizar la compresión")
                 sys.exit(1)
         else:
-            print("No se ha reconocido si la ruta es un archivo o directorio para decidir si comprimir o no")
+            print("No se ha reconocido si la ruta es un archivo o directorio para decidir si comprimir o no, ¿Es la ruta correcta?")
             sys.exit(1)   
 
 def borrarZIP(data):
     try:
     # Borrar archivo zip
-        if data["ZIP"]:
-            os.remove(data["SOURCE"])
+        os.remove(data["SOURCE"])
     except:
-        print("No se ha podido borrar el archivo zip")
+        print("No se ha podido borrar el archivo zip creado temporalmente")
 
 def A_Rutafinal(data):
     origen=(data["SOURCE"])[((data["SOURCE"]).rfind("/")):]

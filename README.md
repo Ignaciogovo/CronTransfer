@@ -64,6 +64,8 @@ Realizar una inserción de servicio completo: (Ejecutaras una guía para facilit
 ```bash
 > easy_insert s
 ```
+  --> Es necesario poner la ruta absoluta en las rutas origen y final.
+
 #### Inserción conexión con guía
 Realizar una inserción de datos de un servidor remoto:
 ```bash
@@ -76,6 +78,7 @@ Realizar una inserción de datos de un servidor remoto:
 > easy_insert cf 192.168.1.4 d  usuario p 
   Introduzca la contraseña:
 ```
+
 
   
 
@@ -90,7 +93,8 @@ Ejemplo
 > backup_daily 7 3 /backups_bbdd/ultimobackup.sql /backups Y N
 ```
 --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 todos los días a las 3 AM con archivo log 
-  y sin sobrescribir la backup en el servidor remoto
+  y sin sobrescribir la backup en el servidor remoto.                     
+  --> Es necesario poner la ruta absoluta en las rutas origen y final.
 
 
 #### Consultas

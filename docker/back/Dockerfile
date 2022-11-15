@@ -33,7 +33,7 @@ COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
 # Incluimos textos:
 RUN mkdir ./textos
-COPY bienvenida.txt /.textos/bienvenida.txt
+COPY textos/ /.textos/
 
 # Generamos alias para la comodidad del programa:
 RUN echo 'alias hi="cat /.textos/bienvenida.txt"' >> ~/.bashrc
@@ -50,7 +50,7 @@ RUN echo 'alias backup_daily="python3 /python/program/inputsfast.py"' >> ~/.bash
 RUN echo 'alias easy_run="python3 /python/program/compartir.py"' >> ~/.bashrc 
 
 # Mostrar el archivo ayuda
-RUN echo 'alias easy_help="python3 /python/help.txt"' >> ~/.bashrc 
+RUN echo 'alias easy_help="cat /.textos/help.txt"' >> ~/.bashrc 
 
 # Indicamos los volumenes compartidos:
 VOLUME [ "/source" ]
