@@ -27,6 +27,9 @@ try:
 except:
     print("Es necesario incluir todos los argumentos")
     sys.exit(1)
+if int(hora) not in range(0,24):
+    print("La hora no es válida")
+    sys.exit(1)
 
 data= {
 "SOURCE": origen,

@@ -6,15 +6,16 @@
 # import funcionesSSH as fs
 # import cifradopass as cp
 from tabulate import tabulate
-data = {}
-data["HOST"]=  '192.168.1.131'
-data["PORT"] = '22'
-data["USER"] = 'abc'
-data["TIPO"] = 'password'
-data["CLAVE"] = '.prueba/prueba/id_prueba'
-data["PASS"] = 'abc'
-data["SOURCE"]=  '/contenedores/keeweb'
-data["FINAL"] = '/home/abc/prueba.py'
+import sys
+# data = {}
+# data["HOST"]=  
+# data["PORT"] = '22'
+# data["USER"] = 'abc'
+# data["TIPO"] = 
+# data["CLAVE"] = 
+# data["PASS"] = 
+# data["SOURCE"]=  '/prueba'
+# data["FINAL"] = '/home/abc'
 
 # Control+k control+u  --> Descomenta
 #Control+k control+c --> Comenta
@@ -38,7 +39,10 @@ data["FINAL"] = '/home/abc/prueba.py'
     
 
 
-
+hora= str(sys.argv[1])
+if int(hora) not in range(0,24):
+    print("La hora no es válida")
+    sys.exit(1)
 
 
 
