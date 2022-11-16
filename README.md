@@ -156,4 +156,4 @@ Borrar conexión
 - Realizar una interfaz web
 - Incluir conexiones con almacenamiento en la nube
 - Optimizar código
-
+- Añadir Ingles y otros idiomas
