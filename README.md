@@ -6,19 +6,19 @@
   <a href="#metas-del-proyecto">Metas del proyecto</a><br>
 </p>
 
-### Objetivo
+## Objetivo
 
 `Easybackups` es un proyecto pensado para facilitar las copias de seguridad recurrentes de archivos o directorios entre servidores.
 Las conexiones entre estos servidores se producen por ssh, además usamos otras tecnologías como python o docker.
 
 
-### Instalación
+## Instalación
 
-#### Dos formas de instalación:
+### Dos formas de instalación:
 - 1 Instalación desde los archivos dockerfile
 - 2 Instalación con las imagenes incluidas en docker hub
 
-1 Instalación desde los archivos dockerfile
+#### 1 Instalación desde los archivos dockerfile
 
 Clonamos el repositorio
 ```bash
@@ -55,30 +55,30 @@ Ejecutamos el docker-compose
 
 
 
-### Formas de uso
+## Formas de uso
 Accedemos al contenedor docker:
 ```bash
 > docker exec -it program /bin/bash
 ```
 
-#### Mostrar por pantalla todos los comandos
+### Mostrar por pantalla todos los comandos
 ```bash
 > easy_help
 ```
 
-#### Inserción servicio con guía
-Realizar una inserción de servicio completo: (Se ejecuta una guía para facilitar insercción)
+### Inserción servicio con guía
+Realizar una inserción de servicio completo (Por defecto): (Se ejecuta una guía para facilitar insercción)
 ```bash
-> easy_insert s
+> easy_insert s 
 ```
   --> Es necesario poner la ruta absoluta en las rutas origen y final.
 
-#### Inserción conexión con guía
+### Inserción conexión con guía
 Realizar una inserción de datos de un servidor remoto:
 ```bash
 > easy_insert c
 ```
-#### Inserción rapída de conexión 
+### Inserción rapída de conexión 
 Realizar una inserción de datos de un servidor remoto:
   Parametros: IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
 ```bash
@@ -92,7 +92,7 @@ Realizar una inserción de datos de un servidor remoto:
 
 
 
-#### Inserción rápida de serivicios
+### Inserción rápida de serivicios
 Realizar una inserción rápida de servicio backup diario
   Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
 Ejemplo
@@ -104,7 +104,7 @@ Ejemplo
   --> Es necesario poner la ruta absoluta en las rutas origen y final.
 
 
-#### Consultas
+### Consultas
 Consultar conexiones: 
 ```bash
 > easy_select c
@@ -114,20 +114,20 @@ Consultar servicios:
 ```bash
 > easy_select s
 ```
-Consultar todo:
+Consultar todo (Por defecto):
 ```bash
 > easy_select a
 ```
 
 
-Ejecutar un servicio en el momento:
+### Ejecutar un servicio en el momento:
   Parametro: número del id del servicio
 ```bash
 > easy_run id
 ```
   Ejemplo: easy_run 7 --> Se ejecuta el servicio con id 7
 
-#### Borrar con guía:
+### Borrar con guía:
 
 Borrar servicios
 ```bash
