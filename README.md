@@ -152,7 +152,7 @@ Borrar conexión
 > easy_delete cf id
 ```
 
-### Metas del proyecto
+## Metas del proyecto
 - Realizar una interfaz web
 - Incluir conexiones con almacenamiento en la nube
 - Optimizar código
