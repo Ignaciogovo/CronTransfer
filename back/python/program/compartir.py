@@ -4,7 +4,7 @@ import funcionesSSH as fssh
 from datetime import datetime
 def conexionData():
     print("-------------")
-    print(datetime.now())
+    print("Inicio backup  --->"+str(datetime.now()))
     print("-------------")
     # Obtenemos el id  a partir de un parametro
     try:

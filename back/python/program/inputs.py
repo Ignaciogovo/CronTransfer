@@ -58,8 +58,7 @@ def inputcompleto():
 try:
     menu= sys.argv[1]
 except:
-    print("Es necesario incluir un argumento")
-    sys.exit(1)
+    menu = "s"
 if menu == "c":
     logo()
     crear_conexion()

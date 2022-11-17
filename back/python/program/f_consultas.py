@@ -26,7 +26,7 @@ def c_servicio():
         print("")
         print("Servicios guardados en el sistema:")
         print("")
-        print(tabulate(datos, headers=["ID","origen","final","IP", "user","log"]))
+        print(tabulate(datos, headers=["ID","origen","final","log","id_conexion","IP", "user"]))
     else:
         print("No hay servicios almacenados en el sistema")
         return(1)

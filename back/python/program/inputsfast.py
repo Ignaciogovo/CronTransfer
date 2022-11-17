@@ -25,7 +25,8 @@ try:
     else:
         sobrescribir="Y"
 except:
-    print("Es necesario incluir todos los argumentos")
+    print("Es necesario incluir todos los parametros")
+    print("parametros: backup_daily id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) ")
     sys.exit(1)
 if int(hora) not in range(0,24):
     print("La hora no es válida")

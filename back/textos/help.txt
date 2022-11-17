@@ -6,7 +6,7 @@
                                                                                 
 Comandos:
 easy_insert 
-        + s  -->  realizar un insert de un servicio de backup completo con guía
+        + s  -->  realizar un insert de un servicio de backup completo con guía. Es el parametro por defecto
         + c  --> Realizar una insercción de datos de una conexión con guía
         + cf --> Realizar una insercción rápida de datos de conexion, es necesario otros parametros:
             IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
@@ -19,10 +19,10 @@ backup_daily
             todos los días a las 3 AM con archivo log y sin sobrescribir la backup en el servidor remoto
 
 
-easy_select
+easy_select 
         + c --> muestra por pantalla las conexiones
         + s --> muestra por pantalla los servicios backups
-        + a --> muestra por pantalla las dos consultas anteriores
+        + a --> muestra por pantalla las dos consultas anteriores --> Es el parametro por defecto
 
 
 easy_run

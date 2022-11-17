@@ -98,5 +98,5 @@ elif menu =="cf":
          sys.exit(1)
     fast_borrar_conexion(id_borrar)
 else:
-    print("No se reconoce los argumentos")
+    print("No se reconoce los parametros")
 

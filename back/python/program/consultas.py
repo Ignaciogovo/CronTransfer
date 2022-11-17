@@ -6,8 +6,7 @@ import sys
 try:
     menu= sys.argv[1]
 except:
-    print("Es necesario incluir un argumento")
-    sys.exit(1)
+    menu = "a"
 if menu == "c":
     f_c.c_ssh()
 
@@ -22,7 +21,7 @@ elif menu == "a":
     f_c.c_servicio()
 
 else:
-    print("No se reconoce los argumentos")
+    print("No se reconoce los parametros")
 
 
 

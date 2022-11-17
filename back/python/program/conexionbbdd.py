@@ -344,7 +344,7 @@ def consultar_Servicio():
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select  sh.id, origen, final, IP, user, log from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
+    sql = "select  sh.id, origen, final, IP, user, log, sh.id_conexion from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
     try:
         cursor.execute(sql)
         datos = cursor.fetchall() 
@@ -359,9 +359,10 @@ def consultar_Servicio():
             "ID" : row[0],
             "SOURCE": row[1], 
             "FINAL" : row[2],
+            "LOG" : row[5],
+            "id_conexion": row[6],
             "IP" : row[3],
-            "USER" : row[4],
-            "LOG" : row[5]
+            "USER" : row[4]
             }
             matriz.append(data) 
         return(matriz)
