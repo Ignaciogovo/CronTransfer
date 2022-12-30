@@ -4,19 +4,33 @@ import conexionbbdd
 import crontabs
 import sys
 from f_consultas import contar_logs
+import re
 
-
-
+especiales = ("@reboot","@yearly","@annually","@monthly","@weekly","@daily","@midnight","@hourly")
+dias_semana= ("sun","mon","tue","wed","thu","fri","sat")
+meses = ("jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")
+def comprobación_crontab(crontab):
+    crontab = " ".join(crontab.split())# Eliminamos los posibles dobles espacios
+    if crontab in especiales:
+        1==1
+    else:
+        list_comp= re.split(" ", crontab) # Separamos el crontab en una lista a partir de los espacios
+        if len(list_comp) == 5:
+            1==1
+        else:
+            print("Formato de crontab erroneo")
+            sys.exit(1)
 
 try:
     id_conexion= str(sys.argv[1])
-    hora= str(sys.argv[2])
+    crontab= str(sys.argv[2])
+    comprobación_crontab(crontab)
     origen= str(sys.argv[3])
     final= str(sys.argv[4])
     log = str(sys.argv[5]) or ("NULL")
     if log == "y" or log == "Y":
         idshare =int(conexionbbdd.ultimoidSHARE())+1
-        log="/log/servicio_"+str(idshare)+"hora_"+hora+".log"
+        log="/log/servicio_"+str(idshare)+".log"
     else:
         log="NULL"
     sobrescribir = str(sys.argv[6]) or ("N")
@@ -26,20 +40,13 @@ try:
         sobrescribir="Y"
 except:
     print("Es necesario incluir todos los parametros")
-    print("parametros: backup_daily id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) ")
-    sys.exit(1)
-if int(hora) not in range(0,24):
-    print("La hora no es válida")
+    print("parametros: easy_crontab id_conexion crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) ")
     sys.exit(1)
 
 data= {
 "SOURCE": origen,
 "FINAL": final,
-"minutes" : "0",
-"hours" : hora,
-"days" : "*",
-"months" : "*",
-"weekday" : "*",
+"crontab" : crontab,
 "id_conexion" : id_conexion,
 "log": log,
 "SOBRESCRIBIR": sobrescribir
@@ -70,4 +77,3 @@ if log != "NULL":
     f = open(log, "x")
     f.close()
     print("La ruta del log de transacciones: "+log)
-

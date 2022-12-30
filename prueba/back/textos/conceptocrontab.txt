@@ -1,0 +1,40 @@
+a cada minuto: *
+b minutos par: */2
+c minutos impar: 1-59/2
+d cada 5 minutos: */5
+e cada 30 minutos: */30
+
+
+
+
+a cada hora *
+b cada dos horas */2
+c cada hora inpar 1-23/2
+d cada 3 horas */3
+e cada 6 horas */6
+f cada 12 horas */12
+
+
+
+
+dias:
+a cada dia *
+b cada 2 dias */2
+c cada 2 impares dias 1-31/3
+d cada 5 dias */5
+e cada 15 dias */15
+f cada 30 dias 1
+
+
+
+a Every day: * 
+b Monday to friday: 1-5
+c Friday to Sunday: 0,5,6
+d Saturday and sunday0,6
+
+meses:
+a todos *
+b Meses pares: */2
+c Every meses impares: 1-11/2
+d cada 3 meses: */3
+

@@ -4,6 +4,8 @@ services:
     image: easybapp:1.0
     restart: unless-stopped
     container_name: program
+    environment:
+      - DOCKER_TIMEZONE=Europe/Madrid
     volumes:
       - /:/source # Origen --->  dejarlo como tal
   bbdd:
