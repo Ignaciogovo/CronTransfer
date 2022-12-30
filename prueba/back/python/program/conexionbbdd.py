@@ -155,7 +155,10 @@ def ultimoidSHARE():
     try:
         cursor.execute(sql)
         resultado = cursor.fetchone()
-        resultado = str(resultado[0])
+        if resultado:
+            resultado = str(resultado[0])
+        else:
+            resultado = str(0)
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
