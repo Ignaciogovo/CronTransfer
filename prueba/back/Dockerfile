@@ -46,6 +46,7 @@ RUN echo 'alias easy_select="python3 /python/program/consultas.py"' >> ~/.bashrc
 
     # En este alias hay que añadir 4 parametros: backupDiario id_conexión hora ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) 
 RUN echo 'alias backup_daily="python3 /python/program/inputsfast.py"' >> ~/.bashrc 
+RUN echo 'alias easy_crontab="python3 /python/program/inputcrontab.py"' >> ~/.bashrc 
 # Incluir el parametro del id del servicio
 RUN echo 'alias easy_run="python3 /python/program/compartir.py"' >> ~/.bashrc 
 
