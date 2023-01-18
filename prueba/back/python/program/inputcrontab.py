@@ -77,3 +77,19 @@ if log != "NULL":
     f = open(log, "x")
     f.close()
     print("La ruta del log de transacciones: "+log)
+
+
+
+
+
+
+
+# Conceptos crontab:
+
+
+# https://www.hostinger.es/tutoriales/cron-job
+
+# https://crontab.guru/ 
+
+
+# https://geekflare.com/es/crontab-linux-with-real-time-examples-and-tools/
