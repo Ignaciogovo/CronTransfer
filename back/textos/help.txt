@@ -36,8 +36,10 @@ easy_delete
         + c --> Borra una conexión con guía
         + sf  --> Borra servicio a partir del parametro dado (Es necesario el id del servicio que se desea borrar)
             Ejemplo: easy_delete sf 7 --> Borra el servicio con id 7
+                Borrar varios servicios: Ejemplo: easy_delete sf 4 5 6 7 --> Borra los servicios 4 5 6 7
         + cf --> Borra conexión a partir del parametro dado
-            Ejemplo: easy_delete sf 4 --> Borra el servicio con id 4
+            Ejemplo: easy_delete sf 4 --> Borra la conexion con id 4
+                Borrar varias conexiones: Ejemplo: easy_delete sf 4 5 6 7 --> Borra las conexiones 4 5 6 7
 
 
 easy_help --> Muestra el archivo ayuda por pantalla

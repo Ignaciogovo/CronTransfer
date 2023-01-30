@@ -49,6 +49,9 @@ RUN echo 'alias backup_daily="python3 /python/program/inputsfast.py"' >> ~/.bash
 # Incluir el parametro del id del servicio
 RUN echo 'alias easy_run="python3 /python/program/compartir.py"' >> ~/.bashrc 
 
+# Actualizar status
+RUN echo 'alias easy_stop="python3 /python/program/easy_status.py stop"' >> ~/.bashrc
+RUN echo 'alias easy_activate="python3 /python/program/easy_status.py activate"' >> ~/.bashrc
 # Mostrar el archivo ayuda
 RUN echo 'alias easy_help="cat /.textos/help.txt"' >> ~/.bashrc 
 

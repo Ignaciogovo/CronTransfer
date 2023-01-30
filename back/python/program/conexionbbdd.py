@@ -60,6 +60,23 @@ def ingresarShare(data,borrar):
     # desconectar del servidor
     db.close()
 
+def update_status(id,status):
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "update share set `status`=%s where id=%s;"
+    try:
+        values=(status,id)
+        cursor.execute(sql,values)
+        db.commit()
+    except:
+        print("Ha fallado el borrado de la conexión, los datos que desea borrar puede ser clave foránea de otros servicios.")
+        #sys.exit(1)
+
+    db.close()        
+
 def borrarSSH(id_ssh):
     db = bbddeasybackups()
     # prepare a cursor object using cursor() method
@@ -240,6 +257,25 @@ def consultar_servicios():
 
     db.close()
     return(matriz)
+
+
+def consultar_status(id):
+    db = bbddeasybackups()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "select status from share where id = %s;"
+    try:
+        cursor.execute(sql,id)
+        datos = cursor.fetchone()
+        status=datos[0]   
+    except:
+        print("Ha fallado la conexión.")
+        sys.exit(1)
+
+    db.close()
+    return(status)
 
 
 #########################################################################

@@ -13,6 +13,10 @@ def conexionData():
         print("El programa compartir.py no recibe argumentos, fallo en el archivo crontab")
         sys.exit(1)
     try:
+        status = bbdd.consultar_status(id)
+        if status != 'activate':
+            print("Esta desactivado \n")
+            sys.exit(1)
         origenfinal = bbdd.consultarOrigenFinal(id)
         idssh= bbdd.consultaridssh(id)
     except:
