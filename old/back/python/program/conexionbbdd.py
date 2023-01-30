@@ -1,9 +1,9 @@
 import pymysql
 import sys
 
-def bbddeasybackups():
+def bbddCronTransfer():
     try:
-        db = pymysql.connect(host='bbdd',user='python',password='python',database='easybackups',charset='utf8mb4')
+        db = pymysql.connect(host='bbdd',user='python',password='python',database='CronTransfer',charset='utf8mb4')
         return db
     except: 
         print("Error al conectar con la base de datos")
@@ -12,7 +12,7 @@ def bbddeasybackups():
 # Ingresar y borrar datos
 
 def ingresarSSH(data):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -35,15 +35,15 @@ def ingresarSSH(data):
     db.close()
     
 def ingresarShare(data,borrar):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "INSERT INTO share(origen,final,id_conexion,crontab,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s)"
+    sql = "INSERT INTO share(origen,final,id_conexion,minutes,hours,days,months,weekday,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     try:
     # Execute the SQL command
-        cursor.execute(sql,(data["SOURCE"],data["FINAL"],data["id_conexion"],data["crontab"],data["log"],data["SOBRESCRIBIR"]))
+        cursor.execute(sql,(data["SOURCE"],data["FINAL"],data["id_conexion"],data["minutes"],data["hours"],data["days"],data["months"],data["weekday"],data["log"],data["SOBRESCRIBIR"]))
     # Commit your changes in the database
         db.commit()
     except:
@@ -60,8 +60,25 @@ def ingresarShare(data,borrar):
     # desconectar del servidor
     db.close()
 
+def update_status(id,status):
+    db = bbddCronTransfer()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "update share set `status`=%s where id=%s;"
+    try:
+        values=(status,id)
+        cursor.execute(sql,values)
+        db.commit()
+    except:
+        print("Ha fallado el borrado de la conexión, los datos que desea borrar puede ser clave foránea de otros servicios.")
+        #sys.exit(1)
+
+    db.close()        
+
 def borrarSSH(id_ssh):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -77,7 +94,7 @@ def borrarSSH(id_ssh):
     db.close()    
 
 def borrarSHARE(id):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -93,7 +110,7 @@ def borrarSHARE(id):
     db.close()
 
 def borrarSHARE_conexion(id_ssh):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -113,7 +130,7 @@ def borrarSHARE_conexion(id_ssh):
 # Consultas en tabla share:
 ########################################################################
 def consultarUsuario(id):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -128,7 +145,7 @@ def consultarUsuario(id):
     db.close()
     return(resultado)
 def consultarOrigenFinal(id):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -146,7 +163,7 @@ def consultarOrigenFinal(id):
 
 
 def ultimoidSHARE():
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -155,10 +172,7 @@ def ultimoidSHARE():
     try:
         cursor.execute(sql)
         resultado = cursor.fetchone()
-        if resultado:
-            resultado = str(resultado[0])
-        else:
-            resultado = str(0)
+        resultado = str(resultado[0])
     except:
         print("Ha fallado la conexión.")
         sys.exit(1)
@@ -167,7 +181,7 @@ def ultimoidSHARE():
     return(resultado)
 
 def consultaridssh(id):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -186,19 +200,23 @@ def consultaridssh(id):
 
 # Consultamos los datos de la tabla share de forma individual
 def consultar_Un_servicio(id):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select crontab, log from share where id=%s;"
+    sql = "select minutes, hours, days, months, weekday, log from share where id=%s;"
     try:
         cursor.execute(sql,id)
         datos = cursor.fetchone()
         data= {
-        "crontab" : datos[0],
+        "minutes" : datos[0],
+        "hours" : datos[1],
+        "days" : datos[2],    
+        "months" : datos[3],
+        "weekday" : datos[4],
         "id" : str(id),
-        "log": datos[1]
+        "log": datos[5]
         }
     except:
         print("Ha fallado la conexión.")
@@ -212,21 +230,25 @@ def consultar_Un_servicio(id):
 # Consulta todos los servicios
 
 def consultar_servicios():
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select crontab, log, id from share;"
+    sql = "select minutes, hours, days, months, weekday, log, id from share;"
     try:
         cursor.execute(sql)
         datos = cursor.fetchall()
         matriz= []
         for row in datos:
             data = {
-            "crontab" : row[0],
-            "log" : row[1],
-            "id" : row[2]
+            "minutes" : row[0],
+            "hours" : row[1],
+            "days" : row[2],    
+            "months" : row[3],
+            "weekday" : row[4],
+            "log": row[5],
+            "id" : row[6]
             }
             matriz.append(data)       
     except:
@@ -237,6 +259,25 @@ def consultar_servicios():
     return(matriz)
 
 
+def consultar_status(id):
+    db = bbddCronTransfer()
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "select status from share where id = %s;"
+    try:
+        cursor.execute(sql,id)
+        datos = cursor.fetchone()
+        status=datos[0]   
+    except:
+        print("Ha fallado la conexión.")
+        sys.exit(1)
+
+    db.close()
+    return(status)
+
+
 #########################################################################
 # Consultas en tabla conexionssh:
 ########################################################################
@@ -244,7 +285,7 @@ def consultar_servicios():
 
 # Obtenemos el último id ofrecido 
 def ultimoidssh():
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -265,7 +306,7 @@ def ultimoidssh():
 
 # Consultamos los datos de conexionssh de forma individual
 def consultarDatosssh(id_ssh):
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -290,7 +331,7 @@ def consultarDatosssh(id_ssh):
 
 
 def comprobar_Conexiones():
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
@@ -334,12 +375,12 @@ def comprobar_Conexiones():
 
 # Consulta de inner join de share y conexionssh para realizar un borrado
 def consultar_Servicio():
-    db = bbddeasybackups()
+    db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "select  sh.id, origen, final, crontab, log, sh.id_conexion from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
+    sql = "select  sh.id, origen, final, IP, user, log, sh.id_conexion from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
     try:
         cursor.execute(sql)
         datos = cursor.fetchall() 
@@ -354,9 +395,10 @@ def consultar_Servicio():
             "ID" : row[0],
             "SOURCE": row[1], 
             "FINAL" : row[2],
-            "crontab" : row[3],
-            "LOG" : row[4],
-            "id_conexion": row[5]
+            "LOG" : row[5],
+            "id_conexion": row[6],
+            "IP" : row[3],
+            "USER" : row[4]
             }
             matriz.append(data) 
         return(matriz)

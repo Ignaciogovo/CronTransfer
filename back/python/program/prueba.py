@@ -7,6 +7,7 @@
 # # import cifradopass as cp
 # from tabulate import tabulate
 # import sys
+import re
 # # data = {}
 # # data["HOST"]=  
 # # data["PORT"] = '22'
@@ -19,7 +20,7 @@
 
 # # Control+k control+u  --> Descomenta
 # #Control+k control+c --> Comenta
-# # sendfile(data)
+# # putdfile(data)
 # # data["PASS"]=cp.encriptar_pass(data["PASS"])
 # # # data["PASS"]=cp.desencriptar_pass(data["PASS"])
 # # # print(data["PASS"])
@@ -73,7 +74,7 @@
 # # data=fs.A_Compresion(data)
 # # data=fs.A_Rutafinal(data)
 # # print(data)
-# # fs.sendfile(data)
+# # fs.putdfile(data)
 
 
 
@@ -81,3 +82,34 @@
 
 # # # pruebas(data)
 # # pruebaruta(data)
+
+
+
+
+comprobación_crontab("* * * feb,jun,oct *")
+
+
+
+
+#ejemplo crontab
+
+# 0 0 * * *
+# 0 6,18 * * *
+# 0 */6 * * *
+# */10 * * * *
+# 0 * 20 7 *
+# @reboot 
+# * * * feb,jun,oct *
+# 0 19 * * mon
+#
+#
+#
+#
+#
+#
+
+
+# https://crontab.guru comprueba los crontab
+
+
+ 

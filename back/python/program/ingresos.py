@@ -151,6 +151,7 @@ def introducirshare():
         data["log"]='NULL'
     validar(data)
     comprobar(data)
+    data["crontab"] = data["minutes"]+" "+data["hours"]+" "+data["days"]+" "+data["months"]+" "+data["weekday"]
     return(data)
 def validarIndividual(key,valor):
     try:

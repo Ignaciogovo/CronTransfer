@@ -69,7 +69,7 @@ def  comprobarRutaSSH(data):
 
 
 
-def sendfile(data):
+def putdfile(data):
     if data["TIPO"] =='clave':
         private_key = paramiko.RSAKey.from_private_key_file(data["CLAVE"])
     ssh_client = paramiko.SSHClient()
@@ -103,6 +103,39 @@ def sendfile(data):
         # Cerramos conexión
     ssh_client.close()
 
+def getfile(data):
+    if data["TIPO"] =='clave':
+        private_key = paramiko.RSAKey.from_private_key_file(data["CLAVE"])
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) # Con esto indicamos que accedemos con nuestras propias credenciales
+    try:
+        if data["TIPO"] =='clave':
+            # Nos conectamos al servidor a partir de las credenciales
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], pkey=private_key)
+        # Nos conectamos al servidor a partir de las credenciales
+        elif data["TIPO"] =='password':
+            password= cp.desencriptar_pass(data["PASS"])
+            ssh_client.connect(hostname=data["HOST"], port=data["PORT"], username=data["USER"], password=password)
+    except:
+        print("error al realizar conexión al transferir archivo")
+        if data["ZIP"]=="YES":
+            borrarZIP(data)
+        sys.exit(1)
+    # Enviamos el archivo a partir de esta serie de lineas
+    try:
+        sftp_client = ssh_client.open_sftp()
+        sftp_client.get(
+            data["SOURCE"],
+            data["FINAL"]
+        )   
+        sftp_client.close()
+    except: 
+        print("Error al transferir archivos, comprueba si la ruta de origen o destino es correcta")
+        if data["ZIP"]=="YES":
+            borrarZIP(data)
+        sys.exit(1)
+        # Cerramos conexión
+    ssh_client.close()
 
 # Analizamos si es necesario la compresión para realizar el envio
 def A_Compresion(data):
@@ -150,7 +183,10 @@ def realizar_envio(data):
     if data["SOBRESCRIBIR"]=="N":
         data=generarArchivoFecha(data)
     # Realizamos envio
-    sendfile(data)
+    if 1==1:
+        putdfile(data)
+    else:
+        getfile()
     #Borramos el archivo zip
     borrarZIP(data)
 

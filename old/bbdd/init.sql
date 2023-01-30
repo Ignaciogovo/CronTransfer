@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
--- Host: localhost    Database: easybackups
+-- Host: localhost    Database: CronTransfer
 -- ------------------------------------------------------
 -- Server version       8.0.29-0ubuntu0.21.10.2
 
@@ -57,7 +57,11 @@ CREATE TABLE `share` (
   `final` varchar(250) NOT NULL,
   `sobrescribir` varchar(20) NOT NULL,
   `id_conexion` int NOT NULL,
-  'crontab' varchar(400) not NULL,
+  `minutes` varchar(30) NOT NULL,
+  `hours` varchar(30) NOT NULL,
+  `days` varchar(30) NOT NULL,
+  `months` varchar(30) NOT NULL,
+  `weekday` varchar(30) NOT NULL,
   `log` varchar(250) NULL,
   `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

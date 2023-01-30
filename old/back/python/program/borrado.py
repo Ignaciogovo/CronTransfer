@@ -84,19 +84,25 @@ if menu == "s":
 elif menu =="c":
     borrar_conexion()
 elif menu =="sf":
-    try:
-        id_borrar=sys.argv[2]
-    except:
+    
+    total = len(sys.argv)
+    if total < 2:
+        for i in range(2,total-1):
+            id_borrar=sys.argv[i]
+            fast_borrar_servicio(id_borrar)
+    else:
          print("Es necesario incluir el id del servicio")
          sys.exit(1)
-    fast_borrar_servicio(id_borrar)
+        
 elif menu =="cf":
-    try:
-        id_borrar=sys.argv[2]
-    except:
+    total = len(sys.argv)
+    if total < 2:
+        for i in range(2,total-1):
+            id_borrar=sys.argv[i]
+            fast_borrar_conexion(id_borrar)
+        else:
          print("Es necesario incluir el id de la conexión")
          sys.exit(1)
-    fast_borrar_conexion(id_borrar)
 else:
     print("No se reconoce los parametros")
 

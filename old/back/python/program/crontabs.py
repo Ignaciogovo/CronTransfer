@@ -4,7 +4,7 @@ import sys
 
 def DefinirCrontab(data):
     # datos: minutos horas dias meses DiasDeSemana(weekday) archivo.py peticion log:
-    crontab = data["crontab"]+" root "+"python3 /python/program/compartir.py "+str(data["id"])
+    crontab = data["minutes"]+" "+data["hours"]+" "+data["days"]+" "+data["months"]+" "+data["weekday"]+" root "+"python3 /python/program/compartir.py "+str(data["id"])
     if data["log"] != "NULL":
         crontab=crontab+" >> " + data["log"]
     crontab=crontab+"\n"
@@ -30,7 +30,7 @@ def borrar_Crontab():
     f = open("/etc/crontab", "r")
     puntoB = 1
     for x in f:
-        if "#EASYBACKUPS" in x:
+        if "#CronTransfer" in x:
             break
         puntoB=puntoB+1
     f.close()

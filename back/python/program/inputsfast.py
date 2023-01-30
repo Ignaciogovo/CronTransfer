@@ -35,11 +35,7 @@ if int(hora) not in range(0,24):
 data= {
 "SOURCE": origen,
 "FINAL": final,
-"minutes" : "0",
-"hours" : hora,
-"days" : "*",
-"months" : "*",
-"weekday" : "*",
+"crontab" : "0 "+hora+" * * * ",
 "id_conexion" : id_conexion,
 "log": log,
 "SOBRESCRIBIR": sobrescribir

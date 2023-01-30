@@ -1,20 +1,22 @@
 version: "3.1"
 services:
   program:
-    image: easybapp:1.0
+    image: cronbapp:1.0
     restart: unless-stopped
     container_name: program
     environment:
-      - DOCKER_TIMEZONE=Europe/Madrid # 
+      - DOCKER_TIMEZONE=Europe/Madrid #
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
     volumes:
       - /:/source # Origen --->  dejarlo como tal
   bbdd:
-    image: easybmysql:1.0
+    image: cronbmysql:1.0
     container_name: bbdd
     environment:
       - MYSQL_ROOT_PASSWORD=prueba
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
     volumes:
       - ./mysql/config:/var/lib/mysql
-    ports:
-      - 3306
     restart: unless-stopped
