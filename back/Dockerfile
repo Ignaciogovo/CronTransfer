@@ -61,8 +61,15 @@ RUN echo 'alias cron_help="cat /.textos/help.txt"' >> ~/.bashrc
 VOLUME [ "/source" ]
 
 # Indicamos variables de entorno:
-ENV DOCKER_TIMEZONE Europe/Madrid
+ENV TZ Europe/Madrid
 ENV MYSQL_USER python
 ENV MYSQL_PASSWORD python
+    # Al instalar tzdata permite seleccionar la zona horaria correcta en un menú. 
+    #Esto no es útil al crear contenedores Docker por eso esta variable
+ENV DEBIAN_FRONTEND noninteractive 
+
+
+# Instalamos tzdata
+RUN apt-get update && apt-get install -y tzdata
 # Establecemos el comando del proceso de inicio del contenedor
 CMD [ "supervisord", "-c", "/etc/supervisor/supervisord.conf" ]

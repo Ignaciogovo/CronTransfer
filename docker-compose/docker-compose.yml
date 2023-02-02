@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     container_name: program
     environment:
-      - DOCKER_TIMEZONE=Europe/Madrid #
+      - TZ=Europe/Madrid #
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
     volumes:
