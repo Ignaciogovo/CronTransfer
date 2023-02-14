@@ -13,10 +13,26 @@ def conexionData():
         print("El programa compartir.py no recibe argumentos, fallo en el archivo crontab")
         sys.exit(1)
     try:
+        # Vemos si se fuerza a ejecutar el envio
+        forzado=sys.argv[2]
+    except:
+        forzado="0"
+    # Comprobamos el status del servicio
+    try:
         status = bbdd.consultar_status(id)
-        if status != 'activate':
-            print("Esta desactivado \n")
-            sys.exit(1)
+    except:
+        print("No es posible conexion con la base de datos o los datos no se han encontrado")
+        sys.exit(1)
+        # Forzar status:
+    if forzado== "f":
+        status = 'activate'
+    # Comprobamos el status del servicio
+    if status != 'activate':
+        # Cerramos el programa
+        print("Esta desactivado \n")
+        sys.exit(1)
+    try:
+        
         origenfinal = bbdd.consultarOrigenFinal(id)
         idssh= bbdd.consultaridssh(id)
     except:

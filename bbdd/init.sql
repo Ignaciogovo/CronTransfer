@@ -57,7 +57,7 @@ CREATE TABLE `share` (
   `final` varchar(250) NOT NULL,
   `sobrescribir` varchar(20) NOT NULL,
   `id_conexion` int NOT NULL,
-  'crontab' varchar(400) not NULL,
+  `crontab` varchar(400) not NULL,
   `status`varchar(200) DEFAULT 'activate',
   `log` varchar(250) NULL,
   `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -66,7 +66,7 @@ CREATE TABLE `share` (
   CONSTRAINT `FKid_conexion` FOREIGN KEY (`id_conexion`) REFERENCES `conexionssh` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+--  'modo' varchar(200) not NULL,
 --
 -- Dumping data for table `share`
 --

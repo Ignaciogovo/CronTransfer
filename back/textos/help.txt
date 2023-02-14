@@ -1,16 +1,20 @@
-
-| ____|   / \   / ___| \ \ / /| __ )    / \    / ___|| |/ /| | | ||  _ \ / ___| 
-|  _|    / _ \  \___ \  \ V / |  _ \   / _ \  | |    | ' / | | | || |_) |\___ \ 
-| |___  / ___ \  ___) |  | |  | |_) | / ___ \ | |___ | . \ | |_| ||  __/  ___) |
-|_____|/_/   \_\|____/   |_|  |____/ /_/   \_\ \____||_|\_\ \___/ |_|    |____/ 
-                                                                                
+  ____                      _____                            __             
+ / ___| _ __   ___   _ __  |_   _| _ __   __ _  _ __   ___  / _|  ___  _ __ 
+| |    | '__| / _ \ | '_ \   | |  | '__| / _` || '_ \ / __|| |_  / _ \| '__|
+| |___ | |   | (_) || | | |  | |  | |   | (_| || | | |\__ \|  _||  __/| |   
+ \____||_|    \___/ |_| |_|  |_|  |_|    \__,_||_| |_||___/|_|   \___||_|   
+                                                                            
 Comandos:
 cron_insert 
-        + s  -->  realizar un insert de un servicio de backup completo con guía. Es el parametro por defecto
+        + s  --> Realizar un insert de un servicio de backup completo con guía. Es el parametro por defecto
         + c  --> Realizar una insercción de datos de una conexión con guía
-        + cf --> Realizar una insercción rápida de datos de conexion, es necesario otros parametros:
-            IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
-            Ejemplo: cron_insert cf 192.168.1.4 d  nombre_usuario p 
+        + sf --> Insertar de forma rápida el codigo en formato crontab
+        Parametros: id_conexion formato_crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+        Ejemplo: cron_crontab 1  " * * * * 4-6 " /backups_bbdd/ultimobackup.sql /backups Y Y
+        + cf --> Realizar una insercción rápida de datos de conexion
+            Parametros: IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
+            Ejemplo: cron_insert cf 192.168.1.4 d  nombre_usuario p
+        
 
 backup_daily
         Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
@@ -28,6 +32,9 @@ cron_select
 cron_run
         + id --->( id representa el codigo identificador del servicio)
         Ejemplo: cron_run 7 --> Ejecuta el servicio con id 7
+        
+        Si el servicio esta apagado:
+        forzar ejecución, Ejemplo: cron_run 7 f
 
 
 
@@ -38,6 +45,14 @@ cron_delete
             Ejemplo: cron_delete sf 7 --> Borra el servicio con id 7
         + cf --> Borra conexión a partir del parametro dado
             Ejemplo: cron_delete sf 4 --> Borra el servicio con id 4
+
+
+cron_stop
+       Ejemplo: cron_stop 7 --> para el id 7
+
+
+cron_activate
+       Ejemplo: cron_activate 7 --> activa el id 7
 
 
 cron_help --> Muestra el archivo ayuda por pantalla

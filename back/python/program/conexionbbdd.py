@@ -36,7 +36,23 @@ def ingresarSSH(data):
 
     # desconectar del servidor
     db.close()
-    
+
+############ Incluir informe del siguiente error: 
+# pymysql.err.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`CronTransfer`.`share`, CONSTRAINT `FKid_conexion` FOREIGN KEY (`id_conexion`) REFERENCES `conexionssh` (`id`))')
+# Es un error al incluir un id de conexión sin que exista esa conexión
+
+
+
+
+
+
+
+
+
+
+
+
+
 def ingresarShare(data,borrar):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
@@ -76,7 +92,7 @@ def update_status(id,status):
         cursor.execute(sql,values)
         db.commit()
     except:
-        print("Ha fallado el borrado de la conexión, los datos que desea borrar puede ser clave foránea de otros servicios.")
+        print("Ha fallado el update.")
         #sys.exit(1)
 
     db.close()        
@@ -337,7 +353,7 @@ def comprobar_Conexiones():
     cursor = db.cursor()
 
     # Prepare SQL query to select
-    sql = "select id, IP, user, port, tipo, fecha from conexionssh;"
+    sql = "select id, IP,port, user, tipo, fecha from conexionssh;"
 
     try:
         cursor.execute(sql)
@@ -353,8 +369,8 @@ def comprobar_Conexiones():
             data = {
             "ID" : row[0],
             "IP" : row[1],
-            "USER" : row[2], 
-            "PORT" : row[3], 
+            "PORT" : row[2], 
+            "USER" : row[3], 
             "TIPO": row[4],
             "FECHA": row[5]
             }
