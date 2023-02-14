@@ -78,21 +78,25 @@ Realizar una inserción de datos de un servidor remoto:
 ```bash
 > cron_insert c
 ```
-### Inserción rapída de conexión 
+### Inserción con parametros de conexión 
 Realizar una inserción de datos de un servidor remoto:
   Parametros: IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
 ```bash
 > cron_insert cf 192.168.1.4 d  usuario p 
   Introduzca la contraseña:
 ```
-
-
+### Inserción con parametros de servicio con formato crontab
+Insertar de forma rápida el codigo en formato crontab:
+ Parametros: id_conexion formato_crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+```bash
+> cron_insert sf 1  " * * * * 4-6 " /backups_bbdd/ultimobackup.sql /backups Y Y
+```
   
 
 
 
 
-### Inserción rápida de serivicios
+### Formatos con parametros de insercción de servicios
 Realizar una inserción rápida de servicio backup diario
   Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
 Ejemplo
@@ -119,6 +123,15 @@ Consultar todo (Por defecto):
 > cron_select a
 ```
 
+### Parar y activar el servicio:
+Parar servicio
+```bash
+> cron_stop id
+```
+Activar servicio:
+```bash
+> cron_activate id
+```
 
 ### Ejecutar un servicio en el momento:
   Parametro: número del id del servicio
@@ -126,6 +139,10 @@ Consultar todo (Por defecto):
 > cron_run id
 ```
   Ejemplo: cron_run 7 --> Se ejecuta el servicio con id 7
+ 
+ Si el servicio esta apagado:
+ forzar ejecución
+  Ejemplo: cron_run 7 f
 
 ### Borrar con guía:
 
@@ -140,7 +157,7 @@ Borrar conexión
 con esta opción se borrarán todos los servicios vinculados a la conexión
 
 
-#### Borrar con parametros
+### Borrar con parametros
 Borrar servicios
   Parametro: id del servicio
 ```bash
