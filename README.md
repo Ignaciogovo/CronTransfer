@@ -8,8 +8,7 @@
 
 ## Objetivo
 
-`CronTransfer` es un proyecto pensado para facilitar las copias de seguridad recurrentes de archivos o directorios entre servidores.
-Las conexiones entre estos servidores se producen por ssh, además usamos otras tecnologías como python o docker.
+Crontransfer es un proyecto desarrollado en Python que utiliza tecnologías como Docker y MySQL para administrar y realizar transferencias programadas a otros servidores a través de SSH. Este programa permite automatizar procesos de transferencia de archivos desde un servidor a otro, y se programa en base a un horario específico en formato cron. La información necesaria para realizar las transferencias, como el horario, el servidor de origen y destino, y los archivos a transferir, se almacena en una base de datos MySQL, permitiendo una gestión centralizada y eficiente de todas las transferencias programadas. Con Crontransfer, se puede ahorrar tiempo en la gestión manual de transferencias y asegurar la seguridad de los datos transferidos mediante el uso de SSH.
 
 
 ## Instalación
