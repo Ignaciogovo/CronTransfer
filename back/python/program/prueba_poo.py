@@ -6,15 +6,21 @@ import os
 
 class DataBase:
     def __init__(self):
-        host='bbdd',
-        user=os.getenv("MYSQL_USER"),
-        password= os.getenv("MYSQL_PASSWORD"),
-        database='CronTransfer',   
-        charset='utf8mb4',
+        self.host = 'bbdd'
+        self.user = os.getenv("MYSQL_USER")
+        self.password = os.getenv("MYSQL_PASSWORD")
+        self.database = 'CronTransfer'
+        self.charset = 'utf8mb4'
         self.conn = None
         
     def connect(self):
-        self.conn = pymysql.connect(host=self.host, user=self.user, password=self.password, database=self.database, charset=self.charset)
+        self.conn = pymysql.connect(
+            host=self.host, 
+            user=self.user, 
+            password=self.password, 
+            database=self.database, 
+            charset=self.charset
+        )
         print("Conexión establecida")
 
     def disconnect(self):
@@ -248,15 +254,18 @@ class DataBase:
                 sql = "select crontab, log, id from share;"
                 cursor.execute(sql)
                 datos = cursor.fetchall()
-                matriz= []
-                for row in datos:
-                    data = {
-                    "crontab" : row[0],
-                    "log" : row[1],
-                    "id" : row[2]
-                    }
-                    matriz.append(data)
-                return(matriz)
+                if datos:
+                    matriz= []
+                    for row in datos:
+                        data = {
+                        "crontab" : row[0],
+                        "log" : row[1],
+                        "id" : row[2]
+                        }
+                        matriz.append(data)
+                    return(matriz)
+                else:
+                    return(0)
         except Exception as e:
             print("Error al consultar datos: ", e)
         finally:
