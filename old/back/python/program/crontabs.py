@@ -16,7 +16,7 @@ def CrearCrontab(crontab):
     archivoCrontab.close()
 
 def RealizarCrontab(id):
-    data = bbdd.consultar_Un_servicio(id)
+    data = bbdd.select_un_servicio(id)
     crontab = DefinirCrontab(data)
     try:
         CrearCrontab(crontab)
@@ -46,7 +46,7 @@ def borrar_Crontab():
 
 # Con esta función insertamos todos los crontab almacenados en la base de datos
 def todos_crontab():
-    datos=bbdd.consultar_servicios()
+    datos=bbdd.select_servicios()
     for data in datos:
         crontab = DefinirCrontab(data)
         try:

@@ -14,7 +14,7 @@ def bbddCronTransfer():
 
 # Ingresar y borrar datos
 
-def ingresarSSH(data):
+def insert_ssh(data):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -53,7 +53,7 @@ def ingresarSSH(data):
 
 
 
-def ingresarShare(data,borrar):
+def insert_share(data,borrar):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -73,7 +73,7 @@ def ingresarShare(data,borrar):
             borrar=input("¿Desea borrar los datos de conexión de ssh escritos anteriormente?(Y/N)")
             if borrar== "y" or borrar == "Y":
                 print("Borramos datos de conexión ssh relacionados")
-                borrarSSH(data["id_conexion"])
+                delete_ssh(data["id_conexion"])
         sys.exit(1)
 
     # desconectar del servidor
@@ -100,7 +100,7 @@ def update_status(id,status):
 
 
 
-def borrarSSH(id_ssh):
+def delete_ssh(id_ssh):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -116,7 +116,7 @@ def borrarSSH(id_ssh):
 
     db.close()    
 
-def borrarSHARE(id):
+def delete_share(id):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -132,7 +132,7 @@ def borrarSHARE(id):
 
     db.close()
 
-def borrarSHARE_conexion(id_ssh):
+def delete_share_conexion(id_ssh):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -152,7 +152,7 @@ def borrarSHARE_conexion(id_ssh):
 #########################################################################
 # Consultas en tabla share:
 ########################################################################
-def consultarUsuario(id):
+def select_share_id_conexion(id):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -167,7 +167,9 @@ def consultarUsuario(id):
         sys.exit(1)
     db.close()
     return(resultado)
-def consultarOrigenFinal(id):
+
+
+def select_share_origen_final(id):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -206,26 +208,8 @@ def ultimoidSHARE():
     db.close()
     return(resultado)
 
-def consultaridssh(id):
-    db = bbddCronTransfer()
-    # prepare a cursor object using cursor() method
-    cursor = db.cursor()
-
-    # Prepare SQL query to INSERT a record into the database.
-    sql = "select id_conexion from share where id=%s;"
-    try:
-        cursor.execute(sql,id)
-        resultado = cursor.fetchone()
-        resultado = str(resultado[0])
-    except:
-        print("Ha fallado la conexión.")
-        sys.exit(1)
-
-    db.close()
-    return(resultado)
-
 # Consultamos los datos de la tabla share de forma individual
-def consultar_Un_servicio(id):
+def select_un_servicio(id):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -251,7 +235,7 @@ def consultar_Un_servicio(id):
 
 # Consulta todos los servicios
 
-def consultar_servicios():
+def select_servicios():
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -276,7 +260,7 @@ def consultar_servicios():
     db.close()
     return(matriz)
 
-def consultar_status(id):
+def select_status(id):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -322,7 +306,7 @@ def ultimoidssh():
 
 
 # Consultamos los datos de conexionssh de forma individual
-def consultarDatosssh(id_ssh):
+def select_datos_ssh(id_ssh):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()

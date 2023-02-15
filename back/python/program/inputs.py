@@ -5,6 +5,8 @@ import crontabs
 import sys
 import f_consultas as f_c
 from ascii import logo
+import re
+import prueba_poo
 especiales = ("@reboot","@yearly","@annually","@monthly","@weekly","@daily","@midnight","@hourly")
 dias_semana= ("sun","mon","tue","wed","thu","fri","sat")
 meses = ("jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")
@@ -28,7 +30,9 @@ def crear_conexion():
     # Coger datos de ssh
     datosssh=ingresos.introducirssh()
     # Insertar datos en la base de datos
-    conexionbbdd.ingresarSSH(datosssh)
+    # db=prueba_poo.DataBase()
+    conexionbbdd.insert_ssh(datosssh)
+    # db.insert_ssh(datosssh)
     # Coger datos para tabla share
     # Cogemos el id del usuario que hemos escrito anteriormente
     idssh=conexionbbdd.ultimoidssh()
@@ -68,8 +72,8 @@ def inputcompleto():
     datosshare["id_conexion"]=idssh
     # Insertamos datos de share en su tabla
     log=datosshare["log"]
-    conexionbbdd.ingresarShare(datosshare,borrar)
-    # conexionbbdd.ingresarShare(datosshare,None)
+    conexionbbdd.insert_share(datosshare,borrar)
+    # conexionbbdd.insert_share(datosshare,None)
     # Realizar Crontab:
     idshare =conexionbbdd.ultimoidSHARE()
     crontabs.RealizarCrontab(idshare)
@@ -102,7 +106,7 @@ else:
             print("Es necesario incluir más parametros")
             sys.exit(1)
         datos_conexion=ingresos.fast_introducirssh(data)
-        conexionbbdd.ingresarSSH(datos_conexion)
+        conexionbbdd.insert_ssh(datos_conexion)
 
     elif menu =="sf":
         try:
@@ -150,8 +154,8 @@ else:
 
 
         # Insertamos datos de share en su tabla
-        conexionbbdd.ingresarShare(data,None)
-        # conexionbbdd.ingresarShare(datosshare,None)
+        conexionbbdd.insert_share(data,None)
+        # conexionbbdd.insert_share(datosshare,None)
         # Realizar Crontab:
         idshare =conexionbbdd.ultimoidSHARE()
         crontabs.RealizarCrontab(idshare)

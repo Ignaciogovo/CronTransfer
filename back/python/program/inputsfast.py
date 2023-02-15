@@ -56,8 +56,8 @@ if data["FINAL"].endswith("/"):
 
 
 # Insertamos datos de share en su tabla
-conexionbbdd.ingresarShare(data,None)
-# conexionbbdd.ingresarShare(datosshare,None)
+conexionbbdd.insert_share(data,None)
+# conexionbbdd.insert_share(datosshare,None)
 # Realizar Crontab:
 idshare =conexionbbdd.ultimoidSHARE()
 crontabs.RealizarCrontab(idshare)

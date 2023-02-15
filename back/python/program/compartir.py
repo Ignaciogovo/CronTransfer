@@ -19,7 +19,7 @@ def conexionData():
         forzado="0"
     # Comprobamos el status del servicio
     try:
-        status = bbdd.consultar_status(id)
+        status = bbdd.select_status(id)
     except:
         print("No es posible conexion con la base de datos o los datos no se han encontrado")
         sys.exit(1)
@@ -33,13 +33,13 @@ def conexionData():
         sys.exit(1)
     try:
         
-        origenfinal = bbdd.consultarOrigenFinal(id)
-        idssh= bbdd.consultaridssh(id)
+        origenfinal = bbdd.select_share_origen_final(id)
+        idssh= bbdd.select_share_id_conexion(id)
     except:
         print("No es posible conexion con la base de datos o los datos no se han encontrado")
         sys.exit(1)
     try:
-        data= bbdd.consultarDatosssh(idssh)
+        data= bbdd.select_datos_ssh(idssh)
     except:
         print("Problemas al sacar datos a partir del idSSH")    
         sys.exit(1)

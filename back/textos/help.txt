@@ -9,8 +9,8 @@ cron_insert
         + s  --> Realizar un insert de un servicio de backup completo con guía. Es el parametro por defecto
         + c  --> Realizar una insercción de datos de una conexión con guía
         + sf --> Insertar de forma rápida el codigo en formato crontab
-        Parametros: id_conexion formato_crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
-        Ejemplo: cron_crontab 1  " * * * * 4-6 " /backups_bbdd/ultimobackup.sql /backups Y Y
+            Parametros: id_conexion formato_crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+        Ejemplo: cron_insert sf 1  " * * * * 4-6 " /backups_bbdd/ultimobackup.sql /backups Y Y
         + cf --> Realizar una insercción rápida de datos de conexion
             Parametros: IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
             Ejemplo: cron_insert cf 192.168.1.4 d  nombre_usuario p

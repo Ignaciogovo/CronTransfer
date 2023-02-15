@@ -2,7 +2,6 @@ from multiprocessing.sharedctypes import Value
 import sys
 from time import sleep
 from getpass import getpass
-from pymysql import NULL
 from funcionesSSH import comprobarSSH
 import cifradopass as cp
 

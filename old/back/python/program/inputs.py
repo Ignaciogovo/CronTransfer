@@ -14,7 +14,7 @@ def crear_conexion():
     # Coger datos de ssh
     datosssh=ingresos.introducirssh()
     # Insertar datos en la base de datos
-    conexionbbdd.ingresarSSH(datosssh)
+    conexionbbdd.insert_ssh(datosssh)
     # Coger datos para tabla share
     # Cogemos el id del usuario que hemos escrito anteriormente
     idssh=conexionbbdd.ultimoidssh()
@@ -49,8 +49,8 @@ def inputcompleto():
     # Añadimos el id del usuario de ssh a los datos de conexión
     datosshare["id_conexion"]=idssh
     # Insertamos datos de share en su tabla
-    conexionbbdd.ingresarShare(datosshare,1)
-    # conexionbbdd.ingresarShare(datosshare,None)
+    conexionbbdd.insert_share(datosshare,1)
+    # conexionbbdd.insert_share(datosshare,None)
     # Realizar Crontab:
     idshare =conexionbbdd.ultimoidSHARE()
     crontabs.RealizarCrontab(idshare)
@@ -77,7 +77,7 @@ elif menu =="cf":
         print("Es necesario incluir más parametros")
         sys.exit(1)
     datos_conexion=ingresos.fast_introducirssh(data)
-    conexionbbdd.ingresarSSH(datos_conexion)
+    conexionbbdd.insert_ssh(datos_conexion)
     
 else:
     print("No se reconoce los parametros")
