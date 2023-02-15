@@ -330,7 +330,7 @@ def select_datos_ssh(id_ssh):
     return(data)
 
 
-def comprobar_Conexiones():
+def select_todas_conexiones():
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()
@@ -374,7 +374,7 @@ def comprobar_Conexiones():
 ########################################################################
 
 # Consulta de inner join de share y conexionssh para realizar un borrado
-def consultar_Servicio():
+def select_todo():
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()

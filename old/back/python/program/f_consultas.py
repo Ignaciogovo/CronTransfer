@@ -3,7 +3,7 @@ import os
 from tabulate import tabulate
 
 def c_ssh():
-    conexiones=cb.comprobar_Conexiones()
+    conexiones=cb.select_todas_conexiones()
     # Convertir el diccionario en lista
     if conexiones != 0:
         for indice in range(len(conexiones)):
@@ -18,7 +18,7 @@ def c_ssh():
 
 
 def c_servicio():
-    datos=cb.consultar_Servicio()
+    datos=cb.select_todo()
     # Convertir el diccionario en lista
     if datos != 0:
         for indice in range(len(datos)):

@@ -22,7 +22,7 @@ def crear_conexion():
 
 
 def inputcompleto():
-    conexiones=conexionbbdd.comprobar_Conexiones()
+    conexiones=conexionbbdd.select_todas_conexiones()
     if conexiones != 0:
         print("Hay conexiones guardadas en el sistema")
         print("1- Usar una conexión ya guardada en el sistema")

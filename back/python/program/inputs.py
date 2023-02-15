@@ -40,7 +40,7 @@ def crear_conexion():
 
 
 def inputcompleto():
-    conexiones=conexionbbdd.comprobar_Conexiones()
+    conexiones=conexionbbdd.select_todas_conexiones()
     # Variable necesaria para la inserción del servicio
     borrar = 1
     if conexiones != 0:
