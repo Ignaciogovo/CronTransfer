@@ -7,5 +7,5 @@ except:
     print("Es necesario incluir todos los parametros")
     sys.exit(1)
 
-bd=pp.DataBase
+bd=pp.DataBase()
 bd.update_status(status,id)

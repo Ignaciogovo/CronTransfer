@@ -32,8 +32,9 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "INSERT INTO conexionssh(IP,port,user,tipo,pass,clave) VALUES ({},{},{},{},{},{})".format(data["HOST"],data["PORT"],data["USER"],data["TIPO"],data["PASS"],data["CLAVE"])
-                cursor.execute(sql)
+                sql = "INSERT INTO conexionssh(IP,port,user,tipo,pass,clave) VALUES (%s,%s,%s,%s,%s,%s)"
+                values=(data["HOST"],data["PORT"],data["USER"],data["TIPO"],data["PASS"],data["CLAVE"])
+                cursor.execute(sql,values)
                 self.conn.commit()
                 print("Datos insertados correctamente.")
         except Exception as e:
@@ -54,8 +55,9 @@ class DataBase:
                     return
 
                 # Insertar datos
-                sql = "INSERT INTO share(origen,final,id_conexion,crontab,log,sobrescribir) VALUES ({},{},{},{},{},{})".format(data["SOURCE"],data["FINAL"],data["id_conexion"],data["crontab"],data["log"],data["SOBRESCRIBIR"])
-                cursor.execute(sql)
+                sql = "INSERT INTO share(origen,final,id_conexion,crontab,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s)"
+                values=(data["SOURCE"],data["FINAL"],data["id_conexion"],data["crontab"],data["log"],data["SOBRESCRIBIR"])
+                cursor.execute(sql,values)
                 self.conn.commit()
                 print("Datos insertados correctamente.")
 
@@ -69,8 +71,9 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "update share set `status`={} where id={};".format(id,status)
-                cursor.execute(sql)
+                sql = "update share set `status`=%s where id=%s;"
+                values=(status,id)
+                cursor.execute(sql,values)
                 self.conn.commit()
         except Exception as e:
             print("Error al actualizar datos: ", e)
@@ -82,8 +85,8 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "delete from conexionssh where id={};".format(id)
-                cursor.execute(sql)
+                sql = "delete from conexionssh where id=%s;"
+                cursor.execute(sql,id)
                 self.conn.commit()
         except Exception as e:
             print("Error al borrar datos: ", e)
@@ -95,8 +98,8 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "delete from share where id={};".format(id)
-                cursor.execute(sql)
+                sql = "delete from share where id=%s;"
+                cursor.execute(sql,id)
                 self.conn.commit()
         except Exception as e:
             print("Error al borrar datos: ", e)
@@ -107,8 +110,8 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "delete from share where id={};".format(id)
-                cursor.execute(sql)
+                sql = "delete from share where id=%s;"
+                cursor.execute(sql,id)
                 self.conn.commit()
         except Exception as e:
             print("Error al borrar datos: ", e)

@@ -21,7 +21,7 @@ def comprobación_crontab(crontab):
             sys.exit(1)
 
 try:
-    bd=pp.DataBase
+    bd=pp.DataBase()
     id_conexion= str(sys.argv[1])
     crontab= str(sys.argv[2])
     comprobación_crontab(crontab)

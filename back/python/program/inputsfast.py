@@ -7,7 +7,7 @@ import prueba_poo as pp
 
 
 try:
-    bd=pp.DataBase
+    bd=pp.DataBase()
     id_conexion= str(sys.argv[1])
     hora= str(sys.argv[2])
     origen= str(sys.argv[3])

@@ -22,7 +22,7 @@ def comprobación_crontab(crontab):
 
 
 def crear_conexion():
-    bd=pp.DataBase
+    bd=pp.DataBase()
     print("")
     print("Introducir una conexión nueva")
     print("")
@@ -37,7 +37,7 @@ def crear_conexion():
 
 
 def inputcompleto():
-    bd=pp.DataBase
+    bd=pp.DataBase()
     conexiones=bd.select_todas_conexiones()
     # Variable necesaria para la inserción del servicio
     borrar = 1
@@ -82,7 +82,7 @@ def inputcompleto():
 
 try:
     menu= sys.argv[1]
-    bd=pp.DataBase
+    bd=pp.DataBase()
 except:
     menu = "s"
 if menu == "c":
