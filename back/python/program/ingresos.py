@@ -1,4 +1,3 @@
-from multiprocessing.sharedctypes import Value
 import sys
 from time import sleep
 from getpass import getpass

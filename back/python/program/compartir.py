@@ -1,5 +1,5 @@
 import sys
-import conexionbbdd as bbdd
+import prueba_poo as pp
 import funcionesSSH as fssh
 from datetime import datetime
 def conexionData():
@@ -7,6 +7,7 @@ def conexionData():
     print("Inicio backup  --->"+str(datetime.now()))
     print("-------------")
     # Obtenemos el id  a partir de un parametro
+    db=pp.DataBase
     try:
         id = sys.argv[1]
     except:
@@ -19,7 +20,7 @@ def conexionData():
         forzado="0"
     # Comprobamos el status del servicio
     try:
-        status = bbdd.select_status(id)
+        status = db.select_status(id)
     except:
         print("No es posible conexion con la base de datos o los datos no se han encontrado")
         sys.exit(1)
@@ -33,13 +34,13 @@ def conexionData():
         sys.exit(1)
     try:
         
-        origenfinal = bbdd.select_share_origen_final(id)
-        idssh= bbdd.select_share_id_conexion(id)
+        origenfinal = db.select_share_origen_final(id)
+        idssh= db.select_share_id_conexion(id)
     except:
         print("No es posible conexion con la base de datos o los datos no se han encontrado")
         sys.exit(1)
     try:
-        data= bbdd.select_datos_ssh(idssh)
+        data= db.select_datos_ssh(idssh)
     except:
         print("Problemas al sacar datos a partir del idSSH")    
         sys.exit(1)

@@ -1,12 +1,10 @@
-from pydoc import importfile
 import ingresos
-import conexionbbdd
 import crontabs
+import prueba_poo as pp
 import sys
 import f_consultas as f_c
 from ascii import logo
 import re
-import prueba_poo
 especiales = ("@reboot","@yearly","@annually","@monthly","@weekly","@daily","@midnight","@hourly")
 dias_semana= ("sun","mon","tue","wed","thu","fri","sat")
 meses = ("jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")
@@ -24,23 +22,23 @@ def comprobación_crontab(crontab):
 
 
 def crear_conexion():
+    bd=pp.DataBase
     print("")
     print("Introducir una conexión nueva")
     print("")
     # Coger datos de ssh
     datosssh=ingresos.introducirssh()
     # Insertar datos en la base de datos
-    # db=prueba_poo.DataBase()
-    conexionbbdd.insert_ssh(datosssh)
-    # db.insert_ssh(datosssh)
+    bd.insert_ssh(datosssh)
     # Coger datos para tabla share
     # Cogemos el id del usuario que hemos escrito anteriormente
-    idssh=conexionbbdd.ultimoidssh()
+    idssh=bd.ultimoidssh()
     return(idssh)
 
 
 def inputcompleto():
-    conexiones=conexionbbdd.select_todas_conexiones()
+    bd=pp.DataBase
+    conexiones=bd.select_todas_conexiones()
     # Variable necesaria para la inserción del servicio
     borrar = 1
     if conexiones != 0:
@@ -72,10 +70,9 @@ def inputcompleto():
     datosshare["id_conexion"]=idssh
     # Insertamos datos de share en su tabla
     log=datosshare["log"]
-    conexionbbdd.insert_share(datosshare,borrar)
-    # conexionbbdd.insert_share(datosshare,None)
+    bd.insert_share(datosshare,borrar)
     # Realizar Crontab:
-    idshare =conexionbbdd.ultimoidSHARE()
+    idshare =bd.ultimoidSHARE()
     crontabs.RealizarCrontab(idshare)
     if log != "NULL":
         print("Se guardado la configuración.")
@@ -85,6 +82,7 @@ def inputcompleto():
 
 try:
     menu= sys.argv[1]
+    bd=pp.DataBase
 except:
     menu = "s"
 if menu == "c":
@@ -106,7 +104,7 @@ else:
             print("Es necesario incluir más parametros")
             sys.exit(1)
         datos_conexion=ingresos.fast_introducirssh(data)
-        conexionbbdd.insert_ssh(datos_conexion)
+        bd.insert_ssh(datos_conexion)
 
     elif menu =="sf":
         try:
@@ -117,7 +115,7 @@ else:
             final= str(sys.argv[5])
             log = str(sys.argv[6]) or ("NULL")
             if log == "y" or log == "Y":
-                idshare =int(conexionbbdd.ultimoidSHARE())+1
+                idshare =int(bd.ultimoidSHARE())+1
                 log="/log/servicio_"+str(idshare)+".log"
             else:
                 log="NULL"
@@ -154,10 +152,9 @@ else:
 
 
         # Insertamos datos de share en su tabla
-        conexionbbdd.insert_share(data,None)
-        # conexionbbdd.insert_share(datosshare,None)
+        bd.insert_share(data,None)
         # Realizar Crontab:
-        idshare =conexionbbdd.ultimoidSHARE()
+        idshare =bd.ultimoidSHARE()
         crontabs.RealizarCrontab(idshare)
         if log != "NULL":
             print("Se guardado la configuración.")

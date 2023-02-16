@@ -1,5 +1,5 @@
 from pymysql import NULL
-import conexionbbdd as bbdd
+import prueba_poo as pp
 import sys
 
 def DefinirCrontab(data):
@@ -16,7 +16,8 @@ def CrearCrontab(crontab):
     archivoCrontab.close()
 
 def RealizarCrontab(id):
-    data = bbdd.select_un_servicio(id)
+    db=pp.DataBase
+    data = db.select_un_servicio(id)
     crontab = DefinirCrontab(data)
     try:
         CrearCrontab(crontab)
@@ -46,7 +47,8 @@ def borrar_Crontab():
 
 # Con esta función insertamos todos los crontab almacenados en la base de datos
 def todos_crontab():
-    datos=bbdd.select_servicios()
+    db=pp.DataBase
+    datos=db.select_servicios()
     for data in datos:
         crontab = DefinirCrontab(data)
         try:

@@ -1,21 +1,20 @@
-from pydoc import importfile
-import ingresos
-import conexionbbdd
 import crontabs
 import sys
 from f_consultas import contar_logs
+import prueba_poo as pp
 
 
 
 
 try:
+    bd=pp.DataBase
     id_conexion= str(sys.argv[1])
     hora= str(sys.argv[2])
     origen= str(sys.argv[3])
     final= str(sys.argv[4])
     log = str(sys.argv[5]) or ("NULL")
     if log == "y" or log == "Y":
-        idshare =int(conexionbbdd.ultimoidSHARE())+1
+        idshare =int(bd.ultimoidSHARE())+1
         log="/log/servicio_"+str(idshare)+"hora_"+hora+".log"
     else:
         log="NULL"
@@ -56,10 +55,9 @@ if data["FINAL"].endswith("/"):
 
 
 # Insertamos datos de share en su tabla
-conexionbbdd.insert_share(data,None)
-# conexionbbdd.insert_share(datosshare,None)
+bd.insert_share(data,None)
 # Realizar Crontab:
-idshare =conexionbbdd.ultimoidSHARE()
+idshare =bd.ultimoidSHARE()
 crontabs.RealizarCrontab(idshare)
 if log != "NULL":
     print("Se guardado la configuración.")

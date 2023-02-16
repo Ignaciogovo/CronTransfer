@@ -1,4 +1,4 @@
-import conexionbbdd
+import prueba_poo as pp
 import sys
 try:
     status= str(sys.argv[1])
@@ -7,5 +7,5 @@ except:
     print("Es necesario incluir todos los parametros")
     sys.exit(1)
 
-
-conexionbbdd.update_status(status,id)
+bd=pp.DataBase
+bd.update_status(status,id)
