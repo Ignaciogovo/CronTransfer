@@ -86,9 +86,9 @@ Realizar una inserción de datos de un servidor remoto:
 ```
 ### Inserción con parametros de servicio con formato crontab
 Insertar de forma rápida el codigo en formato crontab:
- Parametros: id_conexion formato_crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+ Parametros: id_conexion formato_crontab importar/exportar(i/e) /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
 ```bash
-> cron_insert sf 1  " * * * * 4-6 " /backups_bbdd/ultimobackup.sql /backups Y Y
+> cron_insert sf 1  " * * * * 4-6 " i /backups/ultimobackup.sql /backups_bbdd Y Y
 ```
   
 
@@ -97,10 +97,10 @@ Insertar de forma rápida el codigo en formato crontab:
 
 ### Formatos con parametros de insercción de servicios
 Realizar una inserción rápida de servicio backup diario
-  Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+  Parametros: id_conexion hora importar/exportar(i/e) /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
 Ejemplo
 ```bash
-> backup_daily 7 3 /backups_bbdd/ultimobackup.sql /backups Y N
+> backup_daily 7 3 e /backups_bbdd/ultimobackup.sql /backups Y N
 ```
 --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 todos los días a las 3 AM con archivo log 
   y sin sobrescribir la backup en el servidor remoto.                     
