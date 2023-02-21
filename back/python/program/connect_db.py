@@ -58,7 +58,7 @@ class DataBase:
                     raise
 
                 # Insertar datos
-                sql = "INSERT INTO share(tipo_transferencia,origen,final,id_conexion,crontab,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s)"
+                sql = "INSERT INTO share(tipo_transferencia,origen,final,id_conexion,crontab,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s,%s)"
                 values=(data["TRANSFERENCIA"],data["SOURCE"],data["FINAL"],data["id_conexion"],data["crontab"],data["log"],data["SOBRESCRIBIR"])
                 cursor.execute(sql,values)
                 self.conn.commit()
@@ -309,7 +309,7 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "select  sh.id, origen, final, crontab, log, sh.id_conexion,status from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
+                sql = "select  sh.id, origen, final, crontab,tipo_transferencia, log, sh.id_conexion,status from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
                 cursor.execute(sql)
                 datos = cursor.fetchall()
                 if datos:
@@ -320,9 +320,10 @@ class DataBase:
                         "SOURCE": row[1], 
                         "FINAL" : row[2],
                         "crontab" : row[3],
-                        "LOG" : row[4],
-                        "id_conexion": row[5],
-                        "status": row[6]
+                        "tipo_transferencia": row[4],
+                        "LOG" : row[5],
+                        "id_conexion": row[6],
+                        "status": row[7]
                         }
                         matriz.append(data) 
                     return(matriz)

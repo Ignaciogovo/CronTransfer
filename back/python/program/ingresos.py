@@ -78,7 +78,7 @@ def introducirshare():
         data["TRANSFERENCIA"]=input("Tipo de transferencia (importar/exportar) i/e:") or ("i")
         data["TRANSFERENCIA"]=data["TRANSFERENCIA"].lower()
         print(data["TRANSFERENCIA"])
-        if data["TRANSFERENCIA"]=="i" or data["TRANSFERENCIA"]=="e":
+        if data["TRANSFERENCIA"]=="i" and data["TRANSFERENCIA"]=="e":
             break
     data["SOURCE"]=  input("Ruta origen: ") or ("")
     # configuramos los datos proporcionados
@@ -86,15 +86,22 @@ def introducirshare():
     if data["SOURCE"].endswith("/"):
        data["SOURCE"]=data["SOURCE"][:-1]
     # Incluimos el directorio del contenedor para evitar errores
-    if data["SOURCE"].startswith("/"):
-        data["SOURCE"]='/source'+data["SOURCE"]
-    else:
-        data["SOURCE"]='/source'+"/"+data["SOURCE"]
+    if data["TRANSFERENCIA"]=="e":
+        if data["SOURCE"].startswith("/"):
+            data["SOURCE"]='/source'+data["SOURCE"]
+        else:
+            data["SOURCE"]='/source'+"/"+data["SOURCE"]
     data["FINAL"] = input("rutafinal: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
     if data["FINAL"].endswith("/"):
        data["FINAL"]=data["FINAL"][:-1]
+    if data["TRANSFERENCIA"]=="i":
+        if data["FINAL"].startswith("/"):
+            data["FINAL"]='/source'+data["FINAL"]
+        else:
+            data["FINAL"]='/source'+"/"+data["FINAL"]
+
     print("")
     # sobreescribir el archivo
     print("Escoja entre estas opciones que desea:")

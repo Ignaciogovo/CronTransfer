@@ -98,7 +98,7 @@ class operations_transfer:
     # Chequear ruta final
     def check_ruta_final(self):
         self.estado="Chequeo ruta final"
-        if self.data["TRANSFERENCIA"]=="i":
+        if self.data["TRANSFERENCIA"]=="e":
             control=self.connect()
             if control==1:
                 return(1)
@@ -269,12 +269,12 @@ class operations_transfer:
         try:
             sftp_client = self.client.open_sftp()
             if self.data["TRANSFERENCIA"]=="i":
-                sftp_client.put(
+                sftp_client.get(
                     self.data["SOURCE"],
                     self.data["FINAL"]
                 )
             else:
-                sftp_client.get(
+                sftp_client.put(
                     self.data["SOURCE"],
                     self.data["FINAL"]
                 )

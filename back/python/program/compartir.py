@@ -56,7 +56,7 @@ def inicio_programa():
         sys.exit(1)
     print("")
     print("-------------")
-    print(+str(datetime.now()))
+    print(str(datetime.now()))
     print("Inicio transferencia  del servicio:"+str(id))
     print("-------------")
 
@@ -68,7 +68,7 @@ def final_programa(n,n2,ruta):
         print("Transferencia exitosa, pero no se ha podido borrar archivos comprimidos temporales en la ruta: "+ruta)
     else:
         print("Transferencia exitosa ")
-    print(+str(datetime.now()))
+    print(str(datetime.now()))
     print("-------------")
     print("")
     sys.exit(1)

@@ -71,5 +71,10 @@ RUN echo 'alias cron_help="cat /.textos/help.txt"' >> ~/.bashrc
 # Indicamos los volumenes compartidos:
 VOLUME [ "/source" ]
 
+# copiamos el archivo para ejecutar al inicio del servidor
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 # Establecemos el comando del proceso de inicio del contenedor
-CMD [ "supervisord", "-c", "/etc/supervisor/supervisord.conf" ]
+CMD ["/start.sh"]
+# CMD [ "supervisord", "-c", "/etc/supervisor/supervisord.conf" ]

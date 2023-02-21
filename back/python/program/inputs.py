@@ -63,7 +63,7 @@ def inputcompleto():
 
 
     print("")
-    print("Introducir datos del servicio de backup")
+    print("Introducir datos del servicio de de transferencia")
     print("")
     datosshare=ingresos.introducirshare()
     # Añadimos el id del usuario de ssh a los datos de conexión
@@ -111,17 +111,17 @@ else:
             id_conexion= str(sys.argv[2])
             crontab= (str(sys.argv[3])).strip()
             comprobación_crontab(crontab)
-            transferencia=str(sys.argv[2])
+            transferencia=str(sys.argv[4])
             transferencia=transferencia.lower()
-            origen= str(sys.argv[4])
-            final= str(sys.argv[5])
-            log = str(sys.argv[6]) or ("NULL")
+            origen= str(sys.argv[5])
+            final= str(sys.argv[6])
+            log = str(sys.argv[7]) or ("NULL")
             if log == "y" or log == "Y":
                 idshare =int(db.ultimoidSHARE())+1
                 log="/log/servicio_"+str(idshare)+".log"
             else:
                 log="NULL"
-            sobrescribir = str(sys.argv[7]) or ("N")
+            sobrescribir = str(sys.argv[8]) or ("N")
             if sobrescribir == "N" or sobrescribir =="n":
                 sobrescribir="N"
             else:
@@ -130,7 +130,7 @@ else:
             print("Es necesario incluir todos los parametros")
             print("parametros: cron_crontab id_conexion crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) ")
             sys.exit(1)
-        if transferencia != "e" or transferencia != "i":
+        if transferencia != "e" and transferencia != "i":
             print("Tipo de transferencia errónea, deben ser i (importar) o e (exportar)")
             sys.exit(1)
         data= {
@@ -146,15 +146,21 @@ else:
         if data["SOURCE"].endswith("/"):
             data["SOURCE"]=data["SOURCE"][:-1]
         # Incluimos el directorio del contenedor para evitar errores
-        if data["SOURCE"].startswith("/"):
-            data["SOURCE"]='/source'+data["SOURCE"]
-        else:
-            data["SOURCE"]='/source'+"/"+data["SOURCE"]
+        if data["TRANSFERENCIA"]=="e":
+            if data["SOURCE"].startswith("/"):
+                data["SOURCE"]='/source'+data["SOURCE"]
+            else:
+                data["SOURCE"]='/source'+"/"+data["SOURCE"]
 
         # configuramos los datos proporcionados
         # Eliminamos el / final para evitar errores
         if data["FINAL"].endswith("/"):
             data["FINAL"]=data["FINAL"][:-1]
+        if data["TRANSFERENCIA"]=="i":
+            if data["FINAL"].startswith("/"):
+                data["FINAL"]='/source'+data["FINAL"]
+            else:
+                data["FINAL"]='/source'+"/"+data["FINAL"]
 
 
         # Insertamos datos de share en su tabla
