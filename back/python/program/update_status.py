@@ -1,4 +1,4 @@
-import prueba_poo as pp
+import connect_db as cdb
 import sys
 try:
     status= str(sys.argv[1])
@@ -7,5 +7,5 @@ except:
     print("Es necesario incluir todos los parametros")
     sys.exit(1)
 
-bd=pp.DataBase()
-bd.update_status(status,id)
+db=cdb.DataBase()
+db.update_status(status,id)

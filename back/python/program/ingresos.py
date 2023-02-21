@@ -1,7 +1,7 @@
 import sys
 from time import sleep
 from getpass import getpass
-from funcionesSSH import comprobarSSH
+import funcionesSSH as fssh
 import cifradopass as cp
 
 
@@ -29,7 +29,11 @@ def fast_introducirssh(data):
         sys.exit(1)
     validar(data)
     comprobar(data)
-    comprobarSSH(data)
+    conexion=fssh.operations_transfer(data)
+    control=conexion.check_connect()
+    if control ==1:
+        print("Error al comprobar conexión con el servidor por ssh")
+        sys.exit(1)
     return(data)
 
 
@@ -62,10 +66,17 @@ def introducirssh():
         sys.exit(1)
     validar(data)
     comprobar(data)
-    comprobarSSH(data)
+    conexion=fssh.operations_transfer(data)
+    control=conexion.check_connect()
+    if control ==1:
+        print("Error al comprobar conexión con el servidor por ssh")
+        sys.exit(1)
     return(data)
 def introducirshare():
     data={}
+    while data["TRANSFERENCIA"]!="i" or data["TRANSFERENCIA"]!="e":
+        data["TRANSFERENCIA"]=input("Tipo de transferencia (importar/exportar) i/e:") or ("i")
+        data["TRANSFERENCIA"]=data["TRANSFERENCIA"].lower()
     data["SOURCE"]=  input("Ruta origen: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
@@ -83,16 +94,16 @@ def introducirshare():
        data["FINAL"]=data["FINAL"][:-1]
     print("")
     # sobreescribir el archivo
-    print("Escoja el tipo de envio que desea:")
-    print("1- Sobrescribir el backup")
-    print("2- Dejar los backups anteriores diferenciados por fechas")
-    data["SOBRESCRIBIR"]=input("Tipo de envio: (Por defecto 2) ") or ("2")
+    print("Escoja entre estas opciones que desea:")
+    print("1- Sobrescribir el archivo")
+    print("2- Dejar los archivos anteriores diferenciados por fechas")
+    data["SOBRESCRIBIR"]=input("Tipo de archivo final: (Por defecto 2) ") or ("2")
     if data["SOBRESCRIBIR"]=="1":
         data["SOBRESCRIBIR"] = "Y"
     elif data["SOBRESCRIBIR"]=="2":
         data["SOBRESCRIBIR"] = "N"
     print("")
-    print("Introducir fechas y horarios del backups:")
+    print("Introducir fechas y horarios de la transferencia:")
     data["minutes"] ='Falso'
     while data["minutes"] =='Falso':
         print("")

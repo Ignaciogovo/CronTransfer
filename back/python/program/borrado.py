@@ -1,11 +1,11 @@
-import prueba_poo as pp
+import connect_db as cdb
 import sys
 import crontabs as cr
 import f_consultas as f_c
 
 
 def borrar_servicio():
-    db=pp.DataBase
+    db=cdb.DataBase()
     cerrar=f_c.c_servicio()
     if cerrar == 1:
         sys.exit(1)
@@ -31,7 +31,7 @@ def borrar_servicio():
 
 
 def borrar_conexion():
-    db=pp.DataBase
+    db=cdb.DataBase()
     cerrar=f_c.c_ssh()
     if cerrar == 1:
         sys.exit(1)
@@ -50,7 +50,7 @@ def borrar_conexion():
             print("Finalizado la operación de borrado")
 
 def fast_borrar_servicio(id_borrar):
-    db=pp.DataBase
+    db=cdb.DataBase()
     try:
         db.delete_share(id_borrar)
         # Realizamos borrado en crontab y vuelta a su escritura
@@ -61,7 +61,7 @@ def fast_borrar_servicio(id_borrar):
         print("No se ha podido borrar el servicio")
 
 def fast_borrar_conexion(id_borrar):
-    db=pp.DataBase
+    db=cdb.DataBase()
     try:
             db.delete_share_conexion(id_borrar)       
             db.delete_ssh(id_borrar)

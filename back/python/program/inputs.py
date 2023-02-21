@@ -1,6 +1,6 @@
 import ingresos
 import crontabs
-import prueba_poo as pp
+import connect_db as cdb
 import sys
 import f_consultas as f_c
 from ascii import logo
@@ -22,23 +22,23 @@ def comprobación_crontab(crontab):
 
 
 def crear_conexion():
-    bd=pp.DataBase()
+    db=cdb.DataBase()
     print("")
     print("Introducir una conexión nueva")
     print("")
     # Coger datos de ssh
     datosssh=ingresos.introducirssh()
     # Insertar datos en la base de datos
-    bd.insert_ssh(datosssh)
+    db.insert_ssh(datosssh)
     # Coger datos para tabla share
     # Cogemos el id del usuario que hemos escrito anteriormente
-    idssh=bd.ultimoidssh()
+    idssh=db.ultimoidssh()
     return(idssh)
 
 
 def inputcompleto():
-    bd=pp.DataBase()
-    conexiones=bd.select_todas_conexiones()
+    db=cdb.DataBase()
+    conexiones=db.select_todas_conexiones()
     # Variable necesaria para la inserción del servicio
     borrar = 1
     if conexiones != 0:
@@ -70,9 +70,9 @@ def inputcompleto():
     datosshare["id_conexion"]=idssh
     # Insertamos datos de share en su tabla
     log=datosshare["log"]
-    bd.insert_share(datosshare,borrar)
+    db.insert_share(datosshare,borrar)
     # Realizar Crontab:
-    idshare =bd.ultimoidSHARE()
+    idshare =db.ultimoidSHARE()
     crontabs.RealizarCrontab(idshare)
     if log != "NULL":
         print("Se guardado la configuración.")
@@ -82,7 +82,7 @@ def inputcompleto():
 
 try:
     menu= sys.argv[1]
-    bd=pp.DataBase()
+    db=cdb.DataBase()
 except:
     menu = "s"
 if menu == "c":
@@ -104,18 +104,20 @@ else:
             print("Es necesario incluir más parametros")
             sys.exit(1)
         datos_conexion=ingresos.fast_introducirssh(data)
-        bd.insert_ssh(datos_conexion)
+        db.insert_ssh(datos_conexion)
 
     elif menu =="sf":
         try:
             id_conexion= str(sys.argv[2])
             crontab= (str(sys.argv[3])).strip()
             comprobación_crontab(crontab)
+            transferencia=str(sys.argv[2])
+            transferencia=transferencia.lower()
             origen= str(sys.argv[4])
             final= str(sys.argv[5])
             log = str(sys.argv[6]) or ("NULL")
             if log == "y" or log == "Y":
-                idshare =int(bd.ultimoidSHARE())+1
+                idshare =int(db.ultimoidSHARE())+1
                 log="/log/servicio_"+str(idshare)+".log"
             else:
                 log="NULL"
@@ -128,7 +130,11 @@ else:
             print("Es necesario incluir todos los parametros")
             print("parametros: cron_crontab id_conexion crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) ")
             sys.exit(1)
+        if transferencia != "e" or transferencia != "i":
+            print("Tipo de transferencia errónea, deben ser i (importar) o e (exportar)")
+            sys.exit(1)
         data= {
+        "TRANSFERENCIA": transferencia,
         "SOURCE": origen,
         "FINAL": final,
         "crontab" : crontab,
@@ -152,9 +158,9 @@ else:
 
 
         # Insertamos datos de share en su tabla
-        bd.insert_share(data,None)
+        db.insert_share(data,None)
         # Realizar Crontab:
-        idshare =bd.ultimoidSHARE()
+        idshare =db.ultimoidSHARE()
         crontabs.RealizarCrontab(idshare)
         if log != "NULL":
             print("Se guardado la configuración.")

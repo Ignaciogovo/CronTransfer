@@ -43,7 +43,7 @@ class DataBase:
         finally:
             self.disconnect()    
 
-    def insert_share(self, data):
+    def insert_share(self, data,borrar):
         try:
             self.connect()
             with self.conn.cursor() as cursor:
@@ -51,18 +51,25 @@ class DataBase:
                 cursor.execute("SELECT * FROM conexionssh WHERE id=%s",data["id_conexion"])
                 result = cursor.fetchone()
                 if result is None:
-                    print("La clave foránea no existe.")
-                    return
+                    print("La clave for  nea no existe.")
+                    raise
 
                 # Insertar datos
-                sql = "INSERT INTO share(origen,final,id_conexion,crontab,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s)"
-                values=(data["SOURCE"],data["FINAL"],data["id_conexion"],data["crontab"],data["log"],data["SOBRESCRIBIR"])
+                sql = "INSERT INTO share(tipo_transferencia,origen,final,id_conexion,crontab,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s)"
+                values=(data["TRANSFERENCIA"],data["SOURCE"],data["FINAL"],data["id_conexion"],data["crontab"],data["log"],data["SOBRESCRIBIR"])
                 cursor.execute(sql,values)
                 self.conn.commit()
                 print("Datos insertados correctamente.")
+                return(0)
 
         except Exception as e:
             print("Error al insertar datos: ", e)
+            if borrar is not None:
+                borrar=input("  Desea borrar los datos de conexi  n de ssh escritos anteriormente?(Y/N)")
+                if borrar== "y" or borrar == "Y":
+                    print("Borramos datos de conexi  n ssh relacionados")
+                    self.delete_ssh(data["id_conexion"])
+            return(1)
         finally:
             self.disconnect()
 
@@ -209,7 +216,7 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "select origen,final,sobrescribir from share where id=%s;"
+                sql = "select tipo_transferencia,origen,final,sobrescribir from share where id=%s;"
                 cursor.execute(sql,id)
                 resultado = cursor.fetchone()
                 return(resultado)
@@ -225,8 +232,11 @@ class DataBase:
                 sql = "select id from share order by fecha desc;"
                 cursor.execute(sql)
                 resultado = cursor.fetchone()
-                resultado = str(resultado[0])
-                return(resultado)
+                if resultado is None:
+                    return(0)
+                else:
+                    resultado = str(resultado[0])
+                    return(resultado)
         except Exception as e:
             print("Error al consultar datos: ", e)
         finally:

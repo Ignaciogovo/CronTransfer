@@ -1,10 +1,10 @@
 import os
 from tabulate import tabulate
-import prueba_poo as pp
+import connect_db as cdb
 
 def c_ssh():
-    bd = pp.DataBase()
-    conexiones=bd.select_todas_conexiones()
+    db = cdb.DataBase()
+    conexiones=db.select_todas_conexiones()
     # Convertir el diccionario en lista
     if conexiones != 0:
         for indice in range(len(conexiones)):
@@ -19,8 +19,8 @@ def c_ssh():
 
 
 def c_servicio():
-    bd = pp.DataBase()
-    datos=bd.select_servicios()
+    db = cdb.DataBase()
+    datos=db.select_todo()
     # Convertir el diccionario en lista
     if datos != 0:
         for indice in range(len(datos)):

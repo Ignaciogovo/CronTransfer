@@ -1,24 +1,25 @@
 import crontabs
 import sys
-from f_consultas import contar_logs
-import prueba_poo as pp
+import connect_db as cdb
 
 
 
 
 try:
-    bd=pp.DataBase()
+    db=cdb.DataBase()
     id_conexion= str(sys.argv[1])
-    hora= str(sys.argv[2])
-    origen= str(sys.argv[3])
-    final= str(sys.argv[4])
-    log = str(sys.argv[5]) or ("NULL")
+    transferencia=str(sys.argv[2])
+    transferencia=transferencia.lower()
+    hora= str(sys.argv[3])
+    origen= str(sys.argv[4])
+    final= str(sys.argv[5])
+    log = str(sys.argv[6]) or ("NULL")
     if log == "y" or log == "Y":
-        idshare =int(bd.ultimoidSHARE())+1
+        idshare =int(db.ultimoidSHARE())+1
         log="/log/servicio_"+str(idshare)+"hora_"+hora+".log"
     else:
         log="NULL"
-    sobrescribir = str(sys.argv[6]) or ("N")
+    sobrescribir = str(sys.argv[7]) or ("N")
     if sobrescribir == "N" or sobrescribir =="n":
         sobrescribir="N"
     else:
@@ -30,8 +31,12 @@ except:
 if int(hora) not in range(0,24):
     print("La hora no es válida")
     sys.exit(1)
+if transferencia != "e" or transferencia != "i":
+    print("Tipo de transferencia errónea, deben ser i (importar) o e (exportar)")
+    sys.exit(1)
 
 data= {
+"TRANSFERENCIA": transferencia,
 "SOURCE": origen,
 "FINAL": final,
 "crontab" : "0 "+hora+" * * * ",
@@ -55,9 +60,9 @@ if data["FINAL"].endswith("/"):
 
 
 # Insertamos datos de share en su tabla
-bd.insert_share(data,None)
+db.insert_share(data,None)
 # Realizar Crontab:
-idshare =bd.ultimoidSHARE()
+idshare =db.ultimoidSHARE()
 crontabs.RealizarCrontab(idshare)
 if log != "NULL":
     print("Se guardado la configuración.")

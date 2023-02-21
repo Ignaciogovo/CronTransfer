@@ -53,6 +53,7 @@ DROP TABLE IF EXISTS `share`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `share` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `tipo_transferencia` varchar(250) NOT NULL,
   `origen` varchar(250) NOT NULL,
   `final` varchar(250) NOT NULL,
   `sobrescribir` varchar(20) NOT NULL,

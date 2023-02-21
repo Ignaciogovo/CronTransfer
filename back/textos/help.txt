@@ -6,26 +6,26 @@
                                                                             
 Comandos:
 cron_insert 
-        + s  --> Realizar un insert de un servicio de backup completo con guía. Es el parametro por defecto
         + c  --> Realizar una insercción de datos de una conexión con guía
-        + sf --> Insertar de forma rápida el codigo en formato crontab
-            Parametros: id_conexion formato_crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
-        Ejemplo: cron_insert sf 1  " * * * * 4-6 " /backups_bbdd/ultimobackup.sql /backups Y Y
+        + s  --> Realizar un insert de un servicio de transferencia completo con guía. Es el parametro por defecto
         + cf --> Realizar una insercción rápida de datos de conexion
             Parametros: IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
             Ejemplo: cron_insert cf 192.168.1.4 d  nombre_usuario p
-        
+       + sf  --> Insertar de forma rápida el codigo en formato crontab
+            Parametros: id_conexion formato_crontab importar/exportar(i/e) /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+            Ejemplo: cron_insert sf 1  " * * * * 4-6 " i /backups/ultimobackup.sql /backups Y Y
+     
 
 backup_daily
-        Parametros: id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
-        Ejemplo: backup_daily 7 3 /backups_bbdd/ultimobackup.sql /backups Y N
+        Parametros: id_conexion hora  importar/exportar(i/e) /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+        Ejemplo: backup_daily 7 3 e /backups_bbdd/ultimobackup.sql /backups Y N
             --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 
             todos los días a las 3 AM con archivo log y sin sobrescribir la backup en el servidor remoto
 
 
 cron_select 
         + c --> muestra por pantalla las conexiones
-        + s --> muestra por pantalla los servicios backups
+        + s --> muestra por pantalla los servicios de transferencia
         + a --> muestra por pantalla las dos consultas anteriores --> Es el parametro por defecto
 
 
@@ -39,12 +39,13 @@ cron_run
 
 
 cron_delete
-        + s --> Borra un servicio con guía
         + c --> Borra una conexión con guía
-        + sf  --> Borra servicio a partir del parametro dado (Es necesario el id del servicio que se desea borrar)
-            Ejemplo: cron_delete sf 7 --> Borra el servicio con id 7
+        + s --> Borra un servicio con guía
         + cf --> Borra conexión a partir del parametro dado
             Ejemplo: cron_delete sf 4 --> Borra el servicio con id 4
+        + sf  --> Borra servicio a partir del parametro dado (Es necesario el id del servicio que se desea borrar)
+            Ejemplo: cron_delete sf 7 --> Borra el servicio con id 7
+
 
 
 cron_stop
