@@ -8,8 +8,9 @@ services:
       - TZ=Europe/Madrid #
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
+    command: python3 /python3/program/inicio.py
     volumes:
-      - /:/source # Origen --->  dejarlo como tal
+      - /:/source # Origen --->  dejarlo como tal  
   bbdd:
     image: cronbmysql:1.0
     container_name: bbdd

@@ -13,15 +13,27 @@ RUN pip install -r /python/requirements.txt
 
 # introducimos la clave para el cifrado de contraseñas
 RUN mkdir /.claves
-RUN python3 /python/program/instalar_clave.py
+###RUN python3 /python/program/instalar_clave.py
 
 # Creamos una carpeta para los logs de transacciones del backup
 RUN mkdir /log
 #Instalamos nano
 RUN apt-get install -y nano
+# Indicamos variables de entorno:
+ENV TZ Europe/Madrid
+ENV MYSQL_USER python
+ENV MYSQL_PASSWORD python
+    # Al instalar tzdata permite seleccionar la zona horaria correcta en un menú. 
+    #Esto no es útil al crear contenedores Docker por eso esta variable
+ENV DEBIAN_FRONTEND noninteractive 
+
+
+# Instalamos tzdata
+RUN apt-get update && apt-get install -y tzdata
 
 # Instalamos cron
 RUN apt-get update && apt-get install -y cron
+
 RUN echo "#CronTransfer" >> /etc/crontab
 # Instalamos suervisor
 RUN apt-get install -y supervisor \
@@ -59,16 +71,5 @@ RUN echo 'alias cron_help="cat /.textos/help.txt"' >> ~/.bashrc
 # Indicamos los volumenes compartidos:
 VOLUME [ "/source" ]
 
-# Indicamos variables de entorno:
-ENV TZ Europe/Madrid
-ENV MYSQL_USER python
-ENV MYSQL_PASSWORD python
-    # Al instalar tzdata permite seleccionar la zona horaria correcta en un menú. 
-    #Esto no es útil al crear contenedores Docker por eso esta variable
-ENV DEBIAN_FRONTEND noninteractive 
-
-
-# Instalamos tzdata
-RUN apt-get update && apt-get install -y tzdata
 # Establecemos el comando del proceso de inicio del contenedor
 CMD [ "supervisord", "-c", "/etc/supervisor/supervisord.conf" ]

@@ -14,14 +14,17 @@ class DataBase:
         self.conn = None
         
     def connect(self):
-        self.conn = pymysql.connect(
-            host=self.host, 
-            user=self.user, 
-            password=self.password, 
-            database=self.database, 
-            charset=self.charset
-        )
-        print("Conexión establecida")
+        try:
+            self.conn = pymysql.connect(
+                host=self.host, 
+                user=self.user, 
+                password=self.password, 
+                database=self.database, 
+                charset=self.charset
+            )
+        except:
+            print("No se puede conectar con el servidor de base de datos")
+            sys.exit(1)
 
     def disconnect(self):
         if self.conn is not None:

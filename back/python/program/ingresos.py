@@ -74,9 +74,12 @@ def introducirssh():
     return(data)
 def introducirshare():
     data={}
-    while data["TRANSFERENCIA"]!="i" or data["TRANSFERENCIA"]!="e":
+    while True:
         data["TRANSFERENCIA"]=input("Tipo de transferencia (importar/exportar) i/e:") or ("i")
         data["TRANSFERENCIA"]=data["TRANSFERENCIA"].lower()
+        print(data["TRANSFERENCIA"])
+        if data["TRANSFERENCIA"]=="i" or data["TRANSFERENCIA"]=="e":
+            break
     data["SOURCE"]=  input("Ruta origen: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores

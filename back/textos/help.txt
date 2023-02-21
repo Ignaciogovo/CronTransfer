@@ -57,8 +57,3 @@ cron_activate
 
 
 cron_help --> Muestra el archivo ayuda por pantalla
-
-
-
-
-
