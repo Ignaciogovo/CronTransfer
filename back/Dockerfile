@@ -59,7 +59,7 @@ RUN echo 'alias cron_select="python3 /python/program/consultas.py"' >> ~/.bashrc
 RUN echo 'alias backup_daily="python3 /python/program/inputsfast.py"' >> ~/.bashrc
 
 # Incluir el parametro del id del servicio
-RUN echo 'alias cron_run="python3 /python/program/compartir.py"' >> ~/.bashrc 
+RUN echo 'alias cron_run="python3 /python/program/compartir.py a"' >> ~/.bashrc 
 
 # Actualizar status
 RUN echo 'alias cron_stop="python3 /python/program/update_status.py stop"' >> ~/.bashrc

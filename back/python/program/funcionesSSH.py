@@ -4,6 +4,16 @@ import os
 import shutil
 import cifradopass as cp
 
+
+
+class EscritorLog:
+    def __init__(self, archivo):
+        self.archivo = archivo
+
+    def escribir_log(self, mensaje):
+        with open(self.archivo, 'a') as f:
+            f.write(mensaje + '\n')
+
 class operations_transfer:
     def __init__(self,data):
         self.data=data
@@ -15,6 +25,7 @@ class operations_transfer:
         self.password=None
         # Variable para comentar estado cuando se realiza función de connect
         self.estado=None
+        self.log=EscritorLog(data["log"])
         
     def connect(self):
         self.client = paramiko.SSHClient()
@@ -26,7 +37,9 @@ class operations_transfer:
                 self.password = None
 
             except Exception as e:
-                print("Error al cargar la clave privada:", e)
+                mensaje="Error al cargar la clave privada:"+str(e)
+                print(mensaje)
+                self.log.escribir_log(mensaje)                
                 return(1)
         else:
             self.password = cp.desencriptar_pass(self.data["PASS"])
@@ -38,10 +51,13 @@ class operations_transfer:
                 self.client.connect(self.host,port=self.port, username=self.username, password=self.password)
             return(0)
         except Exception as e:
-            print("Error al conectar con el servidor: ", e)
+            mensaje="Error al conectar con el servidor: "+str(e)
+            print(mensaje)
+            self.log.escribir_log(mensaje)    
             if self.estado != None:
-                print("Fallo en "+self.estado)
-
+                mensaje="Fallo en "+self.estado
+                print(mensaje)
+                self.log.escribir_log(mensaje)  
             return(1)
         
     def disconnect(self):
@@ -77,10 +93,14 @@ class operations_transfer:
                     elif "directorio" in output:
                         return("directorio")
                     else:
-                        print("No se ha reconocido la ruta origen, ¿Es la ruta correcta? -->"+self.data["SOURCE"])
+                        mensaje="No se ha reconocido la ruta origen, ¿Es la ruta correcta? -->"+self.data["SOURCE"]
+                        print(mensaje)
+                        self.log.escribir_log(mensaje)  
                         return(1)
             except Exception as e:
-                print("Error al reconocer la ruta: ", e)
+                mensaje="Error al reconocer la ruta: "+str(e)
+                print(mensaje)
+                self.log.escribir_log(mensaje)  
                 return(1)
             finally:
                 self.disconnect()
@@ -91,7 +111,9 @@ class operations_transfer:
                 if os.path.isdir(self.data["SOURCE"]):
                     return("directorio")
                 else:
-                    print("No se ha reconocido la ruta origen, ¿Es la ruta correcta? -->"+self.data["SOURCE"])
+                    mensaje=("No se ha reconocido la ruta origen, ¿Es la ruta correcta? -->"+self.data["SOURCE"])
+                    print(mensaje)
+                    self.log.escribir_log(mensaje)  
                     return(1)
 
 
@@ -122,7 +144,10 @@ class operations_transfer:
                 self.disconnect()
         else:
             if os.path.exists(self.data["FINAL"]):
-                return(0)
+                if os.path.isfile(self.data["FINAL"]):
+                    return(1)
+                else:
+                    return(0)
             else:
                 return(1)
     
@@ -144,7 +169,9 @@ class operations_transfer:
             if valorfinal==0:
                 self.data["FINAL"]=self.data["FINAL"]+origen
             else:
-                print("No se ha reconocido la ruta final, ¿Es la ruta correcta? -->"+vieja)
+                mensaje=("No se ha reconocido la ruta final, ¿Es la ruta correcta? -->"+vieja)
+                print(mensaje)
+                self.log.escribir_log(mensaje)  
                 return(1)
     # Realizar compresion
     # Solo para servidores linux
@@ -169,7 +196,9 @@ class operations_transfer:
                 if output:
                     self.disconnect()
                     if "Permission denied" in output:
-                        print("No hay permisos para realizar compresión"+output)
+                        mensaje=("No hay permisos para realizar compresión"+output)
+                        print(mensaje)
+                        self.log.escribir_log(mensaje)  
                         return(1)
                     else:
                         # Comprobamos si el archivo existe
@@ -186,11 +215,16 @@ class operations_transfer:
                         if "command not found" in stderr:
                             no_install.append(stderr)
                             if compresion == tipos_compresion[-1]:
-                                print("Fallo al realizar la compresión, se ha intentado varios metodos de compresión (zip,7z,tar)")
+                                mensaje=("Fallo al realizar la compresión, se ha intentado varios metodos de compresión (zip,7z,tar)")
+                                print(mensaje)
+                                self.log.escribir_log(mensaje)  
                                 print(no_install)
+                                self.log.escribir_log(no_install)
                                 return(1)
                         else:
-                            print("Fallo al realizar la compresión: "+stderr)
+                            mensaje=("Fallo al realizar la compresión: "+stderr)
+                            print(mensaje)
+                            self.log.escribir_log(mensaje)  
                             return(1)
 
         else:
@@ -201,7 +235,9 @@ class operations_transfer:
                 self.data["ZIP"] = "YES"
                 return(0)
             else:
-                    print("Fallo al realizar compresion")
+                    mensaje=("Fallo al realizar compresion")
+                    print(mensaje)
+                    self.log.escribir_log(mensaje)  
                     return(1)
     # Chequeamos el archivo de compresion
     def check_archivo_remoto(self,archivo):
@@ -282,7 +318,9 @@ class operations_transfer:
             self.disconnect()       
             return(0)
         except Exception as e:
-            print("Error al transferir el archivo: ", e)
+            mensaje=("Error al transferir el archivo: "+str(e))
+            print(mensaje)
+            self.log.escribir_log(mensaje)  
             self.disconnect()       
             return(1)
         # Cerramos la conexión        

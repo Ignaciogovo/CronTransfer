@@ -227,6 +227,19 @@ class DataBase:
             print("Error al consultar datos: ", e)
         finally:
             self.disconnect()
+
+    def select_log(self,id):
+        try:
+            self.connect()
+            with self.conn.cursor() as cursor:
+                sql = "select log from share where id=%s;"
+                cursor.execute(sql,id)
+                resultado = cursor.fetchone()
+                return(resultado)
+        except Exception as e:
+            print("Error al consultar datos: ", e)
+        finally:
+            self.disconnect()
     
     def ultimoidSHARE(self):
         try:
@@ -317,10 +330,10 @@ class DataBase:
                     for row in datos:
                         data = {
                         "ID" : row[0],
-                        "SOURCE": row[1], 
-                        "FINAL" : row[2],
                         "crontab" : row[3],
                         "tipo_transferencia": row[4],
+                        "SOURCE": row[1], 
+                        "FINAL" : row[2],
                         "LOG" : row[5],
                         "id_conexion": row[6],
                         "status": row[7]
