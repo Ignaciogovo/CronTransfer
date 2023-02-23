@@ -3,6 +3,7 @@ from time import sleep
 from getpass import getpass
 import funcionesSSH as fssh
 import cifradopass as cp
+import connect_db
 
 
 
@@ -78,30 +79,23 @@ def introducirshare():
         data["TRANSFERENCIA"]=input("Tipo de transferencia (importar/exportar) i/e:") or ("i")
         data["TRANSFERENCIA"]=data["TRANSFERENCIA"].lower()
         print(data["TRANSFERENCIA"])
-        if data["TRANSFERENCIA"]=="i" and data["TRANSFERENCIA"]=="e":
+        if data["TRANSFERENCIA"]=="i" or data["TRANSFERENCIA"]=="e":
             break
-    data["SOURCE"]=  input("Ruta origen: ") or ("")
+    data["local"]=  input("Ruta origen: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
-    if data["SOURCE"].endswith("/"):
-       data["SOURCE"]=data["SOURCE"][:-1]
+    if data["local"].endswith("/"):
+       data["local"]=data["local"][:-1]
     # Incluimos el directorio del contenedor para evitar errores
-    if data["TRANSFERENCIA"]=="e":
-        if data["SOURCE"].startswith("/"):
-            data["SOURCE"]='/source'+data["SOURCE"]
-        else:
-            data["SOURCE"]='/source'+"/"+data["SOURCE"]
-    data["FINAL"] = input("rutafinal: ") or ("")
+    if data["local"].startswith("/"):
+        data["local"]='/source'+data["local"]
+    else:
+        data["local"]='/source'+"/"+data["local"]
+    data["remoto"] = input("rutafinal: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
-    if data["FINAL"].endswith("/"):
-       data["FINAL"]=data["FINAL"][:-1]
-    if data["TRANSFERENCIA"]=="i":
-        if data["FINAL"].startswith("/"):
-            data["FINAL"]='/source'+data["FINAL"]
-        else:
-            data["FINAL"]='/source'+"/"+data["FINAL"]
-
+    if data["remoto"].endswith("/"):
+       data["remoto"]=data["remoto"][:-1]
     print("")
     # sobreescribir el archivo
     print("Escoja entre estas opciones que desea:")
@@ -158,14 +152,20 @@ def introducirshare():
 
     # Preguntamos si quiere guardar un log de transacciones
     print("")
-    print("Quieres almacenar el log de transacciones en la ruta /log?(Y/N)")
-    data["log"]= input()
-    if data["log"] == "y" or data["log"] == "Y":
-        data["log"]=input("Indica el nombre del log: ")
-        if data["log"].startswith("/"):
-            data["log"]='/log'+data["log"]
-        else:
-            data["log"]='/log'+"/"+data["log"]
+    data["log"]= input("Quieres almacenar el log de transacciones en la ruta /log?(Y/N)").lower
+    if data["log"] == "y":
+        db=connect_db.DataBase
+        idshare =int(db.ultimoidSHARE())+1
+        borred_share=int(db.select_deleted_id_share())+1
+        if idshare < borred_share:
+            idshare=borred_share
+        data["log"]="/log/servicio_"+str(idshare)+".log"
+        if input("El nombre del log predeterminado será: servicio_"+str(1)+".log ¿Desea cambiarlo?(Y/N)").lower() == "y":
+            data["log"]=input("Indica el nombre del log: ")
+            if data["log"].startswith("/"):
+                data["log"]='/log'+data["log"]
+            else:
+                data["log"]='/log'+"/"+data["log"]
     else:
         data["log"]='NULL'
     validar(data)

@@ -58,8 +58,8 @@ class DataBase:
                     raise
 
                 # Insertar datos
-                sql = "INSERT INTO share(tipo_transferencia,origen,final,id_conexion,crontab,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-                values=(data["TRANSFERENCIA"],data["SOURCE"],data["FINAL"],data["id_conexion"],data["crontab"],data["log"],data["SOBRESCRIBIR"])
+                sql = "INSERT INTO share(tipo_transferencia,ruta_local,ruta_remoto,id_conexion,crontab,log,sobrescribir) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+                values=(data["TRANSFERENCIA"],data["local"],data["remoto"],data["id_conexion"],data["crontab"],data["log"],data["SOBRESCRIBIR"])
                 cursor.execute(sql,values)
                 self.conn.commit()
                 print("Datos insertados correctamente.")
@@ -75,6 +75,21 @@ class DataBase:
             return(1)
         finally:
             self.disconnect()
+
+    def insert_deleted_id_share(self,id):
+        try:
+            self.connect()
+            with self.conn.cursor() as cursor:
+                sql = "INSERT INTO deleted_id_share(id_share) VALUES (%s)"
+                values=(id)
+                cursor.execute(sql,values)
+                self.conn.commit()
+                print("Datos insertados correctamente.")
+        except Exception as e:
+            print("Error al insertar datos: ", e)
+            self.conn.rollback()
+        finally:
+            self.disconnect()    
 
     # Realizar updates:
     def update_status(self,id,status):
@@ -105,6 +120,22 @@ class DataBase:
 
 
     def delete_share(self,id):
+        try:
+            x=1
+            self.connect()
+            with self.conn.cursor() as cursor:
+                sql = "delete from share where id=%s;"
+                cursor.execute(sql,id)
+                self.conn.commit()
+                x=0
+        except Exception as e:
+            print("Error al borrar datos: ", e)
+        finally:
+            if x ==0:
+                self.insert_deleted_id_share(id)
+            self.disconnect()
+
+    def delete_share_conexion(self,id):
         try:
             self.connect()
             with self.conn.cursor() as cursor:
@@ -219,7 +250,7 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "select tipo_transferencia,origen,final,sobrescribir from share where id=%s;"
+                sql = "select tipo_transferencia,ruta_local,ruta_remoto,sobrescribir from share where id=%s;"
                 cursor.execute(sql,id)
                 resultado = cursor.fetchone()
                 return(resultado)
@@ -307,6 +338,23 @@ class DataBase:
             with self.conn.cursor() as cursor:
                 sql = "select status from share where id = %s;"
                 cursor.execute(sql,id)
+                datos = cursor.fetchone()
+                status=datos[0]
+                return(status)
+        except Exception as e:
+            print("Error al consultar datos: ", e)
+        finally:
+            self.disconnect()
+
+#########################################################################
+# Consultas en tabla deleted_id_share:
+########################################################################
+    def select_deleted_id_share(self):
+        try:
+            self.connect()
+            with self.conn.cursor() as cursor:
+                sql = "select max(id_share) from deleted_id_share;"
+                cursor.execute(sql)
                 datos = cursor.fetchone()
                 status=datos[0]
                 return(status)

@@ -54,8 +54,8 @@ DROP TABLE IF EXISTS `share`;
 CREATE TABLE `share` (
   `id` int NOT NULL AUTO_INCREMENT,
   `tipo_transferencia` varchar(250) NOT NULL,
-  `origen` varchar(250) NOT NULL,
-  `final` varchar(250) NOT NULL,
+  `ruta_local` varchar(250) NOT NULL,
+  `ruta_remoto` varchar(250) NOT NULL,
   `sobrescribir` varchar(20) NOT NULL,
   `id_conexion` int NOT NULL,
   `crontab` varchar(400) not NULL,
@@ -75,6 +75,25 @@ CREATE TABLE `share` (
 LOCK TABLES `share` WRITE;
 /*!40000 ALTER TABLE `share` DISABLE KEYS */;
 /*!40000 ALTER TABLE `share` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `deleted_id_share`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `deleted_id_share` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_share` int NOT NULL,
+  PRIMARY KEY (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--  'modo' varchar(200) not NULL,
+--
+-- Dumping data for table `deleted_id_share`
+--
+
+LOCK TABLES `deleted_id_share` WRITE;
+/*!40000 ALTER TABLE `deleted_id_share` DISABLE KEYS */;
+/*!40000 ALTER TABLE `deleted_id_share` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

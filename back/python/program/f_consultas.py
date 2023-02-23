@@ -28,7 +28,7 @@ def c_servicio():
         print("")
         print("Servicios guardados en el sistema:")
         print("")
-        print(tabulate(datos, headers=["ID","crontab","tipo_transferencia","origen","final","id_conexion","status","log"]))
+        print(tabulate(datos, headers=["ID","crontab","tipo_transferencia","ruta_local","ruta_remoto","id_conexion","status","log"]))
     else:
         print("No hay servicios almacenados en el sistema")
         return(1)

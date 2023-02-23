@@ -2,9 +2,29 @@ import funcionesSSH as fssh
 import sys
 import connect_db as cdb
 from datetime import datetime
-if len(sys.argv)>=3:
+if len(sys.argv)>3:
     print("demasiados argumentos")
     sys.exit()
+if len(sys.argv)<3:
+    print("Falta argumentos")
+    sys.exit()
+
+def comprobacion_status(id,log):
+    db=cdb.DataBase()
+    archivo=fssh.EscritorLog(log)
+    try:
+        status = db.select_status(id)
+    except:
+        mensaje=("No es posible conexion con la base de datos o los datos no se han encontrado para comprobar su estado")
+        print(mensaje)
+        archivo.escribir_log(mensaje)
+        sys.exit(1)
+    if status != 'activate':
+    # Cerramos el programa
+        mensaje=("Esta desactivado \n")
+        print(mensaje)
+        archivo.escribir_log(mensaje)
+        sys.exit(1)
 def conexionData():
     # Obtenemos el id  a partir de un parametro
     db=cdb.DataBase()
@@ -18,23 +38,13 @@ def conexionData():
         log=str(sys.argv[1])
         if log=="a":
             log=db.select_log(id)
+        else:
+            comprobacion_status(id,log)
     except:
         log=db.select_log(id)
     archivo=fssh.EscritorLog(log)
     # Comprobamos el status del servicio
-    try:
-        status = db.select_status(id)
-    except:
-        print("No es posible conexion con la base de datos o los datos no se han encontrado")
-        sys.exit(1)
-        # Forzar status:
-    # if forzado== "f":
-    #     status = 'activate'
-    # Comprobamos el status del servicio
-    if status != 'activate':
-        # Cerramos el programa
-        print("Esta desactivado \n")
-        sys.exit(1)
+
     try:
         
         origenfinal = db.select_share_origen_final(id)
@@ -50,10 +60,24 @@ def conexionData():
         print("Problemas al sacar datos a partir del idSSH")    
         sys.exit(1)
     data["TRANSFERENCIA"] =origenfinal[0]
-    data["SOURCE"] =origenfinal[1]
-    data["FINAL"] =origenfinal[2]
+    if data["TRANSFERENCIA"]== "e":
+        data["SOURCE"] =origenfinal[1]
+        data["FINAL"] =origenfinal[2]
+    else:
+        data["SOURCE"] =origenfinal[2]
+        data["FINAL"] =origenfinal[1]
     data["SOBRESCRIBIR"] =origenfinal[3]
     data["log"]=log
+    mensaje="Servicio id: "+str(id)+"\n"
+    mensaje=mensaje+"Conexión servidor id: "+str(idssh)+"\n"
+    archivo.escribir_log(mensaje)
+    if data["TRANSFERENCIA"] == "e":
+            mensaje=mensaje+"Tipo de transferencia: Exportar\n"
+    else:
+        mensaje=mensaje+"Tipo de transferencia: Importar\n"
+    print(mensaje)
+    archivo.escribir_log(mensaje)
+    
     return(data)
 
 def inicio_programa():
@@ -61,10 +85,7 @@ def inicio_programa():
         id = sys.argv[2]
         try:
             log=str(sys.argv[1])
-            print(id)
-            print(log)
             if log=="a":
-                print("prueba")
                 log=db.select_log(id)
         except:
             db=cdb.DataBase()
@@ -73,39 +94,28 @@ def inicio_programa():
         print("No se recibe argumentos, fallo en la ejecución de cron_run o en el en el archivo crontab --->"+str(datetime.now()))
         sys.exit(1)
     # Escribimos en el archivo
+    if log==None:
+        print("Este servicio no está guardado en el sistema:"+str(id))
+        sys.exit(1)
     archivo=fssh.EscritorLog(log)
-    print("")
-    archivo.escribir_log("")
-    print("-------------")
-    archivo.escribir_log("-------------")
-    print(str(datetime.now()))
-    archivo.escribir_log(str(datetime.now()))
-    print("Inicio transferencia  del servicio:"+str(id))
-    archivo.escribir_log("Inicio transferencia  del servicio:"+str(id))
-    print("-------------")
-    archivo.escribir_log("-------------")
+    mensaje="\n-------------\n"+str(datetime.now())+"\n Inicio transferencia"
+    print(mensaje)
+    archivo.escribir_log(mensaje)
 
 def final_programa(n,n2,data):
     archivo=fssh.EscritorLog(data["log"])
-    print("-------------")
-    archivo.escribir_log("-------------")
     if n == 1:
-        mensaje="Transferecia fallida"
-        print(mensaje)
-        archivo.escribir_log(mensaje)
-    elif n2==2:
-        mensaje="Transferencia exitosa, pero no se ha podido borrar archivos comprimidos temporales en la ruta: "+data["SOURCE"]
-        print(mensaje)
-        archivo.escribir_log(mensaje)
+        mensaje="ERROR, transferencia fallida\n"
     else:
-        mensaje="Transferecia exitosa"
-        print(mensaje)
-        archivo.escribir_log(mensaje)
-    print(str(datetime.now()))
-    archivo.escribir_log(str(datetime.now()))
-    print("-------------")
-    archivo.escribir_log("-------------")
-    archivo.escribir_log("")
+        mensaje="Transferecia exitosa\n"
+    if n2==2 and n==0:
+        mensaje="Transferencia exitosa, pero no se ha podido borrar archivos comprimidos temporales en la ruta: "+data["SOURCE"]+"\n"
+
+
+    mensaje=mensaje+"Fecha/Hora: "+str(datetime.now())+"\n-------------\n"
+
+    print(mensaje)
+    archivo.escribir_log(mensaje)
     sys.exit(1)
 
 

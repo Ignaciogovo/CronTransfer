@@ -1,5 +1,5 @@
 #!/bin/bash
-python3 /programa/inicio.py
+python3 /python/program/inicio.py
 supervisord -c /etc/supervisor/supervisord.conf
 
 

@@ -113,11 +113,14 @@ else:
             comprobación_crontab(crontab)
             transferencia=str(sys.argv[4])
             transferencia=transferencia.lower()
-            origen= str(sys.argv[5])
-            final= str(sys.argv[6])
+            localhost= str(sys.argv[5])
+            remoto= str(sys.argv[6])
             log = str(sys.argv[7]) or ("NULL")
             if log == "y" or log == "Y":
                 idshare =int(db.ultimoidSHARE())+1
+                borred_share=int(db.select_deleted_id_share())+1
+                if idshare < borred_share:
+                    idshare=borred_share
                 log="/log/servicio_"+str(idshare)+".log"
             else:
                 log="NULL"
@@ -135,32 +138,26 @@ else:
             sys.exit(1)
         data= {
         "TRANSFERENCIA": transferencia,
-        "SOURCE": origen,
-        "FINAL": final,
+        "localhost": localhost,
+        "remoto": remoto,
         "crontab" : crontab,
         "id_conexion" : id_conexion,
         "log": log,
         "SOBRESCRIBIR": sobrescribir
         }
         ## Modificamos los datos de ruta para evitar errores
-        if data["SOURCE"].endswith("/"):
-            data["SOURCE"]=data["SOURCE"][:-1]
+        if data["local"].endswith("/"):
+            data["local"]=data["local"][:-1]
         # Incluimos el directorio del contenedor para evitar errores
-        if data["TRANSFERENCIA"]=="e":
-            if data["SOURCE"].startswith("/"):
-                data["SOURCE"]='/source'+data["SOURCE"]
-            else:
-                data["SOURCE"]='/source'+"/"+data["SOURCE"]
+        if data["local"].startswith("/"):
+            data["local"]='/source'+data["local"]
+        else:
+            data["local"]='/source'+"/"+data["local"]
 
         # configuramos los datos proporcionados
         # Eliminamos el / final para evitar errores
-        if data["FINAL"].endswith("/"):
-            data["FINAL"]=data["FINAL"][:-1]
-        if data["TRANSFERENCIA"]=="i":
-            if data["FINAL"].startswith("/"):
-                data["FINAL"]='/source'+data["FINAL"]
-            else:
-                data["FINAL"]='/source'+"/"+data["FINAL"]
+        if data["remoto"].endswith("/"):
+            data["remoto"]=data["remoto"][:-1]
 
 
         # Insertamos datos de share en su tabla
