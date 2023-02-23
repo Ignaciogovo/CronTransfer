@@ -81,7 +81,7 @@ def introducirshare():
         print(data["TRANSFERENCIA"])
         if data["TRANSFERENCIA"]=="i" or data["TRANSFERENCIA"]=="e":
             break
-    data["local"]=  input("Ruta origen: ") or ("")
+    data["local"]=  input("Ruta local: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
     if data["local"].endswith("/"):
@@ -91,7 +91,7 @@ def introducirshare():
         data["local"]='/source'+data["local"]
     else:
         data["local"]='/source'+"/"+data["local"]
-    data["remoto"] = input("rutafinal: ") or ("")
+    data["remoto"] = input("ruta del servidor remoto: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
     if data["remoto"].endswith("/"):

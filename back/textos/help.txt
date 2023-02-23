@@ -12,12 +12,12 @@ cron_insert
             Parametros: IP, puerto(d='Por defecto'/ cualquier puerto) usuario p/k --> password/key
             Ejemplo: cron_insert cf 192.168.1.4 d  nombre_usuario p
        + sf  --> Insertar de forma rápida el codigo en formato crontab
-            Parametros: id_conexion formato_crontab importar/exportar(i/e) /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+            Parametros: id_conexion formato_crontab importar/exportar(i/e) /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N)
             Ejemplo: cron_insert sf 1  " * * * * 4-6 " i /backups/ultimobackup.sql /backups Y Y
      
 
 backup_daily
-        Parametros: id_conexion hora  importar/exportar(i/e) /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N)
+        Parametros: id_conexion hora  importar/exportar(i/e) /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N)
         Ejemplo: backup_daily 7 3 e /backups_bbdd/ultimobackup.sql /backups Y N
             --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 
             todos los días a las 3 AM con archivo log y sin sobrescribir la backup en el servidor remoto
