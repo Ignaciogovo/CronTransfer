@@ -11,8 +11,9 @@ class EscritorLog:
         self.archivo = archivo
 
     def escribir_log(self, mensaje):
-        with open(self.archivo, 'a') as f:
-            f.write(mensaje + '\n')
+        if self.archivo is not None:
+            with open(self.archivo, 'a') as f:
+                f.write(mensaje + '\n')
 
 class operations_transfer:
     def __init__(self,data):
@@ -25,7 +26,10 @@ class operations_transfer:
         self.password=None
         # Variable para comentar estado cuando se realiza función de connect
         self.estado=None
-        self.log=EscritorLog(data["log"])
+        if "log" in data.keys():
+            self.log=EscritorLog(data["log"])
+        else:
+            self.log=EscritorLog(None)
         
     def connect(self):
         self.client = paramiko.SSHClient()

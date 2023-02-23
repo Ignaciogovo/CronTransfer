@@ -50,12 +50,13 @@ def borrar_Crontab():
 def todos_crontab():
     db=cdb.DataBase()
     datos=db.select_servicios()
-    for data in datos:
-        crontab = DefinirCrontab(data)
-        try:
-            CrearCrontab(crontab)
-        except:
-            print("Se ha intentado realizar la escritura de crontab con id: "+str(data["id"])+" pero algo ha fallado")
+    if datos !=0:
+        for data in datos:
+            crontab = DefinirCrontab(data)
+            try:
+                CrearCrontab(crontab)
+            except:
+                print("Se ha intentado realizar la escritura de crontab con id: "+str(data["id"])+" pero algo ha fallado")
             
 
 

@@ -235,7 +235,7 @@ class DataBase:
                 sql = "select log from share where id=%s;"
                 cursor.execute(sql,id)
                 resultado = cursor.fetchone()
-                return(resultado)
+                return(str(resultado[0]))
         except Exception as e:
             print("Error al consultar datos: ", e)
         finally:

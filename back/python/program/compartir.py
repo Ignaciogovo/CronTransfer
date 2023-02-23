@@ -15,7 +15,7 @@ def conexionData():
         sys.exit(1)
     try:
         # Vemos si se fuerza a ejecutar el envio
-        log=sys.argv[1]
+        log=str(sys.argv[1])
         if log=="a":
             log=db.select_log(id)
     except:
@@ -60,8 +60,12 @@ def inicio_programa():
     try:
         id = sys.argv[2]
         try:
-            # Vemos si se fuerza a ejecutar el envio
-            log=sys.argv[1]
+            log=str(sys.argv[1])
+            print(id)
+            print(log)
+            if log=="a":
+                print("prueba")
+                log=db.select_log(id)
         except:
             db=cdb.DataBase()
             log=db.select_log(id)
