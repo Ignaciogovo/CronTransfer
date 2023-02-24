@@ -232,7 +232,7 @@ class DataBase:
  #########################################################################
 # Consultas en tabla share:
 ##########################################################################
-    def select_share_id_conexion(self,id):
+    def select_id_conexion_fromshare(self,id):
         try:
             self.connect()
             with self.conn.cursor() as cursor:
@@ -241,6 +241,26 @@ class DataBase:
                 resultado = cursor.fetchone()
                 resultado = str(resultado[0])
                 return(resultado)
+        except Exception as e:
+            print("Error al consultar datos: ", e)
+        finally:
+            self.disconnect()
+
+    # Obtenemos todos los id a partir del id_conexión
+    def select_id_from_share_where_id_conexion(self,id):
+        try:
+            self.connect()
+            with self.conn.cursor() as cursor:
+                sql = "select id from share where id_conexion=%s"
+                cursor.execute(sql,id)
+                resultado = cursor.fetchall()
+                lista=()
+                if resultado:
+                    for row in resultado:
+                        lista.append(row[0])
+                    return(lista)
+                else:
+                    return(0)
         except Exception as e:
             print("Error al consultar datos: ", e)
         finally:
@@ -356,8 +376,11 @@ class DataBase:
                 sql = "select max(id_share) from deleted_id_share;"
                 cursor.execute(sql)
                 datos = cursor.fetchone()
-                status=datos[0]
-                return(status)
+                deleted_id=datos[0]
+                if deleted_id is not None:
+                    return(deleted_id)
+                else:
+                    return(0)
         except Exception as e:
             print("Error al consultar datos: ", e)
         finally:
@@ -370,7 +393,7 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "select  sh.id, origen, final, crontab,tipo_transferencia, log, sh.id_conexion,status from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
+                sql = "select  sh.id, ruta_local,ruta_remoto, crontab,tipo_transferencia, log, sh.id_conexion,status from share sh inner join conexionssh cs on sh.id_conexion=cs.id;"
                 cursor.execute(sql)
                 datos = cursor.fetchall()
                 if datos:

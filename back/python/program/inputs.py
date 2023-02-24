@@ -116,29 +116,31 @@ else:
             localhost= str(sys.argv[5])
             remoto= str(sys.argv[6])
             log = str(sys.argv[7]) or ("NULL")
-            if log == "y" or log == "Y":
-                idshare =int(db.ultimoidSHARE())+1
-                borred_share=int(db.select_deleted_id_share())+1
-                if idshare < borred_share:
-                    idshare=borred_share
-                log="/log/servicio_"+str(idshare)+".log"
-            else:
-                log="NULL"
-            sobrescribir = str(sys.argv[8]) or ("N")
-            if sobrescribir == "N" or sobrescribir =="n":
-                sobrescribir="N"
-            else:
-                sobrescribir="Y"
+
         except:
             print("Es necesario incluir todos los parametros")
-            print("parametros: cron_crontab id_conexion crontab /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) ")
+            print("parametros: cron_crontab id_conexion crontab /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N) ")
             sys.exit(1)
+        # Modificaciones de los datos antes de la inserción
+        if log == "y" or log == "Y":
+            idshare =int(db.ultimoidSHARE())+1
+            borred_share=int(db.select_deleted_id_share())+1
+            if idshare < borred_share:
+                idshare=borred_share
+            log="/log/servicio_"+str(idshare)+".log"
+        else:
+            log="NULL"
+        sobrescribir = str(sys.argv[8]) or ("N")
+        if sobrescribir == "N" or sobrescribir =="n":
+            sobrescribir="N"
+        else:
+            sobrescribir="Y"
         if transferencia != "e" and transferencia != "i":
             print("Tipo de transferencia errónea, deben ser i (importar) o e (exportar)")
             sys.exit(1)
         data= {
         "TRANSFERENCIA": transferencia,
-        "localhost": localhost,
+        "local": localhost,
         "remoto": remoto,
         "crontab" : crontab,
         "id_conexion" : id_conexion,

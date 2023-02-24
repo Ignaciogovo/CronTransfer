@@ -98,7 +98,7 @@ def inicio_programa():
         print("Este servicio no está guardado en el sistema:"+str(id))
         sys.exit(1)
     archivo=fssh.EscritorLog(log)
-    mensaje="\n-------------\n"+str(datetime.now())+"\n Inicio transferencia"
+    mensaje="\n-------------\nFecha/Hora: "+str(datetime.now())+"\nInicio transferencia"
     print(mensaje)
     archivo.escribir_log(mensaje)
 

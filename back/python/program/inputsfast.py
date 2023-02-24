@@ -14,23 +14,26 @@ try:
     local= str(sys.argv[4])
     remoto= str(sys.argv[5])
     log = str(sys.argv[6]) or ("NULL")
-    if log.lower() == "y":
-        idshare =int(db.ultimoidSHARE())+1
-        borred_share=int(db.select_deleted_id_share())+1
-        if idshare < borred_share:
-            idshare=borred_share
-        log="/log/servicio_"+str(idshare)+"hora_"+hora+".log"
-    else:
-        log="NULL"
-    sobrescribir = str(sys.argv[7]) or ("N")
-    if sobrescribir.lower() =="n":
-        sobrescribir="N"
-    else:
-        sobrescribir="Y"
+
 except:
     print("Es necesario incluir todos los parametros")
-    print("parametros: backup_daily id_conexion hora /ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) ")
+    print("parametros: backup_daily id_conexion hora /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N) ")
     sys.exit(1)
+# Modificaciones de los datos antes del input
+if log.lower() == "y":
+    idshare =int(db.ultimoidSHARE())+1
+    borred_share=int(db.select_deleted_id_share())+1
+    if idshare < borred_share:
+        idshare=borred_share
+    log="/log/servicio_"+str(idshare)+"hora_"+hora+".log"
+else:
+    log="NULL"
+sobrescribir = str(sys.argv[7]) or ("N")
+if sobrescribir.lower() =="n":
+    sobrescribir="N"
+else:
+    sobrescribir="Y"
+
 if int(hora) not in range(0,24):
     print("La hora no es válida")
     sys.exit(1)

@@ -5,15 +5,17 @@ services:
     restart: unless-stopped
     container_name: program
     environment:
-      - TZ=Europe/Madrid #
+      - TZ=Europe/Madrid 
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
     volumes:
-      - /:/source # Origen --->  dejarlo como tal  
+      - ./log:/log  
+      - /:/source # Ruta local --->  dejar el directorio del contenedor como esta  
   bbdd:
     image: cronbmysql:1.0
     container_name: bbdd
     environment:
+      - TZ=Europe/Madrid 
       - MYSQL_ROOT_PASSWORD=prueba
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
