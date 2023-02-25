@@ -5,7 +5,9 @@ import sys
 def DefinirCrontab(data):
     # datos: minutos horas dias meses DiasDeSemana(weekday) archivo.py peticion log:
     crontab = data["crontab"]+" root "+"python3 /python/program/compartir.py "
-    if data["log"] != "NULL":
+    if data["log"] ==None:
+        crontab=crontab+"NULL"
+    else:
         crontab=crontab+data["log"]
     crontab=crontab+" "+str(data["id"])
     crontab=crontab+"\n"

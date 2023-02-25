@@ -35,7 +35,7 @@ def conexionData():
     try:
         
         origenfinal = db.select_share_origen_final(id)
-        idssh= db.select_share_id_conexion(id)
+        idssh= db.select_id_conexion_fromshare(id)
     except:
         print("No es posible conexion con la base de datos o los datos no se han encontrado")
         sys.exit(1)

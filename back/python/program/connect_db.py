@@ -78,7 +78,6 @@ class DataBase:
 
     def insert_deleted_id_share(self,id):
         try:
-            self.connect()
             with self.conn.cursor() as cursor:
                 sql = "INSERT INTO deleted_id_share(id_share) VALUES (%s)"
                 values=(id)
@@ -88,8 +87,6 @@ class DataBase:
         except Exception as e:
             print("Error al insertar datos: ", e)
             self.conn.rollback()
-        finally:
-            self.disconnect()    
 
     # Realizar updates:
     def update_status(self,id,status):
@@ -135,29 +132,6 @@ class DataBase:
                 self.insert_deleted_id_share(id)
             self.disconnect()
 
-    def delete_share_conexion(self,id):
-        try:
-            self.connect()
-            with self.conn.cursor() as cursor:
-                sql = "delete from share where id=%s;"
-                cursor.execute(sql,id)
-                self.conn.commit()
-        except Exception as e:
-            print("Error al borrar datos: ", e)
-        finally:
-            self.disconnect()
-
-    def delete_share_conexion(self,id):
-        try:
-            self.connect()
-            with self.conn.cursor() as cursor:
-                sql = "delete from share where id=%s;"
-                cursor.execute(sql,id)
-                self.conn.commit()
-        except Exception as e:
-            print("Error al borrar datos: ", e)
-        finally:
-            self.disconnect()
 
 
 
@@ -166,6 +140,21 @@ class DataBase:
 #########################################################################
 # Consultas en tabla conexionssh:
 ########################################################################
+
+    def check_id_exists_from_conexion(self, id):
+        try:
+            self.connect()
+            with self.conn.cursor() as cursor:
+                sql = "SELECT COUNT(*) FROM conexionssh WHERE id = %s;"
+                cursor.execute(sql, id)
+                resultado = cursor.fetchone()
+                return 0 if resultado[0] > 0 else 1
+        except Exception as e:
+            print("Error al consultar datos: ", e)
+        finally:
+            self.disconnect()
+
+
     def ultimoidssh(self):
         try:
             self.connect()
@@ -232,6 +221,19 @@ class DataBase:
  #########################################################################
 # Consultas en tabla share:
 ##########################################################################
+    def check_id_exists_from_share(self, id):
+        try:
+            self.connect()
+            with self.conn.cursor() as cursor:
+                sql = "SELECT COUNT(*) FROM share WHERE id = %s;"
+                cursor.execute(sql, id)
+                resultado = cursor.fetchone()
+                return 0 if resultado[0] > 0 else 1
+        except Exception as e:
+            print("Error al consultar datos: ", e)
+        finally:
+            self.disconnect()
+
     def select_id_conexion_fromshare(self,id):
         try:
             self.connect()
@@ -286,7 +288,7 @@ class DataBase:
                 sql = "select log from share where id=%s;"
                 cursor.execute(sql,id)
                 resultado = cursor.fetchone()
-                return(str(resultado[0]))
+                return None if resultado[0] == 'Null' else resultado[0]
         except Exception as e:
             print("Error al consultar datos: ", e)
         finally:

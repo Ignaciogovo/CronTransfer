@@ -2,6 +2,15 @@ import connect_db as cdb
 import sys
 import crontabs as cr
 import f_consultas as f_c
+import os
+
+def delete_file(archivo):
+    try:
+        os.remove(archivo)
+        print("Archivo log "+archivo+" borrado exitosamente.")
+    except OSError as e:
+        print("Error al borrar el archivo log "+archivo+": "+e)
+
 
 
 def borrar_servicio():
@@ -20,11 +29,17 @@ def borrar_servicio():
     if str(id_borrar) == "0":
         sys.exit(1)
     else:
-        ssh_borrar=db.select_share_id_conexion(id_borrar)
+        if db.check_id_exists_from_share(id_borrar) == 1:
+            print("Servicio no almacenado en el sistema")
+            sys.exit()
+        ssh_borrar=db.select_id_conexion_fromshare(id_borrar)
+        log = db.select_log(id_borrar)
         print("Vamos a borrar el los datos relacionados con el id: "+id_borrar)
         db.delete_share(id_borrar)
-        ssh_borrar= input("¿Desea borrar tambien los datos relacionados con el la conexión ss al servidor?(Y/N) ") or ("")
-        if ssh_borrar == "y" or ssh_borrar == "Y":        
+        if log is not None:
+            if input("¿Desea borrar el archivo log "+str(log)+" relacionado con el servicio?(Y/N) ").lower() == "y":
+                delete_file(log)
+        if input("¿Desea borrar tambien los datos relacionados con el la conexión ssh al servidor?(Y/N) ").lower() == "y":        
             db.delete_ssh(ssh_borrar)
         # Realizamos borrado en crontab y vuelta a su escritura
         cr.borrar_Crontab()
@@ -50,12 +65,14 @@ def borrar_conexion():
     if str(id_borrar) == "0":
         sys.exit(1)
     else:
+        if db.check_id_exists_from_conexion(id_borrar) == 1:
+            print("Conexión no almacenada en el sistema")
+            sys.exit(1)            
         lista=db.select_id_from_share_where_id_conexion(id_borrar)
         if lista == 0:
             db.delete_ssh(id_borrar)
         else:
-            ssh_borrar= input("¿Borrar una conexión borrará todos los servicios relacionados con él, está ¿seguro?(Y/N) ").lower() or ("y")
-            if ssh_borrar == "y":
+            if input("¿Borrar una conexión borrará todos los servicios relacionados con él, está ¿seguro?(Y/N) ").lower() == "y":
                 # Borramos todos los servicios relacionados con la conexión:
                 for row in lista:
                     fast_borrar_servicio(row) 
@@ -74,6 +91,9 @@ def fast_borrar_servicio(id_borrar):
         sys.exit()
     db=cdb.DataBase()
     try:
+        if db.check_id_exists_from_share(id_borrar) == 1:
+            print("Servicio no almacenado en el sistema")
+            sys.exit()
         db.delete_share(id_borrar)
         # Realizamos borrado en crontab y vuelta a su escritura
         cr.borrar_Crontab()
@@ -89,12 +109,14 @@ def fast_borrar_conexion(id_borrar):
         print("Parametro incorrecto")
         sys.exit()
     db=cdb.DataBase()
+    if db.check_id_exists_from_conexion(id_borrar) == 1:
+        print("Conexión no almacenada en el sistema")
+        sys.exit(1)
     try:
         lista=db.select_id_from_share_where_id_conexion(id_borrar)
         if lista == 0:
             db.delete_ssh(id_borrar)
-        ssh_borrar= input("¿Borrar una conexión borrará todos los servicios relacionados con él, ¿está seguro?(Y/N) ").lower() or ("y")
-        if ssh_borrar == "y":
+        if  input("¿Borrar una conexión borrará todos los servicios relacionados con él, ¿está seguro?(Y/N) ").lower() == "y":
             for row in lista:
                 fast_borrar_servicio(row)
             db.delete_share_conexion(id_borrar)       

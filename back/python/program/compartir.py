@@ -38,6 +38,9 @@ def conexionData():
         log=str(sys.argv[1])
         if log=="a":
             log=db.select_log(id)
+        elif log == "NULL":
+            log=db.select_log(id)
+            comprobacion_status(id,log)
         else:
             comprobacion_status(id,log)
     except:
@@ -46,9 +49,8 @@ def conexionData():
     # Comprobamos el status del servicio
 
     try:
-        
         origenfinal = db.select_share_origen_final(id)
-        idssh= db.select_share_id_conexion(id)
+        idssh= db.select_id_conexion_fromshare(id)
     except:
         mensaje=("No es posible conexion con la base de datos o los datos no se han encontrado")
         print(mensaje)
@@ -81,20 +83,22 @@ def conexionData():
     return(data)
 
 def inicio_programa():
+    db=cdb.DataBase()
     try:
         id = sys.argv[2]
         try:
             log=str(sys.argv[1])
             if log=="a":
                 log=db.select_log(id)
+            elif log == "NULL":
+                log=db.select_log(id)
         except:
-            db=cdb.DataBase()
             log=db.select_log(id)
     except:
         print("No se recibe argumentos, fallo en la ejecución de cron_run o en el en el archivo crontab --->"+str(datetime.now()))
         sys.exit(1)
     # Escribimos en el archivo
-    if log==None:
+    if db.check_id_exists_from_share(id)==1:
         print("Este servicio no está guardado en el sistema:"+str(id))
         sys.exit(1)
     archivo=fssh.EscritorLog(log)
@@ -110,7 +114,7 @@ def final_programa(n,n2,data):
         mensaje="Transferecia exitosa\n"
     if n2==2 and n==0:
         mensaje="Transferencia exitosa, pero no se ha podido borrar archivos comprimidos temporales en la ruta: "+data["SOURCE"]+"\n"
-
+    
 
     mensaje=mensaje+"Fecha/Hora: "+str(datetime.now())+"\n-------------\n"
 

@@ -152,7 +152,7 @@ def delete_share_conexion(id_ssh):
 #########################################################################
 # Consultas en tabla share:
 ########################################################################
-def select_share_id_conexion(id):
+def select_id_conexion_fromshare(id):
     db = bbddCronTransfer()
     # prepare a cursor object using cursor() method
     cursor = db.cursor()

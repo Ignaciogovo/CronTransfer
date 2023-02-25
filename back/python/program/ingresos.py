@@ -152,15 +152,14 @@ def introducirshare():
 
     # Preguntamos si quiere guardar un log de transacciones
     print("")
-    data["log"]= input("Quieres almacenar el log de transacciones en la ruta /log?(Y/N)").lower
-    if data["log"] == "y":
-        db=connect_db.DataBase
+    if input("Quieres almacenar el log de transacciones en la ruta /log?(Y/N)").lower() == "y":
+        db=connect_db.DataBase()
         idshare =int(db.ultimoidSHARE())+1
         borred_share=int(db.select_deleted_id_share())+1
         if idshare < borred_share:
             idshare=borred_share
         data["log"]="/log/servicio_"+str(idshare)+".log"
-        if input("El nombre del log predeterminado será: servicio_"+str(1)+".log ¿Desea cambiarlo?(Y/N)").lower() == "y":
+        if input("El nombre del log predeterminado será: servicio_"+str(idshare)+".log ¿Desea cambiarlo?(Y/N)").lower() == "y":
             data["log"]=input("Indica el nombre del log: ")
             if data["log"].startswith("/"):
                 data["log"]='/log'+data["log"]
