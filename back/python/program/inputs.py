@@ -8,7 +8,7 @@ import re
 especiales = ("@reboot","@yearly","@annually","@monthly","@weekly","@daily","@midnight","@hourly")
 dias_semana= ("sun","mon","tue","wed","thu","fri","sat")
 meses = ("jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")
-def comprobación_crontab(crontab):
+def comprobacion_crontab(crontab):
     crontab = " ".join(crontab.split())# Eliminamos los posibles dobles espacios
     if crontab in especiales:
         1==1
@@ -18,7 +18,7 @@ def comprobación_crontab(crontab):
             1==1
         else:
             print("Formato de crontab erroneo")
-            sys.exit(1)
+            sys.exit()
 
 
 def crear_conexion():
@@ -110,17 +110,19 @@ else:
         try:
             id_conexion= str(sys.argv[2])
             crontab= (str(sys.argv[3])).strip()
-            comprobación_crontab(crontab)
             transferencia=str(sys.argv[4])
             transferencia=transferencia.lower()
             localhost= str(sys.argv[5])
             remoto= str(sys.argv[6])
             log = str(sys.argv[7]) or ("NULL")
+            sobrescribir = str(sys.argv[8]) or ("N")
 
         except:
             print("Es necesario incluir todos los parametros")
-            print("parametros: cron_crontab id_conexion crontab /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N) ")
+            print("parametros: cron_crontab id_conexion crontab importar/exportar(i/e) /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N) ")
             sys.exit(1)
+        comprobacion_crontab(crontab)
+
         # Modificaciones de los datos antes de la inserción
         if log == "y" or log == "Y":
             idshare =int(db.ultimoidSHARE())+1
@@ -130,7 +132,6 @@ else:
             log="/log/servicio_"+str(idshare)+".log"
         else:
             log="NULL"
-        sobrescribir = str(sys.argv[8]) or ("N")
         if sobrescribir == "N" or sobrescribir =="n":
             sobrescribir="N"
         else:
@@ -138,6 +139,12 @@ else:
         if transferencia != "e" and transferencia != "i":
             print("Tipo de transferencia errónea, deben ser i (importar) o e (exportar)")
             sys.exit(1)
+        else:
+            if transferencia== "e":
+                transferencia="export"
+            else:
+                transferencia="import"
+
         data= {
         "TRANSFERENCIA": transferencia,
         "local": localhost,
@@ -172,5 +179,6 @@ else:
             f = open(log, "x")
             f.close()
             print("La ruta del log de transacciones: "+log)
+    
     else:
         print("No se reconoce los parametros")

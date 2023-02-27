@@ -12,7 +12,7 @@ def c_ssh():
         print("")
         print("Conexiones guardanas en el sistema:")
         print("")
-        print(tabulate(conexiones, headers=["ID","IP","PORT","USER", "Tipo","first connection"]))
+        print(tabulate(conexiones, headers=["ID","IP","Puerto","Usuario", "Tipo de autenticación","Primera conexión"]))
     else:
         print("No hay conexiones en el sistema")
         return(1)
@@ -28,7 +28,7 @@ def c_servicio():
         print("")
         print("Servicios guardados en el sistema:")
         print("")
-        print(tabulate(datos, headers=["ID","crontab","tipo_transferencia","ruta_local","ruta_remoto","id_conexion","status","log"]))
+        print(tabulate(datos, headers=["ID","crontab","tipo_transferencia","ruta_local","ruta_remoto","log","id_conexion","status"]))
     else:
         print("No hay servicios almacenados en el sistema")
         return(1)

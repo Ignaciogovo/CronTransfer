@@ -3,6 +3,7 @@
   <a href="#objetivo">Objetivo</a> •
   <a href="#instalación">Instalación</a> •
   <a href="#formas-de-uso">Formas de uso</a> •
+  <a href="#Comentarios">Comentarios</a> •
   <a href="#metas-del-proyecto">Metas del proyecto</a><br>
 </p>
 
@@ -167,6 +168,18 @@ Borrar conexión
 ```bash
 > cron_delete cf id
 ```
+
+
+## Comentarios
+### Directorio /source del contenedor program
+    Se requiere un directorio compartido con la máquina local, este directorio es llamado "source.
+    Todos los archivos necesarios deben estar en este directorio(clave privada, archivos que se desea transferir o directorios finales).
+    No es necesario incluir "/source/" en la ruta del archivo ya que el programa en docker lo añade automáticamente al buscar archivos en la carpeta compartida.
+    Por lo tanto, si un usuario tiene un archivo en la ruta absoluta "/home/usuario/archivo.txt" y la configuración del archivo compartido es "/home/usuario:/source" el programa en docker puede acceder a él utilizando la ruta "/archivo.txt" en lugar de "/source/archivo.txt".
+  
+### Servidor remoto
+Para usar la versión 1.0 del programa, el servidor remoto debe ser de sistema operativo Linux. 
+Si quieres importar un directorio desde el servidor remoto, se debe tener instalado en el servidor uno de los clientes de terminales tar, 7z o zip. Ya que para transferir los directorios, primero hacemos una compresión del mismo. Para importar un archivo no es necesario comprimir por lo tanto se necesita el uso de estos programas.
 
 ## Metas del proyecto
 - Realizar una interfaz web

@@ -62,7 +62,7 @@ def conexionData():
         print("Problemas al sacar datos a partir del idSSH")    
         sys.exit(1)
     data["TRANSFERENCIA"] =origenfinal[0]
-    if data["TRANSFERENCIA"]== "e":
+    if data["TRANSFERENCIA"]== "export":
         data["SOURCE"] =origenfinal[1]
         data["FINAL"] =origenfinal[2]
     else:
@@ -71,9 +71,8 @@ def conexionData():
     data["SOBRESCRIBIR"] =origenfinal[3]
     data["log"]=log
     mensaje="Servicio id: "+str(id)+"\n"
-    mensaje=mensaje+"Conexión servidor id: "+str(idssh)+"\n"
-    archivo.escribir_log(mensaje)
-    if data["TRANSFERENCIA"] == "e":
+    mensaje=mensaje+"Conexión servidor remoto id: "+str(idssh)+"\n"
+    if data["TRANSFERENCIA"] == "export":
             mensaje=mensaje+"Tipo de transferencia: Exportar\n"
     else:
         mensaje=mensaje+"Tipo de transferencia: Importar\n"

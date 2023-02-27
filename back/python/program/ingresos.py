@@ -44,7 +44,7 @@ def introducirssh():
     data["HOST"]=  input("IP Servidor: ") or ("")
     data["PORT"] = input("puerto(puerto 22 por defecto): ") or ("22")
     data["USER"] = input("usuario: ") or ("")
-    print("Qué tipo de seguridad en la conexión quieres usar?:")
+    print("Qué tipo de autenticación desea usar?:")
     print("1- password")
     print("2- clave privada")
     data["TIPO"] = input("Indique el número:(Por defecto 1) ") or ("1")
@@ -81,6 +81,10 @@ def introducirshare():
         print(data["TRANSFERENCIA"])
         if data["TRANSFERENCIA"]=="i" or data["TRANSFERENCIA"]=="e":
             break
+    if transferencia== "e":
+        transferencia="export"
+    else:
+        transferencia="import"
     data["local"]=  input("Ruta local: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores

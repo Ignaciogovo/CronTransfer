@@ -89,7 +89,7 @@ class DataBase:
             self.conn.rollback()
 
     # Realizar updates:
-    def update_status(self,id,status):
+    def update_status(self,status,id):
         try:
             self.connect()
             with self.conn.cursor() as cursor:
@@ -288,7 +288,7 @@ class DataBase:
                 sql = "select log from share where id=%s;"
                 cursor.execute(sql,id)
                 resultado = cursor.fetchone()
-                return None if resultado[0] == 'Null' else resultado[0]
+                return None if resultado[0] == 'NULL' else resultado[0]
         except Exception as e:
             print("Error al consultar datos: ", e)
         finally:

@@ -79,7 +79,7 @@ class operations_transfer:
     # Chequear ruta inicial
     def check_formato_ruta(self):
         self.estado="Chequeo ruta origen"
-        if self.data["TRANSFERENCIA"]=="i":
+        if self.data["TRANSFERENCIA"]=="import":
             control=self.connect()
             if control==1:
                 return(1)
@@ -124,7 +124,7 @@ class operations_transfer:
     # Chequear ruta final
     def check_ruta_final(self):
         self.estado="Chequeo ruta final"
-        if self.data["TRANSFERENCIA"]=="e":
+        if self.data["TRANSFERENCIA"]=="export":
             control=self.connect()
             if control==1:
                 return(1)
@@ -181,7 +181,7 @@ class operations_transfer:
     # Solo para servidores linux
     def create_zip(self):
         self.estado="Creación zip temporal"
-        if self.data["TRANSFERENCIA"]=="i":
+        if self.data["TRANSFERENCIA"]=="import":
             control=self.connect()
             if control==1:
                 return(1)
@@ -264,7 +264,7 @@ class operations_transfer:
     def drop_zip(self):
         self.estado="borrado zip temporal"
         if "ZIP"in self.data and self.data["ZIP"]=="YES":
-            if self.data["TRANSFERENCIA"]=="i":
+            if self.data["TRANSFERENCIA"]=="import":
                 control=self.connect()
                 if control==1:
                     return(1)
@@ -308,7 +308,7 @@ class operations_transfer:
             return(1)
         try:
             sftp_client = self.client.open_sftp()
-            if self.data["TRANSFERENCIA"]=="i":
+            if self.data["TRANSFERENCIA"]=="import":
                 sftp_client.get(
                     self.data["SOURCE"],
                     self.data["FINAL"]

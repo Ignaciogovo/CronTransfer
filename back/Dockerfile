@@ -56,7 +56,7 @@ RUN echo 'alias cron_delete="python3 /python/program/borrado.py"' >> ~/.bashrc
 RUN echo 'alias cron_select="python3 /python/program/consultas.py"' >> ~/.bashrc
 
     # En este alias hay que añadir 4 parametros: backup_daily id_conexión hora ruta/origen /ruta/final log(Y/N) sobrescribir(Y/N) 
-RUN echo 'alias backup_daily="python3 /python/program/inputsfast.py"' >> ~/.bashrc
+RUN echo 'alias cron_daily="python3 /python/program/inputsfast.py"' >> ~/.bashrc
 
 # Incluir el parametro del id del servicio
 RUN echo 'alias cron_run="python3 /python/program/compartir.py a"' >> ~/.bashrc 

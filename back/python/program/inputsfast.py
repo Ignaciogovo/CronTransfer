@@ -40,6 +40,11 @@ if int(hora) not in range(0,24):
 if transferencia != "e" and transferencia != "i":
     print("Tipo de transferencia errónea, deben ser i (importar) o e (exportar)")
     sys.exit(1)
+else:
+    if transferencia== "e":
+        transferencia="export"
+    else:
+        transferencia="import"
 
 data= {
 "TRANSFERENCIA": transferencia,
