@@ -1,7 +1,7 @@
 import sys
 from time import sleep
 from getpass import getpass
-import funcionesSSH as fssh
+import f_SSH as fssh
 import cifradopass as cp
 import connect_db
 
@@ -19,6 +19,9 @@ def fast_introducirssh(data):
     elif data["TIPO"] == "k":
         data["PASS"]= 'NULL'
         data["CLAVE"]= input("Ruta clave privada: ")
+        if input("¿Ésta encriptada la clave privada con contraseña?(Y/N): ").lower() == "y":
+            data["PASS"]= getpass("Introduzca la contraseña de la clave privada: ")
+            data["PASS"]= cp.encriptar_pass(data["PASS"])
         # Añadimos el directorio del contenedor para evitar errores
         if data["CLAVE"].startswith("/"):
             data["CLAVE"]='/source'+data["CLAVE"]
@@ -62,6 +65,9 @@ def introducirssh():
         else:
             data["CLAVE"]='/source'+"/"+data["CLAVE"]
         data["TIPO"] = 'clave'
+        if input("¿Ésta encriptada la clave privada con contraseña?(Y/N): ").lower() == "y":
+            data["PASS"]= getpass("Introduzca la contraseña de la clave privada: ")
+            data["PASS"]= cp.encriptar_pass(data["PASS"])
     else:
         print("No has seleccionado ninguna opción de las anteriores")
         sys.exit(1)

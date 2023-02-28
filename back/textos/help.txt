@@ -15,7 +15,6 @@ cron_insert
             Parametros: id_conexion formato_crontab importar/exportar(i/e) /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N)
             Ejemplo: cron_insert sf 1  " * * * * 4-6 " i /backups/ultimobackup.sql /backups Y Y
      
-
 cron_daily
         Realiza una insercción transferencia en hora hora determinada cada día
         Parametros: id_conexion hora  importar/exportar(i/e) /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N)

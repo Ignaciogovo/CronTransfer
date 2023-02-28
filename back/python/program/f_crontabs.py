@@ -1,4 +1,3 @@
-from pymysql import NULL
 import connect_db as cdb
 import sys
 

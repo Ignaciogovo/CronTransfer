@@ -1,25 +1,23 @@
 version: "3.1"
 services:
   program:
-    image: cronbapp:1.0
+    image: cronapp:1.0
     restart: unless-stopped
     container_name: program
     environment:
-      - TZ=Europe/Madrid 
+      - TZ=Europe/Madrid
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
     volumes:
-      - ./log:/log  
-      - /:/source # Ruta local --->  dejar el directorio /source del contenedor como tal. 
-      # Las claves privadas y los archivos/directorios que se quieran compartir deben estar dentro del directorio compartido (source)  
+      - ./log:/log
+      - /:/source # Ruta local --->  dejar el directorio /source del contenedor como tal.
+      # Las claves privadas y los archivos/directorios que se quieran compartir deben estar dentro del directorio compartido (source)
   bbdd:
-    image: cronbmysql:1.0
+    image: cronmysql:1.0
     container_name: bbdd
     environment:
-      - TZ=Europe/Madrid 
+      - TZ=Europe/Madrid
       - MYSQL_ROOT_PASSWORD=prueba
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
-    volumes:
-      - ./mysql/config:/var/lib/mysql
     restart: unless-stopped

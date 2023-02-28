@@ -1,6 +1,6 @@
 import connect_db as cdb
 import sys
-import crontabs as cr
+import f_crontabs as cr
 import f_consultas as f_c
 import os
 

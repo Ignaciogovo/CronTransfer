@@ -1,4 +1,4 @@
-import funcionesSSH as fssh
+import f_SSH as fssh
 import sys
 import connect_db as cdb
 from datetime import datetime
@@ -70,6 +70,9 @@ def conexionData():
         data["FINAL"] =origenfinal[1]
     data["SOBRESCRIBIR"] =origenfinal[3]
     data["log"]=log
+    if data["TIPO"]=="clave":
+        if data["PASS"]=="NULL":
+            data["PASS"]=None
     mensaje="Servicio id: "+str(id)+"\n"
     mensaje=mensaje+"Conexión servidor remoto id: "+str(idssh)+"\n"
     if data["TRANSFERENCIA"] == "export":

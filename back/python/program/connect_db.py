@@ -194,7 +194,7 @@ class DataBase:
         try:
             self.connect()
             with self.conn.cursor() as cursor:
-                sql = "select id, IP,port, user, tipo, fecha from conexionssh;"
+                sql = "select id, IP,port, user, tipo,clave, fecha from conexionssh;"
                 cursor.execute(sql)
                 conexiones = cursor.fetchall()                
                 if conexiones:

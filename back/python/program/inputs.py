@@ -1,5 +1,5 @@
 import ingresos
-import crontabs
+import f_crontabs as cr
 import connect_db as cdb
 import sys
 import f_consultas as f_c
@@ -73,7 +73,7 @@ def inputcompleto():
     db.insert_share(datosshare,borrar)
     # Realizar Crontab:
     idshare =db.ultimoidSHARE()
-    crontabs.RealizarCrontab(idshare)
+    cr.RealizarCrontab(idshare)
     if log != "NULL":
         print("Se guardado la configuración.")
         f = open(log, "x")
@@ -111,7 +111,6 @@ else:
             id_conexion= str(sys.argv[2])
             crontab= (str(sys.argv[3])).strip()
             transferencia=str(sys.argv[4])
-            transferencia=transferencia.lower()
             localhost= str(sys.argv[5])
             remoto= str(sys.argv[6])
             log = str(sys.argv[7]) or ("NULL")
@@ -136,6 +135,7 @@ else:
             sobrescribir="N"
         else:
             sobrescribir="Y"
+        transferencia=transferencia.lower()
         if transferencia != "e" and transferencia != "i":
             print("Tipo de transferencia errónea, deben ser i (importar) o e (exportar)")
             sys.exit(1)
@@ -173,7 +173,7 @@ else:
         db.insert_share(data,None)
         # Realizar Crontab:
         idshare =db.ultimoidSHARE()
-        crontabs.RealizarCrontab(idshare)
+        cr.RealizarCrontab(idshare)
         if log != "NULL":
             print("Se guardado la configuración.")
             f = open(log, "x")

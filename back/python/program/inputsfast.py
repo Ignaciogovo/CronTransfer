@@ -1,8 +1,13 @@
-import crontabs
+import f_crontabs as cr
 import sys
 import connect_db as cdb
 
-
+if len(sys.argv)>7:
+    print("demasiados argumentos")
+    sys.exit()
+if len(sys.argv)<5:
+    print("Falta argumentos")
+    sys.exit()
 
 
 try:
@@ -13,13 +18,13 @@ try:
     transferencia=transferencia.lower()
     local= str(sys.argv[4])
     remoto= str(sys.argv[5])
-    log = str(sys.argv[6]) or ("NULL")
 
 except:
     print("Es necesario incluir todos los parametros")
     print("parametros: backup_daily id_conexion hora /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N) ")
     sys.exit(1)
 # Modificaciones de los datos antes del input
+log = str(sys.argv[6]) or ("NULL")
 if log.lower() == "y":
     idshare =int(db.ultimoidSHARE())+1
     borred_share=int(db.select_deleted_id_share())+1
@@ -74,7 +79,7 @@ if data["remoto"].endswith("/"):
 db.insert_share(data,None)
 # Realizar Crontab:
 idshare =db.ultimoidSHARE()
-crontabs.RealizarCrontab(idshare)
+cr.RealizarCrontab(idshare)
 if log != "NULL":
     print("Se guardado la configuración.")
     f = open(log, "x")

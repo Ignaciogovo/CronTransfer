@@ -23,7 +23,6 @@ class operations_transfer:
         self.port=data["PORT"]
         self.client = None
         self.private_key=None
-        self.password=None
         # Variable para comentar estado cuando se realiza función de connect
         self.estado=None
         if "log" in data.keys():
@@ -34,11 +33,16 @@ class operations_transfer:
     def connect(self):
         self.client = paramiko.SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        #Desencriptamos la contraseña si no es None
+        if self.data["PASS"] != "NULL" and self.data["PASS"] is not None:
+            password_ssh=cp.desencriptar_pass(self.data["PASS"])
+        else:
+            password_ssh=None
         #Seguridad:
         if self.data["TIPO"]=='clave':
+            # Sacamos la varia
             try:
-                self.private_key =paramiko.RSAKey.from_private_key_file(self.data["CLAVE"])
-                self.password = None
+                self.private_key =paramiko.RSAKey.from_private_key_file(filename=self.data["CLAVE"],password=password_ssh)
 
             except Exception as e:
                 mensaje="Error al cargar la clave privada:"+str(e)
@@ -46,13 +50,12 @@ class operations_transfer:
                 self.log.escribir_log(mensaje)                
                 return(1)
         else:
-            self.password = cp.desencriptar_pass(self.data["PASS"])
             self.private_key = None
         try:
             if self.data["TIPO"]=='clave':
                 self.client.connect(self.host, port=self.port,username=self.username, pkey=self.private_key)
             else:
-                self.client.connect(self.host,port=self.port, username=self.username, password=self.password)
+                self.client.connect(self.host,port=self.port, username=self.username, password=password_ssh)
             return(0)
         except Exception as e:
             mensaje="Error al conectar con el servidor: "+str(e)
