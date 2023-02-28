@@ -1,0 +1,37 @@
+Ejemplos de horarios cron:
+    '0 0 * * *': Este horario ejecuta el comando una vez al día, todos los días a las 00:00.
+
+    '0 12 * * 1': Este horario ejecuta el comando una vez a la semana, cada lunes a las 12:00.
+
+    '30 8-18 * * 1-5': Este horario ejecuta el comando cada 30 minutos de lunes a viernes entre las 8:00 y las 18:00.
+
+    '0 0 1 * *': Este horario ejecuta el comando una vez al mes, el primer día de cada mes a las 00:00.
+
+    '0 0 * * 0': Este horario ejecuta el comando una vez a la semana, cada domingo a las 00:00.
+
+    '0 0-23/2 * * *': Este horario ejecuta el comando cada 2 horas, todos los días.
+
+    '0 8-18 * * 1-5': Este horario ejecuta el comando una vez al día, de lunes a viernes entre las 8:00 y las 18:00.
+
+    '0 0 * * 1': Este horario ejecuta el comando una vez a la semana, cada lunes a las 00:00.
+
+    '*/10 * * * *': Este horario ejecuta el comando cada 10 minutos, todos los días.
+
+    '0 0 15 1,4,7,10 *': Este horario ejecuta el comando cuatro veces al año, el 15 de enero, abril, julio y octubre a las 00:00
+
+    '0 0-23/4 * * *': Este horario ejecuta el comando cada 4 horas, todos los días.
+
+    '0 0 * * 2-6': Este horario ejecuta el comando una vez al día, de martes a sábado a las 00:00.
+
+horarios especiales:
+    @reboot: Este horario ejecuta el comando al iniciar el sistema.
+
+    @yearly o @annually: Este horario ejecuta el comando una vez al año, el primer minuto del primer día de enero.
+
+    @monthly: Este horario ejecuta el comando una vez al mes, el primer minuto del primer día de cada mes.
+
+    @weekly: Este horario ejecuta el comando una vez a la semana, el primer minuto del primer día de la semana (generalmente los domingos).
+
+    @daily o @midnight: Este horario ejecuta el comando una vez al día, a medianoche.
+
+    @hourly: Este horario ejecuta el comando una vez cada hora, en el primer minuto de cada hora.
