@@ -71,7 +71,7 @@ Realizar una inserción de servicio completo (Por defecto): (Se ejecuta una guí
 ```bash
 > cron_insert s 
 ```
-  --> Es necesario poner la ruta absoluta en las rutas local y remoto.
+  --> Es necesario poner la ruta absoluta en las rutas local y remoto. Si se cambia dirección del archivo compartido source: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
 
 ### Inserción conexión con guía
 Realizar una inserción de datos de un servidor remoto:
@@ -85,27 +85,34 @@ Realizar una inserción de datos de un servidor remoto:
 > cron_insert cf 192.168.1.4 d  usuario p 
   Introduzca la contraseña:
 ```
+ <a href="/examples/examples_insert.txt">Ejemplos cron_insert cf</a>
+
 ### Inserción con parametros de servicio con formato crontab
 Insertar de forma rápida el codigo en formato crontab:
  Parametros: id_conexion formato_crontab importar/exportar(i/e) /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N)
 ```bash
 > cron_insert sf 1  " * * * * 4-6 " i /backups/ultimobackup.sql /backups_bbdd Y Y
 ```
+ <a href="/examples/examples_insert.txt">Ejemplos cron_insert sf</a>
+ <a href="/examples/example_cron.txt">Ejemplos horario cron</a>
+
   
 
 
 
 
-### Formatos con parametros de insercción de servicios
-Realizar una inserción rápida de servicio backup diario
+### Inserción rápida de servicios
+#### cron_daily
+Realizar una inserción rápida de servicio transferencia diaria
   Parametros: id_conexion hora importar/exportar(i/e) /ruta/local /ruta/remoto log(Y/N) sobrescribir(Y/N)
 Ejemplo
 ```bash
-> backup_daily 7 3 e /backups_bbdd/ultimobackup.sql /backups Y N
+> cron_daily 7 3 e /backups_bbdd/ultimobackup.sql /backups Y N
 ```
 --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 todos los días a las 3 AM con archivo log 
   y sin sobrescribir la backup en el servidor remoto.                     
   --> Es necesario poner la ruta absoluta en las rutas local y remoto.
+ <a href="/examples/examples_insert.txt">Ejemplos cron_daily</a>
 
 
 ### Consultas
@@ -172,10 +179,10 @@ Borrar conexión
 
 ## Comentarios
 ### Directorio /source del contenedor program
-    Se requiere un directorio compartido con la máquina local, este directorio es llamado "source.
-    Todos los archivos necesarios deben estar en este directorio(clave privada, archivos que se desea transferir o directorios finales).
-    No es necesario incluir "/source/" en la ruta del archivo ya que el programa en docker lo añade automáticamente al buscar archivos en la carpeta compartida.
-    Por lo tanto, si un usuario tiene un archivo en la ruta absoluta "/home/usuario/archivo.txt" y la configuración del archivo compartido es "/home/usuario:/source" el programa en docker puede acceder a él utilizando la ruta "/archivo.txt" en lugar de "/source/archivo.txt".
+Se requiere un directorio compartido con la máquina local, este directorio es llamado "source".
+Todos los archivos necesarios deben estar en este directorio(clave privada, archivos que se desea transferir o directorios finales).
+No es necesario incluir "/source/" en la ruta del archivo ya que el programa lo añade automáticamente al buscar archivos en la carpeta compartida.
+Por lo tanto, si un usuario tiene un archivo en la ruta absoluta "/home/usuario/archivo.txt" y la configuración del archivo compartido es "/home/usuario:/source" el programa puede acceder a él utilizando la ruta "/archivo.txt" en lugar de "/source/archivo.txt".
   
 ### Servidor remoto
 Para usar la versión 1.0 del programa, el servidor remoto debe ser de sistema operativo Linux. 
