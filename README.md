@@ -71,7 +71,7 @@ Realizar una inserción de servicio completo (Por defecto): (Se ejecuta una guí
 ```bash
 > cron_insert s 
 ```
-  --> Es necesario poner la ruta absoluta en las rutas local y remoto. Si se cambia dirección del archivo compartido source: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
+--> Es necesario poner la ruta absoluta en las rutas local y remoto. Si se cambia dirección del archivo compartido source: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
 
 ### Inserción conexión con guía
 Realizar una inserción de datos de un servidor remoto:
@@ -93,8 +93,9 @@ Insertar de forma rápida el codigo en formato crontab:
 ```bash
 > cron_insert sf 1  " * * * * 4-6 " i /backups/ultimobackup.sql /backups_bbdd Y Y
 ```
- <a href="/examples/examples_insert.txt">Ejemplos cron_insert sf</a>
- <a href="/examples/example_cron.txt">Ejemplos horario cron</a>
+ <a href="/examples/examples_insert.txt">Ejemplos cron_insert sf</a>, <a href="/examples/example_cron.txt">Ejemplos horario cron</a>
+
+--> Es necesario poner la ruta absoluta en las rutas local y remoto. Si se cambia dirección del archivo compartido source: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
 
   
 
@@ -111,9 +112,9 @@ Ejemplo
 ```
 --Se enviaría el archivo /backups_bbdd/ultimobackup.sql a la ruta /backups de la conexión con id 7 todos los días a las 3 AM con archivo log 
   y sin sobrescribir la backup en el servidor remoto.                     
-  --> Es necesario poner la ruta absoluta en las rutas local y remoto.
- <a href="/examples/examples_insert.txt">Ejemplos cron_daily</a>
-
+  <a href="/examples/examples_insert.txt">Ejemplos cron_daily</a>
+  
+  --> Es necesario poner la ruta absoluta en las rutas local y remoto. Si se cambia dirección del archivo compartido source: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
 
 ### Consultas
 Consultar conexiones: 
