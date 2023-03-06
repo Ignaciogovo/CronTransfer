@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   program:
-    image: cronapp:1.0
+    image: cronapp:0.5
     restart: unless-stopped
     container_name: program
     environment:
@@ -13,7 +13,7 @@ services:
       - /:/source # Ruta local --->  dejar el directorio /source del contenedor como tal.
       # Las claves privadas y los archivos/directorios que se quieran compartir deben estar dentro del directorio compartido (source)
   bbdd:
-    image: cronmysql:1.0
+    image: cronmysql:0.5
     container_name: bbdd
     environment:
       - TZ=Europe/Madrid
