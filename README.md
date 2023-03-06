@@ -189,6 +189,10 @@ Por lo tanto, si un usuario tiene un archivo en la ruta absoluta "/home/usuario/
 Para usar la versión 1.0 del programa, el servidor remoto debe ser de sistema operativo Linux. 
 Si quieres importar un directorio desde el servidor remoto, se debe tener instalado en el servidor uno de los clientes de terminales tar, 7z o zip. Ya que para transferir los directorios, primero hacemos una compresión del mismo. Para importar un archivo no es necesario comprimir por lo tanto se necesita el uso de estos programas.
 
+
+### Rutas
+Es necesario usar las rutas absolutas. en el caso de la ruta del equipo local hay que seguir los pasos del comentario: <a href="#directorio-source-del-contenedor-program">Directorio /source del contenedor program</a>. El uso de ~ en la ruta, como por ejemplo la ruta: ~/Downloads no es compatible
+
 ## Metas del proyecto
 - Realizar una interfaz web
 - Incluir conexiones con almacenamiento en la nube
