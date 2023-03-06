@@ -1,0 +1,23 @@
+version: "3.1"
+services:
+  program:
+    image: ignaciogovoj/cronapp:0.5
+    restart: unless-stopped
+    container_name: program
+    environment:
+      - TZ=Europe/Madrid
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    volumes:
+      - ./log:/log
+      - /:/source # Ruta local --->  dejar el directorio /source del contenedor como tal.
+      # Las claves privadas y los archivos/directorios que se quieran compartir deben estar dentro del directorio compartido (source)
+  bbdd:
+    image: ignaciogovoj/cronmysql:0.5
+    container_name: bbdd
+    environment:
+      - TZ=Europe/Madrid
+      - MYSQL_ROOT_PASSWORD=prueba
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    restart: unless-stopped
