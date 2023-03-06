@@ -53,7 +53,8 @@ Ejecutamos el docker-compose
 > docker-compose up -d
 ```
 
-
+#### Instalación con las imagenes incluidas en docker hub
+Ejecutar el archivo docker-compose: <a href="/recursos/CronTransfer/docker-compose.yml">docker-compose.yml</a> con sus respectivas modificaciones
 
 ## Formas de uso
 Accedemos al contenedor docker:
@@ -71,7 +72,7 @@ Realizar una inserción de servicio completo (Por defecto): (Se ejecuta una guí
 ```bash
 > cron_insert s 
 ```
---> Es necesario poner la ruta absoluta en las rutas local y remoto. Si se cambia dirección del archivo compartido source: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
+--> Es necesario poner la ruta absoluta en las rutas local y remoto. En el caso de modificar la dirección del archivo compartido source en el docker-compose: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
 
 ### Inserción conexión con guía
 Realizar una inserción de datos de un servidor remoto:
@@ -114,7 +115,7 @@ Ejemplo
   y sin sobrescribir la backup en el servidor remoto.                     
   <a href="/examples/examples_insert.txt">Ejemplos cron_daily</a>
   
-  --> Es necesario poner la ruta absoluta en las rutas local y remoto. Si se cambia dirección del archivo compartido source: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
+  --> Es necesario poner la ruta absoluta en las rutas local y remoto. En el caso de modificar la dirección del archivo compartido source en el docker-compose: <a href="#directorio-source-del-contenedor-program">Comentarios</a>
 
 ### Consultas
 Consultar conexiones: 
@@ -186,15 +187,17 @@ No es necesario incluir "/source/" en la ruta del archivo ya que el programa lo 
 Por lo tanto, si un usuario tiene un archivo en la ruta absoluta "/home/usuario/archivo.txt" y la configuración del archivo compartido es "/home/usuario:/source" el programa puede acceder a él utilizando la ruta "/archivo.txt" en lugar de "/source/archivo.txt".
   
 ### Servidor remoto
-Para usar la versión 1.0 del programa, el servidor remoto debe ser de sistema operativo Linux. 
+Para usar la versión 0.5 del programa, el servidor remoto debe tener de sistema operativo Linux. 
 Si quieres importar un directorio desde el servidor remoto, se debe tener instalado en el servidor uno de los clientes de terminales tar, 7z o zip. Ya que para transferir los directorios, primero hacemos una compresión del mismo. Para importar un archivo no es necesario comprimir por lo tanto se necesita el uso de estos programas.
 
 
 ### Rutas
-Es necesario usar las rutas absolutas. en el caso de la ruta del equipo local hay que seguir los pasos del comentario: <a href="#directorio-source-del-contenedor-program">Directorio /source del contenedor program</a>. El uso de ~ en la ruta, como por ejemplo la ruta: ~/Downloads no es compatible
+Es necesario usar las rutas absolutas. En el caso de la ruta del equipo local hay que seguir los pasos del comentario: <a href="#directorio-source-del-contenedor-program">Directorio /source del contenedor program</a>. El uso de ~ en la ruta, como por ejemplo la ruta: ~/Downloads no es compatible
 
 ## Metas del proyecto
 - Realizar una interfaz web
 - Incluir conexiones con almacenamiento en la nube
 - Optimizar código
+- Dar la posibilidad de comprimir y descomprimir el direcotorio/archivo
+- Incluir a windows/
 - Añadir Ingles y otros idiomas
