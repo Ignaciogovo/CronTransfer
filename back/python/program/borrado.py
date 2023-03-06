@@ -30,7 +30,7 @@ def borrar_servicio():
         sys.exit(1)
     else:
         if db.check_id_exists_from_share(id_borrar) == 1:
-            print("Servicio no almacenado en el sistema")
+            print("Servicio no almacenado en el sistema: "+str(id_borrar))
             sys.exit()
         ssh_borrar=db.select_id_conexion_fromshare(id_borrar)
         log = db.select_log(id_borrar)
@@ -66,7 +66,7 @@ def borrar_conexion():
         sys.exit(1)
     else:
         if db.check_id_exists_from_conexion(id_borrar) == 1:
-            print("Conexión no almacenada en el sistema")
+            print("Conexión no almacenada en el sistema: "+str(id_borrar))
             sys.exit(1)            
         lista=db.select_id_from_share_where_id_conexion(id_borrar)
         if lista == 0:
@@ -110,7 +110,7 @@ def fast_borrar_conexion(id_borrar):
         sys.exit()
     db=cdb.DataBase()
     if db.check_id_exists_from_conexion(id_borrar) == 1:
-        print("Conexión no almacenada en el sistema"+str(id_borrar))
+        print("Conexión no almacenada en el sistema: "+str(id_borrar))
         sys.exit(1)
     try:
         lista=db.select_id_from_share_where_id_conexion(id_borrar)

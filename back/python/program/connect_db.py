@@ -97,6 +97,7 @@ class DataBase:
                 values=(status,id)
                 cursor.execute(sql,values)
                 self.conn.commit()
+                print("Nuevo estado del servicio: "+status)
         except Exception as e:
             print("Error al actualizar datos: ", e)
         finally:

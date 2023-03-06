@@ -1,53 +1,55 @@
-Ejemplos inserciones
+Ejemplos inserciones rápidas a partir de parametros:
+
+Insertar conexiones ssh
+
+    cron_insert cf:
+        cron_insert cf 192.168.1.4 d nombre_usuario p:
+            --> Este ejemplo se conecta a la dirección IP 192.168.1.4 en el puerto por defecto y con el nombre de usuario "nombre_usuario" utilizando autenticación por contraseña.
+
+        cron_insert cf 192.168.1.78 6212 root k: 
+            --> Este ejemplo se conecta a la dirección IP 192.168.1.78 en el puerto 6212 y con el nombre de usuario "root" utilizando autenticación por clave pública.
+
+        cron_insert cf 10.0.0.4 2222 user p:
+            --> Este ejemplo se conecta a la dirección IP 10.0.0.4 en el puerto 2222 y con el nombre de usuario "user" y  utilizando autenticación por contraseña.
+
+        cron_insert cf 192.168.0.10 d user k:
+            --> Este ejemplo se conecta a la dirección IP 192.168.0.10 en el puerto por defecto y con el nombre de usuario "user" utilizando autenticación por clave pública.
+
+        cron_insert cf example.com 2222 user p:
+            --> Este ejemplo se conecta al dominio "example.com" en el puerto 2222 y con el nombre de usuario "user" y la contraseña p.
 
 
-cron_insert cf:
-    cron_insert cf 192.168.1.4 d nombre_usuario p:
-        --> Este ejemplo se conecta a la dirección IP 192.168.1.4 en el puerto por defecto y con el nombre de usuario "nombre_usuario" utilizando autenticación por contraseña.
+Insertar servicios
 
-    cron_insert cf 192.168.1.78 6212 root k: 
-        --> Este ejemplo se conecta a la dirección IP 192.168.1.78 en el puerto 6212 y con el nombre de usuario "root" utilizando autenticación por clave pública.
+    cron_insert sf:
+        cron_insert sf 1 "0 0 * * * " e /backup/local /backup/remoto Y N:
+            --> Este comando exporta  al servidor de id 1 el direcorio /backup/local al directorio /backup/remoto todos los días a las 00:00, sin sobrescribir archivos existentes (diferenciandolos por fechas) y con registro de log activado.
 
-    cron_insert cf 10.0.0.1 2222 user p:
-        --> Este ejemplo se conecta a la dirección IP 10.0.0.1 en el puerto 2222 y con el nombre de usuario "user" y  utilizando autenticación por contraseña.
+        cron_insert sf 2 "*/5 * * * * " i /home/user/respaldo /home/user/archivo.txt  Y Y: 
+            --> Este comando importa del servidor de id 2 el archivo /home/user/archivo.txt al directorio /home/user/respaldo cada 5 minutos, sobrescribiendo el archivo si existe y con registro de log activado.
 
-    cron_insert cf 192.168.0.10 d user k:
-        --> Este ejemplo se conecta a la dirección IP 192.168.0.10 en el puerto por defecto y con el nombre de usuario "user" utilizando autenticación por clave pública.
+        cron_insert sf 12 "0 1 * * * " e /var/logs/app.log /backup/logs N N: 
+            --> Este comando exporta al servidor de id 12 el archivo /var/logs/app.log al directorio /backup/logs todos los días a la 01:00, sin sobrescribir archivos existentes (diferenciandolos por fechas) y sin registro de log.
 
-    cron_insert cf example.com 2222 user p:
-        --> Este ejemplo se conecta al dominio "example.com" en el puerto 2222 y con el nombre de usuario "user" y la contraseña p.
+        cron_insert sf 4 "0 */2 * * * " i  /home/user/backup /var/www/html/backup.sql N Y:
+            --> Este comando importa del servidor de id 4 el archivo /var/www/html/backup.sql al directorio /home/user/backup cada 2 horas, sobrescribiendo el archivo si existe y sin registro de log.
 
-
-
-cron_insert sf:
-    cron_insert sf 1 "0 0 * * * " e /backup/local /backup/remoto Y N:
-        --> Este comando exporta  al servidor de id 1 el direcorio /backup/local al directorio /backup/remoto todos los días a las 00:00, sin sobrescribir archivos existentes (diferenciandolos por fechas) y con registro de log activado.
-
-    cron_insert sf 2 "*/5 * * * * " i /home/user/respaldo /home/user/archivo.txt  Y Y: 
-        --> Este comando importa del servidor de id 2 el archivo /home/user/archivo.txt al directorio /home/user/respaldo cada 5 minutos, sobrescribiendo el archivo si existe y con registro de log activado.
-
-    cron_insert sf 12 "0 1 * * * " e /var/logs/app.log /backup/logs N N: 
-        --> Este comando exporta al servidor de id 12 el archivo /var/logs/app.log al directorio /backup/logs todos los días a la 01:00, sin sobrescribir archivos existentes (diferenciandolos por fechas) y sin registro de log.
-
-    cron_insert sf 4 "0 */2 * * * " i  /home/user/backup /var/www/html/backup.sql N Y:
-        --> Este comando importa del servidor de id 4 el archivo /var/www/html/backup.sql al directorio /home/user/backup cada 2 horas, sobrescribiendo el archivo si existe y sin registro de log.
-
-    cron_insert sf 25 "0 0 * * 1-5 " e /home/user/documentos /backup/documentos Y Y:
-        --> Este comando exporta al servidor de id 25 el directorio /home/user/documentos al directorio /backup/documentos de lunes a viernes a las 00:00, sobrescribiendo archivos existentes y con registro de log activado.
+        cron_insert sf 25 "0 0 * * 1-5 " e /home/user/documentos /backup/documentos Y Y:
+            --> Este comando exporta al servidor de id 25 el directorio /home/user/documentos al directorio /backup/documentos de lunes a viernes a las 00:00, sobrescribiendo archivos existentes y con registro de log activado.
 
 
 
 
 
-cron_daily
-    cron_daily 1 0 e /home/user/data.sql /mnt/backup Y N
-        --> Este ejemplo exportará al servidor de id 1 diariamente a las 00:00 el archivo "/home/user/data.sql" al directorio remoto "/mnt/backup", generando un registro de log y sin sobrescribir archivos existentes (diferenciandolos por fechas).
+    cron_daily
+        cron_daily 1 0 e /home/user/data.sql /mnt/backup Y N
+            --> Este ejemplo exportará al servidor de id 1 diariamente a las 00:00 el archivo "/home/user/data.sql" al directorio remoto "/mnt/backup", generando un registro de log y sin sobrescribir archivos existentes (diferenciandolos por fechas).
 
-    cron_daily 3 2 i /home/user/backups /mnt/data.sql  Y N
-        --> Este ejemplo importará del servidor de id 3 diariamente a las 02:00 el archivo "/mnt/data.sql" al directorio local "/home/user/backups", generando un registro de log y sin sobrescribir archivos existentes (diferenciandolos por fechas).
+        cron_daily 3 2 i /home/user/backups /mnt/data.sql  Y N
+            --> Este ejemplo importará del servidor de id 3 diariamente a las 02:00 el archivo "/mnt/data.sql" al directorio local "/home/user/backups", generando un registro de log y sin sobrescribir archivos existentes (diferenciandolos por fechas).
 
-    cron_daily 5 12 e /home/user/data /mnt/backup Y Y
-        --> Este ejemplo exportará al servidor de id 5 diariamente a las 12:00 el directorio "/home/user/data.sql" al directorio remoto "/mnt/backup", generando un registro de log y sobrescribiendo archivos existentes.
+        cron_daily 5 12 e /home/user/data /mnt/backup Y Y
+            --> Este ejemplo exportará al servidor de id 5 diariamente a las 12:00 el directorio "/home/user/data.sql" al directorio remoto "/mnt/backup", generando un registro de log y sobrescribiendo archivos existentes.
 
-    cron_daily 10 18 i /home/user/backups /data/archivo.txt  N Y
-        --> Este ejemplo importará del servidor de id 10 diariamente a las 18:00  el archivo "/data/archivo.txt" al directorio local "/home/user/backups", sin registro de log y sobrescribiendo archivos existentes.
+        cron_daily 10 18 i /home/user/backups /data/archivo.txt  N Y
+            --> Este ejemplo importará del servidor de id 10 diariamente a las 18:00  el archivo "/data/archivo.txt" al directorio local "/home/user/backups", sin registro de log y sobrescribiendo archivos existentes.
