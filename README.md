@@ -15,10 +15,10 @@ Crontransfer es un proyecto desarrollado en Python que utiliza tecnologías como
 ## Instalación
 
 ### Dos formas de instalación:
-- 1 Instalación desde los archivos dockerfile
-- 2 Instalación con las imagenes incluidas en docker hub
+- <a href="#2-Instalación-desde-dockerfile">1 Instalación desde dockerfile</a>
+- <a href="#2-Instalación-con-las-imágenes-incluidas-en-docker-hub">2 Instalación con las imágenes incluidas en docker hub</a>
 
-#### 1 Instalación desde los archivos dockerfile
+#### 1 Instalación desde dockerfile
 
 Clonamos el repositorio
 ```bash
@@ -53,7 +53,7 @@ Ejecutamos el docker-compose
 > docker-compose up -d
 ```
 
-#### Instalación con las imagenes incluidas en docker hub
+#### 2 Instalación con las imágenes incluidas en docker hub
 Ejecutar el archivo docker-compose: <a href="/recursos/CronTransfer/docker-compose.yml">docker-compose.yml</a> con sus respectivas modificaciones
 
 ## Formas de uso
