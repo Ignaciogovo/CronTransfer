@@ -29,18 +29,18 @@ Accedemos a directorio back para crear la primera imagen
 ```bash
 > cd back
 ```
-Creamos la imagen cronbapp:1.0
+Creamos la imagen cronbapp:latest
 ```bash
-> docker build -t cronbapp:1.0 .
+> docker build -t cronbapp:latest .
 ```
 
 Accedemos al directorio bbdd para crear la segunda imagen
 ```bash
 > cd ../bbdd
 ```
-Creamos la imagen cronbmysql:1.0
+Creamos la imagen cronbmysql:latest
 ```bash
-> docker build -t cronbmysql:1.0 .
+> docker build -t cronbmysql:latest .
 ```
 
 Volvemos al direcorio principial
