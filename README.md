@@ -199,5 +199,5 @@ Es necesario usar las rutas absolutas. En el caso de la ruta del equipo local ha
 - Incluir conexiones con almacenamiento en la nube
 - Optimizar código
 - Dar la posibilidad de comprimir y descomprimir el direcotorio/archivo
-- Incluir a windows/
-- Añadir Ingles y otros idiomas
+- Incluir compatibilidad con que el servidor remoto sea Windows o otro sistema operativo distinto a linux
+- Añadir Ingls y otros idiomas
