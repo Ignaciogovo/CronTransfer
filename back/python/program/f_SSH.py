@@ -202,8 +202,14 @@ class operations_transfer:
                 stderr = stderr.read().decode("utf-8")
                 if output:
                     self.disconnect()
+                    if stderr:
+                            if "Permission denied" in stderr:
+                                mensaje=("No hay permisos para realizar compresión "+stderr)
+                                print(mensaje)
+                                self.log.escribir_log(mensaje)  
+                                return(1)
                     if "Permission denied" in output:
-                        mensaje=("No hay permisos para realizar compresión"+output)
+                        mensaje=("No hay permisos para realizar compresión "+output)
                         print(mensaje)
                         self.log.escribir_log(mensaje)  
                         return(1)
@@ -229,10 +235,16 @@ class operations_transfer:
                                 self.log.escribir_log(no_install)
                                 return(1)
                         else:
-                            mensaje=("Fallo al realizar la compresión: "+stderr)
-                            print(mensaje)
-                            self.log.escribir_log(mensaje)  
-                            return(1)
+                            if "Permission denied" in stderr:
+                                mensaje=("No hay permisos para realizar compresión "+stderr)
+                                print(mensaje)
+                                self.log.escribir_log(mensaje)  
+                                return(1)
+                            else:
+                                mensaje=("Fallo al realizar la compresión: "+stderr)
+                                print(mensaje)
+                                self.log.escribir_log(mensaje)  
+                                return(1)
 
         else:
             archivo_zip = shutil.make_archive(self.data["SOURCE"], "zip", self.data["SOURCE"])
@@ -251,7 +263,7 @@ class operations_transfer:
         control=self.connect()
         if control==1:
             return(1)
-        command='[ -f '+archivo+' ] && echo "archivo" || echo "1")'
+        command='[ -f '+archivo+' ] && echo "archivo" || echo "1"'
         stdin, stdout, stderr = self.client.exec_command(command)
         # stdin, stdout, stderr = self.client.exec_command(command)
         # Mostrar la salida del comando

@@ -52,10 +52,13 @@ def inputcompleto():
 
     if opcion_menu == "1":
         f_c.c_ssh()
-        idssh = input("Introducir ID de la conexión deseada: (Si introduce el 0 crea una nueva conexión: ") or ("0")
+        idssh = input("Introducir ID de la conexión deseada: (Si introduce el 0 crea una nueva conexión): ") or ("0")
         if idssh == "0":
             idssh=crear_conexion()
         else:
+            if db.check_id_exists_from_conexion(idssh) ==1:
+                print("El id de la conexión no coincide con ningún id guardado en el sistema")
+                sys.exit()
             borrar = None
     # Creamos una nueva conexion
     elif opcion_menu == "2":

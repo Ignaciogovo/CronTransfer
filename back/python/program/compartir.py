@@ -90,10 +90,6 @@ def inicio_programa():
         id = sys.argv[2]
         try:
             log=str(sys.argv[1])
-            if log=="a":
-                log=db.select_log(id)
-            elif log == "NULL":
-                log=db.select_log(id)
         except:
             log=db.select_log(id)
     except:
@@ -101,8 +97,12 @@ def inicio_programa():
         sys.exit(1)
     # Escribimos en el archivo
     if db.check_id_exists_from_share(id)==1:
-        print("Este servicio no está guardado en el sistema:"+str(id))
+        print("Este servicio no está guardado en el sistema: "+str(id))
         sys.exit(1)
+    if log=="a":
+        log=db.select_log(id)
+    elif log == "NULL":
+        log=db.select_log(id)
     archivo=fssh.EscritorLog(log)
     mensaje="\n-------------\nFecha/Hora: "+str(datetime.now())+"\nInicio transferencia"
     print(mensaje)

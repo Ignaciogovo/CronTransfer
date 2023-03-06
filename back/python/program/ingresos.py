@@ -82,15 +82,14 @@ def introducirssh():
 def introducirshare():
     data={}
     while True:
-        data["TRANSFERENCIA"]=input("Tipo de transferencia (importar/exportar) i/e:") or ("i")
-        data["TRANSFERENCIA"]=data["TRANSFERENCIA"].lower()
-        print(data["TRANSFERENCIA"])
-        if data["TRANSFERENCIA"]=="i" or data["TRANSFERENCIA"]=="e":
+        transferencia=input("Tipo de transferencia (importar/exportar) i/e:").lower()
+        if transferencia=="i" or transferencia=="e":
             break
     if transferencia== "e":
-        transferencia="export"
+        data["TRANSFERENCIA"]="export"
     else:
-        transferencia="import"
+        data["TRANSFERENCIA"]="import"
+    # Obtenemos la ruta local
     data["local"]=  input("Ruta local: ") or ("")
     # configuramos los datos proporcionados
     # Eliminamos el / final para evitar errores
@@ -179,7 +178,7 @@ def introducirshare():
         data["log"]='NULL'
     validar(data)
     comprobar(data)
-    data["crontab"] = data["minutes"]+" "+data["hours"]+" "+data["days"]+" "+data["months"]+" "+data["weekday"]
+    data["crontab"] = str(data["minutes"])+" "+str(data["hours"])+" "+str(data["days"])+" "+str(data["months"])+" "+str(data["weekday"])
     return(data)
 def validarIndividual(key,valor):
     try:
@@ -197,7 +196,7 @@ def validarIndividual(key,valor):
                 else:
                     print("valor no valido:")
                     return('Falso')
-            else: 
+            else:
                 if key == "days":
                     if valor in range(1,32):
                         return(valor)

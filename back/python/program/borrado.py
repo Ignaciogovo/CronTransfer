@@ -90,10 +90,10 @@ def fast_borrar_servicio(id_borrar):
         print("Parametro incorrecto")
         sys.exit()
     db=cdb.DataBase()
+    if db.check_id_exists_from_share(id_borrar) == 1:
+        print("Servicio no almacenado en el sistema: "+str(id_borrar))
+        sys.exit()
     try:
-        if db.check_id_exists_from_share(id_borrar) == 1:
-            print("Servicio no almacenado en el sistema")
-            sys.exit()
         db.delete_share(id_borrar)
         # Realizamos borrado en crontab y vuelta a su escritura
         cr.borrar_Crontab()
@@ -110,22 +110,27 @@ def fast_borrar_conexion(id_borrar):
         sys.exit()
     db=cdb.DataBase()
     if db.check_id_exists_from_conexion(id_borrar) == 1:
-        print("Conexión no almacenada en el sistema")
+        print("Conexión no almacenada en el sistema"+str(id_borrar))
         sys.exit(1)
     try:
         lista=db.select_id_from_share_where_id_conexion(id_borrar)
         if lista == 0:
-            db.delete_ssh(id_borrar)
-        if  input("¿Borrar una conexión borrará todos los servicios relacionados con él, ¿está seguro?(Y/N) ").lower() == "y":
-            for row in lista:
-                fast_borrar_servicio(row)
-            db.delete_share_conexion(id_borrar)       
-            db.delete_ssh(id_borrar)
-            cr.borrar_Crontab()
-            cr.todos_crontab()
-            print("Finalizado la operación de borrado")
+            try:
+                db.delete_ssh(id_borrar)
+                print("Finalizado la operación de borrado")
+            except:
+                sys.exit()
         else:
-            print("No se borra la conexión: "+str(id_borrar))
+            if  input("¿Borrar una conexión borrará todos los servicios relacionados con él, ¿está seguro?(Y/N) ").lower() == "y":
+                for row in lista:
+                    fast_borrar_servicio(row)
+                db.delete_share_conexion(id_borrar)
+                db.delete_ssh(id_borrar)
+                cr.borrar_Crontab()
+                cr.todos_crontab()
+                print("Finalizado la operación de borrado")
+            else:
+                print("No se borra la conexión: "+str(id_borrar))
     except:
         print("No se ha podido borrar la conexión")
 
